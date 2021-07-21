@@ -2,7 +2,7 @@
   <q-layout view="lHh Lpr fff" class="bg-positive-1">
     <q-header elevated class="bg-primary text-white-8" height-hint="64">
       <q-toolbar class="GPL__toolbar" style="height: 64px">
-        <q-btn flat dense round @click="toggleLeftDrawer" aria-label="Menu" color="po" icon="menu" class="q-mx-md"/>
+        <q-btn flat dense round @click="toggleLeftDrawer" aria-label="Menu" color="positive" icon="menu" class="q-mx-md"/>
 
         <q-toolbar-title v-if="$q.screen.gt.sm" shrink class="row items-center no-wrap">
           <!-- <img src="https://cdn.quasar.dev/img/layout-gallery/logo-google.svg"> -->
@@ -11,6 +11,7 @@
 
         <q-space />
 
+        <!-- Barra de busqueda -->
         <q-input class="GPL__toolbar-input" dense standout="bg-secondary" v-model="search" placeholder="Buscar perfiles, categorias" >
           <!-- <q-input class="GNL__toolbar-input" outlined dense v-model="search" color="bg-grey-7 shadow-1" placeholder="Search for topics, locations & sources"> -->
           <template v-slot:prepend>
@@ -19,11 +20,11 @@
           </template>
         </q-input>
 
-        <q-btn v-if="$q.screen.gt.xs" flat dense no-wrap color="positive" icon="add" no-caps label="Subir" class="q-ml-sm q-px-md">
+        <q-btn v-if="$q.screen.gt.xs" flat dense no-wrap color="positive" icon="add" no-caps label="Crear Pary" class="q-ml-sm q-px-md">
           <q-menu anchor="top end" self="top end">
             <q-list class="text-grey-8" style="min-width: 100px">
               <q-item aria-hidden="true">
-                <q-item-section class="text-uppercase text-grey-7" style="font-size: 0.7rem">Subir New</q-item-section>
+                <q-item-section class="text-uppercase text-grey-7" style="font-size: 0.7rem">Crear PARY</q-item-section>
               </q-item>
               <q-item v-for="menu in createMenu" :key="menu.text" clickable v-close-popup aria-hidden="true">
                 <q-item-section avatar>
@@ -35,7 +36,7 @@
           </q-menu>
         </q-btn>
 
-        <q-btn v-if="$q.screen.gt.xs" flat dense no-wrap color="positive" icon="cloud_upload" no-caps label="Upload" class="q-ml-sm q-px-md" />
+        <q-btn v-if="$q.screen.gt.xs" flat dense no-wrap color="positive" icon="cloud_upload" no-caps label="Subir" class="q-ml-sm q-px-md" />
 
         <q-space />
 
@@ -43,7 +44,7 @@
         <div class="q-gutter-sm row items-center no-wrap">
 
           <!-- btn Home -->
-          <q-btn round dense flat color="positive" icon="apps">
+          <q-btn round dense flat color="positive" icon="apps" to="/home">
             <q-tooltip>Home Apps</q-tooltip>
           </q-btn>
 
@@ -56,7 +57,7 @@
           </q-btn>
 
           <!-- btn Cuenta -->
-          <q-btn round flat dense @click="toggleRightDrawer">     
+          <q-btn round flat dense @click="toggleRightDrawer" class="q-mx-md">     
             <q-avatar size="26px">
               <img src="https://cdn.quasar.dev/img/boy-avatar.png">
             </q-avatar>
@@ -68,12 +69,12 @@
 
       </q-toolbar>
     </q-header>
-
-    <!-- Inicio Header izquierda -->
-    <q-drawer side="right" v-model="rightDrawerOpen" bordered :width="230" :breakpoint="500"  @click="rightDrawerOpen  = false">
+ <!-- Inicio Header Derecha -->
+    <q-drawer side="right" v-model="rightDrawerOpen" bordered :width="230" :breakpoint="500" behavior="mobile" @click="rightDrawerOpen  = false">
         <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
           <q-list padding>
-            <q-item clickable v-ripple>
+
+            <q-item clickable v-ripple to="/login">
               <q-item-section avatar>
                 <q-icon name="inbox" />
               </q-item-section>
@@ -83,7 +84,7 @@
               </q-item-section>
             </q-item>
 
-            <q-item clickable v-ripple>
+            <q-item clickable v-ripple to="/login">
               <q-item-section avatar>
                 <q-icon name="send" />
               </q-item-section>
@@ -110,7 +111,7 @@
 
         <q-img  class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px">
           <div class="absolute-bottom bg-transparent">
-            <q-btn round flat dense>     
+            <q-btn round flat dense to="/home/Perfil">     
               <q-avatar  size="56px" class="q-mb-sm">
                 <img src="https://cdn.quasar.dev/img/boy-avatar.png">
               </q-avatar>
@@ -121,8 +122,9 @@
           </div>
         </q-img>        
       </q-drawer>
+   
 
-    <!-- Inicio Header Derecha -->
+    <!-- Inicio Header Izquierda -->
     <q-drawer v-model="leftDrawerOpen" bordered behavior="mobile" @click="leftDrawerOpen = false">
       <q-scroll-area class="fit">
         <q-toolbar class="GPL__toolbar">
@@ -169,7 +171,7 @@
     </q-drawer>
 
     <q-page-container class="GPL__page-container">
-      <router-view />
+      <router-view></router-view>
 
       <q-page-sticky v-if="$q.screen.gt.sm" expand position="left">
         <div class="fit q-pt-xl q-px-sm column">

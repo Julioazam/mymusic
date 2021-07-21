@@ -20,7 +20,8 @@ module.exports = configure(function (ctx) {
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli/boot-files
     boot: [
-      'axios',
+      'axios', 
+      'firebase'//Conexión a firebase db
     ],
 
     // https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -74,6 +75,16 @@ module.exports = configure(function (ctx) {
       https: false,
       port: 8080,
       open: true // opens browser window automatically
+      // proxy:{
+      //   '/marketapi':{
+      //     target:'http//localhost:8080',
+      //     changeOrigin: true,
+      //     pathRewrite: {
+      //       '^/marketapi': 'http://localhost/marketapi/'
+      //     }
+
+      //   }
+      // }
     },
 
     // https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
@@ -92,7 +103,8 @@ module.exports = configure(function (ctx) {
 
       // Quasar plugins
       plugins: [
-      'Notify'
+      'Notify',
+      'Dialog'
       ]
     },
 
@@ -187,6 +199,7 @@ module.exports = configure(function (ctx) {
       bundler: 'packager', // 'packager' or 'builder'
 
       packager: {
+        plataform:'win32'
         // https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#options
 
         // OS X / Mac App Store
