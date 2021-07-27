@@ -111,7 +111,7 @@
 
         <q-img  class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px">
           <div class="absolute-bottom bg-transparent">
-            <q-btn round flat dense to="/home/Perfil">     
+            <q-btn round flat dense to="/perfil/info-perfil">     
               <q-avatar  size="56px" class="q-mb-sm">
                 <img src="https://cdn.quasar.dev/img/boy-avatar.png">
               </q-avatar>

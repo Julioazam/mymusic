@@ -1,6 +1,7 @@
 <template>
 
   <div class="q-pa-md mobile img-bg" align="center">
+
     <q-card class="my-card" transparent>
 
       <q-card-section>
@@ -48,8 +49,7 @@
                       </template>
                     </q-input>
                     <q-input v-model="passwordl" label="Contraseña" placeholder="Contraseña" hint="Escriba su contraseña" :type="isPwd ? 'password' : 'text'" required clearable color="primary">
-                      <!-- rounded 
-					  				filled -->
+                      <!-- rounded filled -->
                       <template v-slot:prepend>
                         <q-icon name="lock" />
                       </template>
@@ -76,60 +76,62 @@
         </q-tab-panel>
 
         <q-tab-panel name="two">With so much content to display at once, and often so little screen real-estate
+
         	<q-form  method="get" ref="formR" lazy-validation class="col-12" v-on:register="register">
-            <!-- v-model="valid"	 -->
-              <div class="q-pa-md" style="max-width: 300px;">
-                <div class="q-gutter-y-md column" >
-                	<label class="imageButton">
-                		<q-icon name="person" v-if="seeIcon" class="uploadImageIcon"/>                      
-                		<img class="imagePrevew" v-if="seeImage" :src="imagePrevUrl">
-	                	<q-file  v-model="imagen" id="imagen" :dense="dense" label="Foto de perfil" placeholder="Carga de imagen" hint="Sube tu foto de perfil" accept=".jpg, image/*"  @change="previsualizarImagen($event)">
-					    </q-file>
-					</label>
 
-                  <q-input outlined v-model="nombre" id="nombre" :dense="dense" label="Nombre (s)" placeholder="Escribir" hint="Escriba su Nombre (s)"/>
+            	<!-- v-model="valid"	 -->
+              	<div class="q-pa-md" style="max-width: 300px;">
+                	<div class="q-gutter-y-md column" >
+                		<label class="imageButton">
+                			<q-icon name="person" v-if="seeIcon" class="uploadImageIcon"/>                      
+                			<img class="imagePrevew" v-if="seeImage" :src="imagePrevUrl">
+	                		<q-file  v-model="imagen" id="imagen" :dense="dense" label="Foto de perfil" placeholder="Carga de imagen" hint="Sube tu foto de perfil" accept=".jpg, image/*"  @change="previsualizarImagen($event)">
+					    	</q-file>
+						</label>
 
-                  <q-input outlined v-model="apellidos" id="apellidos" label="Apellidos" placeholder="Escribir" hint="Escriba sus Apellidos" :dense="dense"/>
+						<q-input outlined v-model="nombre" id="nombre" :dense="dense" label="Nombre (s)" placeholder="Escribir" hint="Escriba su Nombre (s)"/>
 
-                  <q-input outlined v-model="email" id="email" label="Email" placeholder="Escribir" hint="Escriba su correo electronico" :dense="dense"/>
+	                  	<q-input outlined v-model="apellidos" id="apellidos" label="Apellidos" placeholder="Escribir" hint="Escriba sus Apellidos" :dense="dense"/>
 
-                  <q-input outlined v-model="password" id="password" label="Contraseña" placeholder="Escribir" hint="Escriba su contraseña" :type="isPwd ? 'password' : 'text'" required :dense="dense">
-                    <template v-slot:append>
-                      <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
-                    </template>
-                  </q-input>
+	                  	<q-input outlined v-model="email" id="email" label="Email" placeholder="Escribir" hint="Escriba su correo electronico" :dense="dense"/>
 
-                  <q-input outlined v-model="nom_artistico" id="nom_artistico" label="Nombre Artistico" placeholder="Escribir" hint="Escriba su Nombre Artistico" :dense="dense"/>
+	                  	<q-input outlined v-model="password" id="password" label="Contraseña" placeholder="Escribir" hint="Escriba su contraseña" :type="isPwd ? 'password' : 'text'" required :dense="dense">
+	                    	<template v-slot:append>
+	                    		<q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
+	                    	</template>
+	                  	</q-input>
 
-                  <q-select outlined v-model="categoria" id="categoria" :options="options" label="Categoria" hint="Seleciones una Categoría" :dense="dense"/>
+	                  	<q-input outlined v-model="nom_artistico" id="nom_artistico" label="Nombre Artistico" placeholder="Escribir" hint="Escriba su Nombre Artistico" :dense="dense"/>
 
-                  <q-list>
-                    <q-item tag="label"  v-model="checkbox" id="checkbox" :true-value="10" :false-value="0" :rules="[v => v != 0 || 'Debes aceptar nuestros términos y condiciones']">
-                      <q-item-section avatar>
-                        <q-radio v-model="color" val="primary" color="primary" />
-                      </q-item-section>
+	                  	<q-select outlined v-model="categoria" id="categoria" :options="options" label="Categoria" hint="Seleciones una Categoría" :dense="dense"/>
 
-                      <q-item-section>
-                        <q-item-label class="text-body2" >Más Información</q-item-label>
-                        <q-item-label caption class="text-caption">Acepto terminos y condiciones </q-item-label>
-                      </q-item-section>
-                    </q-item>
-                  </q-list>
-                </div>
-                 <div class="submitCont sc">
-                    <q-btn :loading="loading[0]" unelevated  color="info" @click="simulateProgress(0); register()" label="Registrar" type="register">
-                      <template v-slot:loading>
-                        <q-spinner-facebook />
-                      </template>
-                    </q-btn>
-                  </div>
-              </div>
+	                  	<q-list>
+	                    	<q-item tag="label"  v-model="checkbox" id="checkbox" :true-value="10" :false-value="0" :rules="[v => v != 0 || 'Debes aceptar nuestros términos y condiciones']">
+	                    		<q-item-section avatar>
+	                    			<q-radio v-model="color" val="primary" color="primary" />
+	                    		</q-item-section>
 
-                
-          </q-form>
-        </q-tab-panel>
-      </q-tab-panels>
-    </q-card>
+	                    		<q-item-section>
+	                    			<q-item-label class="text-body2" >Más Información</q-item-label>
+	                    			<q-item-label caption class="text-caption">Acepto terminos y condiciones </q-item-label>
+	                    		</q-item-section>
+	                    	</q-item>
+	                    </q-list>
+	                </div>
+
+	                <div class="submitCont sc">
+	                	<q-btn :loading="loading[0]" unelevated  color="info" @click="simulateProgress(0); register()" label="Registrar" type="register">
+	                		<template v-slot:loading>
+	                			<q-spinner-facebook />
+	                		</template>
+	                	</q-btn>
+	                </div>
+	            </div>
+	        </q-form>
+	    </q-tab-panel>
+
+	  </q-tab-panels>
+	</q-card>
   </div>
 </template>
 <script>
@@ -200,16 +202,17 @@ export default {
 	}),
 
 	methods: {
-		nothing() {
-			return null;
-		},
-
 		previsualizarImagen(e){
 			const file = e.target.files[0];
       		this.imagePrevUrl = URL.createObjectURL(file);
       		this.seeIcon=false;
       		this.seeImage = true;
 		},
+		
+		nothing() {
+			return null;
+		},
+
 
 		login: function(){
 			// this.$router.push({ path: 'home' })

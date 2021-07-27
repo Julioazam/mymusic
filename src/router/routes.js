@@ -9,9 +9,25 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     name:'Home',
-    children: [
+    children: 
+    [
       { path: '/home', component: () => import('pages/Index.vue')},
-      { path: '/home/Perfil' ,component: () => import('pages/Perfil.vue')}
+
+      // Perfil
+      {
+        path: '/Perfil',
+        component: () => import('pages/Perfil.vue'),
+        name:'Perfil',
+        children:[
+            { path: '/perfil/historys-perfil', component: () => import('pages/Perfil/historys-perfil.vue')},
+            { path: '/perfil/photos-perfil', component: () => import('pages/Perfil/photos-perfil.vue')},
+            { path: '/perfil/movies-perfil', component: () => import('pages/Perfil/movies-perfil.vue')},
+            { path: '/perfil/info-perfil', component: () => import('pages/Perfil/info-perfil.vue')},
+            { path: '/perfil/agenda-perfil', component: () => import('pages/Perfil/agenda-perfil.vue')},
+            { path: '/perfil/friends-perfil', component: () => import('pages/Perfil/friends-perfil.vue')},
+            { path: '/perfil/chat-perfil', component: () => import('pages/Perfil/chat-perfil.vue')}
+        ]
+      }
       
     ]
   },
