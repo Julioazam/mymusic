@@ -134,8 +134,9 @@
           </q-toolbar-title>
         </q-toolbar>
 
+        <!-- Group Public -->
         <q-list padding>
-          <q-item v-for="link in links1" :key="link.text" clickable class="GPL__drawer-item">
+          <q-item v-for="link in links1" :key="link.text" clickable class="GPL__drawer-item" :to="link.path">
             <q-item-section avatar>
               <q-icon :name="link.icon" />
             </q-item-section>
@@ -143,10 +144,11 @@
               <q-item-label>{{ link.text }}</q-item-label>
             </q-item-section>
           </q-item>
+          <!-- Finn Group Public -->
 
           <q-separator class="q-my-md" />
 
-          <q-item v-for="link in links2" :key="link.text" clickable class="GPL__drawer-item">
+          <q-item v-for="link in links2" :key="link.text" clickable class="GPL__drawer-item" >
             <q-item-section avatar>
               <q-icon :name="link.icon" />
             </q-item-section>
@@ -175,32 +177,38 @@
 
       <q-page-sticky v-if="$q.screen.gt.sm" expand position="left">
         <div class="fit q-pt-xl q-px-sm column">
-          <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn">
-            <q-icon size="22px" name="photo" />
-            <div class="GPL__side-btn__label">Videos</div>
-          </q-btn>
 
-          <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn">
-            <q-icon size="22px" name="collections_bookmark" />
-            <div class="GPL__side-btn__label">Albums</div>
-          </q-btn>
-
-          <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn">
+          <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn" to="/home/states">
             <q-icon size="22px" name="assistant" />
-            <div class="GPL__side-btn__label">Assistant</div>
+            <div class="GPL__side-btn__label">Estados</div>
             <q-badge floating color="red" text-color="white" style="top: 8px; right: 16px">
               1
             </q-badge>
           </q-btn>
 
-          <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn">
-            <q-icon size="22px" name="group" />
-            <div class="GPL__side-btn__label">Sharing</div>
+          <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn" to="/home/photos">
+            <q-icon size="22px" name="photo" />
+            <div class="GPL__side-btn__label">Fotos</div>
           </q-btn>
 
-          <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn">
+          <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn" to="/home/videos">
+            <q-icon size="22px" name="collections_bookmark" />
+            <div class="GPL__side-btn__label">Videos</div>
+          </q-btn>
+
+          <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn" to="/home/stories">
             <q-icon size="22px" name="import_contacts" />
-            <div class="GPL__side-btn__label">Photo books</div>
+            <div class="GPL__side-btn__label">Historias</div>
+          </q-btn>
+
+          <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn" to="/home/friends">
+            <q-icon size="22px" name="group" />
+            <div class="GPL__side-btn__label">Amigos</div>
+          </q-btn>
+
+          <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn" to="/home/categories">
+            <q-icon size="22px" name="category" />
+            <div class="GPL__side-btn__label">Categorías</div>
           </q-btn>
         </div>
       </q-page-sticky>
@@ -232,11 +240,12 @@ export default {
       search,
       storage,
       links1: [
-        { icon: 'photo', text: 'Photos' },
-        { icon: 'photo_album', text: 'Albums' },
-        { icon: 'assistant', text: 'Assistant' },
-        { icon: 'people', text: 'Sharing' },
-        { icon: 'book', text: 'Photo books' }
+        { icon: 'assistant', text: 'Estados', path: "/home/states" },
+        { icon: 'photo', text: 'Fotos', path: "/home/photos" },
+        { icon: 'photo_album', text: 'Videos', path: "/home/videos" },
+        { icon: 'import_contacts', text: 'Historias', path: "/home/stories" },
+        { icon: 'people', text: 'Amigos', path: "/home/friends" },
+        { icon: 'category', text: 'Categorias', path: "/home/categories"}
       ],
       links2: [
         { icon: 'archive', text: 'Archive' },

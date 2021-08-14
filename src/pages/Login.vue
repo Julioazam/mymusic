@@ -1,66 +1,79 @@
 <template>
-
   <div class="q-pa-md mobile img-bg" align="center">
-
     <q-card class="my-card" transparent>
-
       <q-card-section>
         <div class="text-h6"> Porque The PARY eres tú</div>
       </q-card-section>
-
       <q-tabs v-model="tab" class="text-teal">
         <q-tab label="Login" name="one" />
         <q-tab label="Registro" name="two" />
       </q-tabs>
-
       <q-separator />
-
       <q-tab-panels v-model="tab" animated>
         <q-tab-panel name="one">The QCard component is a great way to display important pieces of grouped.
-
           <q-card primary flat bordered class="my-card">
             <q-card-section class="bg-primary text-white">
-            	<div class="q-col-gutter-md row items-start">
-			      <div class="col-12" >
-			        <q-img class="img-login" src="https://cdn.quasar.dev/img/parallax2.jpg">
-			        </q-img>
-			      </div>
-			  	</div>
-			  	<BR></BR>
-            	<div class="text-h5">Bienvenido de nuevo</div>
-            	<q-separator color="positive"/>
-            	<BR></BR>
-            	<div class="text-subtitle2">Ingresa tus datos de acceso para iniciar sesión en tu cuenta</div>
-            	
+              <div class="q-col-gutter-md row items-start">
+                <div class="col-12">
+                  <q-img class="img-login" src="https://cdn.quasar.dev/img/parallax2.jpg">
+                  </q-img>
+                </div>
+              </div>
+              <BR></BR>
+              <div class="text-h5">Bienvenido de nuevo</div>
+              <q-separator color="positive" />
+              <BR></BR>
+              <div class="text-subtitle2">Ingresa tus datos de acceso para iniciar sesión en tu cuenta</div>
             </q-card-section>
           </q-card>
-
           <q-card class="my-card">
             <q-section>
-            	<!-- Formulario de login -->
-              <q-form method="get" ref="form" lazy-validation v-on:submit="login" >
-                <!-- v-model="valid"	@submit.prevent="nothing()" -->
+              <!-- Formulario de login -->
+              <q-form method="post" ref="form" lazy-validation id="formLogin">
+                <!-- v-model="valid"	@submit.prevent="nothing()"  -->
                 <div class="q-pa-md">
                   <div class="q-gutter-y-md column" style="max-width: 300px">
+                    <q-input 
+                    	v-model="mail" 
+                    	id="mail"
+                    	name="mail"
+                    	label="Usuario" 
+                    	placeholder="Correo | Usuario" 
+                    	hint="Escriba su usuario correo electronico" 
+                    	required 
+                    	clearable 
+                    	color="primary" 
+                    	rounded 
+                    	:rules="stringRules">
 
-                    <q-input v-model="mail" label="Usuario" placeholder="Correo | Usuario" hint="Escriba su usuario correo electronico" required clearable color="primary" rounded :rules="stringRules">
-                      <template v-slot:prepend>
-                        <q-icon name="person" />
-                      </template>
+                    	<template v-slot:prepend>
+                        	<q-icon name="person" />
+                      	</template>
                     </q-input>
-                    <q-input v-model="passwordl" label="Contraseña" placeholder="Contraseña" hint="Escriba su contraseña" :type="isPwd ? 'password' : 'text'" required clearable color="primary">
-                      <!-- rounded filled -->
-                      <template v-slot:prepend>
-                        <q-icon name="lock" />
-                      </template>
-                      <template v-slot:append>
-                        <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
-                      </template>
+
+                    <q-input 
+	                    v-model="passwordl" 
+	                    id="passwordl"
+	                    name="passwordl"
+	                    label="Contraseña" 
+	                    placeholder="Contraseña" 
+	                    hint="Escriba su contraseña" 
+	                    :type="isPwd ? 'password' : 'text'" 
+	                    required 
+	                    clearable 
+	                    color="primary">
+
+	                    <!-- rounded filled -->
+                     	<template v-slot:prepend>
+                        	<q-icon name="lock" />
+                      	</template>
+                      	<template v-slot:append>
+                        	<q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
+                      	</template>
                     </q-input>
                   </div>
                   <div class="submitCont sc">
-                  	<q-btn :loading="loading[0]" unelevated  color="info" @click="simulateProgress(0)" label="Ingresar" type="submit">
-                    
+                    <q-btn :loading="loading[0]" unelevated color="info" @click="simulateProgress(0),login()" label="Ingresar">
                       <template v-slot:loading>
                         <q-spinner-facebook />
                       </template>
@@ -75,261 +88,380 @@
           </q-card>
         </q-tab-panel>
 
+        <!-- Register -->
         <q-tab-panel name="two">With so much content to display at once, and often so little screen real-estate
+          <q-form 
+          	method="post" 
+          	ref="formR"  
+          	class="col-12" 
+          	@submit="onSubmit"
+          	enctype="multipart/form-data"
+          	id="formRegistro">
 
-        	<q-form  method="get" ref="formR" lazy-validation class="col-12" v-on:register="register">
+            <div class="q-pa-md" style="max-width: 300px;">
+              <div class="q-gutter-y-md column">
 
-            	<!-- v-model="valid"	 -->
-              	<div class="q-pa-md" style="max-width: 300px;">
-                	<div class="q-gutter-y-md column" >
-                		<label class="imageButton">
-                			<q-icon name="person" v-if="seeIcon" class="uploadImageIcon"/>                      
-                			<img class="imagePrevew" v-if="seeImage" :src="imagePrevUrl">
-	                		<q-file  v-model="imagen" id="imagen" :dense="dense" label="Foto de perfil" placeholder="Carga de imagen" hint="Sube tu foto de perfil" accept=".jpg, image/*"  @change="previsualizarImagen($event)">
-					    	</q-file>
-						</label>
+                <label class="imageButton">
+                  <q-icon name="photo" v-if="seeIcon" class="uploadImageIcon" />
+                  <img class="imagePrevew" v-if="seeImage" :src="imagePrevUrl">
+                  <q-file filled v-model="imagen" id="imagen" name="imagen" :dense="dense" label="Foto de perfil" placeholder="Carga de imagen" hint="Sube tu foto de perfil" accept=".jpg, image/*" @change="previsualizarImagen($event)"></q-file>
+                </label>
 
-						<q-input outlined v-model="nombre" id="nombre" :dense="dense" label="Nombre (s)" placeholder="Escribir" hint="Escriba su Nombre (s)"/>
+                <q-input 
+                	filled 
+                	v-model="nombre" 
+                	id="nombre" 
+                	name="nombre"
+                	:dense="dense" 
+                	label="Nombre (s)"
+                	lazy-rules
+                	:rules="[ val => val && val.length > 0 || 'Por favor Escriba su nombre']"/>
 
-	                  	<q-input outlined v-model="apellidos" id="apellidos" label="Apellidos" placeholder="Escribir" hint="Escriba sus Apellidos" :dense="dense"/>
+                <q-input 
+	                filled 
+	                v-model="apellidos" 
+	                id="apellidos" 
+	                name="apellidos"
+	                label="Apellidos" 
+	                :dense="dense" 
+	                lazy-rules
+	                :rules="[ val => val && val.length > 0 || 'Por favor Escriba su apellidos']"/>
 
-	                  	<q-input outlined v-model="email" id="email" label="Email" placeholder="Escribir" hint="Escriba su correo electronico" :dense="dense"/>
+                <q-input 
+                	filled 
+                	v-model="nom_artistico" 
+                	id="nom_artistico" 
+                	name="nom_artistico"
+                	label="Nombre Artistico" 
+                	:dense="dense" 
+                	lazy-rules
+                	:rules="[ val => val && val.length > 0 || 'Por favor Escriba su nombre artistico']"/>
 
-	                  	<q-input outlined v-model="password" id="password" label="Contraseña" placeholder="Escribir" hint="Escriba su contraseña" :type="isPwd ? 'password' : 'text'" required :dense="dense">
-	                    	<template v-slot:append>
-	                    		<q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
-	                    	</template>
-	                  	</q-input>
+                <q-input 
+                	filled 
+                	v-model="email" 
+                	id="email" 
+                	name="email"
+                	label="Email" 
+                	:dense="dense" />
+                
+                <q-input 
+                	filled 
+                	v-model="confirmar" 
+                	id="confirmar" 
+                	name="confirmar"
+                	label="Contraseña" 
+                	placeholder="Escribir" 
+                	:type="isPwd ? 'password' : 'text'" 
+                	required 
+                	:dense="dense" 
+                	hint="Escriba su contraseña">
+                	<template v-slot:append>
+                    	<q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
+                  	</template>
+                </q-input>
 
-	                  	<q-input outlined v-model="nom_artistico" id="nom_artistico" label="Nombre Artistico" placeholder="Escribir" hint="Escriba su Nombre Artistico" :dense="dense"/>
+                <q-input 
+                	filled 
+                	v-model="password" 
+                	id="password" 
+                	name="password"
+                	label="Contraseña" 
+                	placeholder="Escribir" 
+                	:type="isPwd ? 'password' : 'text'" 
+                	required 
+                	:dense="dense" 
+                	hint="Confirme su contraseña">
+                  <template v-slot:append>
+                    <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
+                  </template>
+                </q-input>
 
-	                  	<q-select outlined v-model="categoria" id="categoria" :options="options" label="Categoria" hint="Seleciones una Categoría" :dense="dense"/>
+               
+                <q-input 
+                	filled 
+                	v-model="telefono" 
+                	id="telefono" 
+                	name="telefono"
+                	label="Telefono" 
+                	mask="(###) ### - ####" 
+                	:dense="dense" />
 
-	                  	<q-list>
-	                    	<q-item tag="label"  v-model="checkbox" id="checkbox" :true-value="10" :false-value="0" :rules="[v => v != 0 || 'Debes aceptar nuestros términos y condiciones']">
-	                    		<q-item-section avatar>
-	                    			<q-radio v-model="color" val="primary" color="primary" />
-	                    		</q-item-section>
+                <q-input filled v-model="fechNac" name="fechNac" id="fechNac" mask="date" :rules="['date']" placeholder="Escriba su fecha de nacimiento" hint="" :dense="dense">
+                  <template v-slot:append>
+                    <q-icon name="event" class="cursor-pointer">
+                      <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
+                        <q-date v-model="fechNac">
+                          <div class="row items-center justify-end">
+                            <q-btn v-close-popup label="Close" color="primary" flat />
+                          </div>
+                        </q-date>
+                      </q-popup-proxy>
+                    </q-icon>
+                  </template>
+                </q-input>
 
-	                    		<q-item-section>
-	                    			<q-item-label class="text-body2" >Más Información</q-item-label>
-	                    			<q-item-label caption class="text-caption">Acepto terminos y condiciones </q-item-label>
-	                    		</q-item-section>
-	                    	</q-item>
-	                    </q-list>
-	                </div>
+                <!-- v-model="valid"   -->
+                <q-toggle v-model="accept" label="Acepto Terminos y Condiciones" checked-icon="check" color="green" unchecked-icon="clear" />
+              </div>
+            </div>
+            <div>
+              <!-- <q-btn label="Guardar Cambios" type="submit" color="info" /> -->
+              <q-btn 
+              unelevated 
+              color="info" 
+              @click="register()" 
+              label="Registrar" 
+              type="submit">
 
-	                <div class="submitCont sc">
-	                	<q-btn :loading="loading[0]" unelevated  color="info" @click="simulateProgress(0); register()" label="Registrar" type="register">
-	                		<template v-slot:loading>
-	                			<q-spinner-facebook />
-	                		</template>
-	                	</q-btn>
-	                </div>
-	            </div>
-	        </q-form>
-	    </q-tab-panel>
-
-	  </q-tab-panels>
-	</q-card>
+                <template v-slot:loading>
+                  <q-spinner-facebook />
+                </template>
+              </q-btn>
+            </div>
+          </q-form>
+        </q-tab-panel>
+      </q-tab-panels>
+    </q-card>
   </div>
 </template>
 <script>
 import router from '../router/routes.js'
 import { ref } from 'vue'
 import axios from 'axios'
+import { useQuasar } from 'quasar'
 export default {
 
-	setup() {
-		const loading = ref([ false	])
+  setup() {
+    // Switch
+    const $q = useQuasar()
+    const nombre = ref(null)
 
-		const progress = ref(false)
+    const accept = ref(false)
 
-		function simulateProgress (number) {
-			// we set loading state
-	    	loading.value[ number ] = true
+    // Boutton
+    const loading = ref([false])
+    const progress = ref(false)
 
-	    	// simulate a delay
-	    	setTimeout(() => {
-	    		// we're done, we reset loading state
-	      		loading.value[ number ] = false
-	      	}, 300)
-	    }
+    function simulateProgress(number) {
+      // we set loading state
+      loading.value[number] = true
 
-	    return {
-	    	// Contaseña
-	    	isPwd: ref(true),
-	    	dense: ref(true),
-	    	color: ref('cyan'),
+      // simulate a delay
+      setTimeout(() => {
+        // we're done, we reset loading state
+        loading.value[number] = false
+      }, 300)
+    }
 
-	    	// Botones de login
-		    loading,
-		    progress,
-		    simulateProgress,
-	      	
-		    // Cards
-		    tab: ref('one'),
+    return {
+      // Contaseña
+      isPwd: ref(true),
+      dense: ref(true),
+      color: ref('cyan'),
 
-	     	// select
-	     	categoria: ref(null),
-	     	imagen: ref(null)
-	     }
-	},
+      // Validar
+      nombre,
+      accept,
 
-	data: () => ({
-		//URL PREVEW 1
-		imagePrevUrl:null,
-		seeIcon:true,
-		seeImage:false,
+      // Botones de login
+      loading,
+      progress,
+      simulateProgress,
 
-		//VALIDATIONS
-	    valid: true,
-	    stringRules: [v => !!v || '', ],
+      // Cards
+      tab: ref('one'),
 
-    	options: ['Comedia', 'Decoraciones', 'Musical', 'Servicios', 'Otro'],
+      // select
+      date:ref(''),
+      
+      imagen: ref(null),
 
-	    mail: null,
-	    passwordl: null,
+      onSubmit() {
+        if (accept.value !== true) {
+        	register();
+          $q.notify({
+            color: 'red-5',
+            textColor: 'white',
+            icon: 'warning',
+            message: 'Debe aceptar Terminos y Condiciones'
+          })
+        } else {
+          $q.notify({
+            color: 'green-4',
+            textColor: 'white',
+            icon: 'cloud_done',
+            message: 'Se guardaron los cambios'
+          })
+        }
+      }
+    }
+  },
 
-	    imagen: null,
-	    nombre: null,
-	    apellidos: null,
-	    email: null,
-	    password: null,
-	    categoria: null,
-	    nom_artistico:null,
-	    checkbox: 0
-	}),
+  data: () => ({
+    //URL PREVEW 1
+    imagePrevUrl: null,
+    seeIcon: true,
+    seeImage: false,
 
-	methods: {
-		previsualizarImagen(e){
-			const file = e.target.files[0];
-      		this.imagePrevUrl = URL.createObjectURL(file);
-      		this.seeIcon=false;
-      		this.seeImage = true;
-		},
-		
-		nothing() {
-			return null;
-		},
+    //VALIDATIONS
+    valid: true,
+    stringRules: [v => !!v || '', ],
+
+    mail: null,
+    passwordl: null,
+
+    nombre: null,
+    apellidos: null,
+    nom_artistico: null,
+    email: null,
+    password: null,
+    confirmar: null,
+    imagen: null,
+    telefono: null,
+    fechNac:null,
+
+    respuesta:null,
+    res:null
+  }),
+
+  methods: {
+    previsualizarImagen(e) {
+      const file = e.target.files[0];
+      this.imagePrevUrl = URL.createObjectURL(file);
+      this.seeIcon = false;
+      this.seeImage = true;
+    },
+
+    nothing() {
+      return null;
+    },
 
 
-		login: function(){
-			// this.$router.push({ path: 'home' })
-		
-		  	//this.$refs.form.validate()
-		  	//GUARDAR DATOS
-			const mail = this.mail;
-			const passwordl = this.passwordl;
+    login: function() {
+      //GUARDAR DATOS
+      const mail = this.mail;
+      const passwordl = this.passwordl;
 
-			//CREAR PAQUETE
-			const packagePost = { 
-				'mail':mail,
-	          	'passwordl':passwordl
-	        };
+      // CREAR PAQUETE
+      // const packagePost = {
+      //  	'mail': mail,
+      //  	'passwordl': passwordl
+      // };
 
-	        //ENVIAR PACKETE POR POST
-	       
-			$.ajax({
-				data:  packagePost, 
-	          	url:   ''+serverName+''+'/ajax/usuario.php?op=verificar', 
-	          	type:  'post',
 
-	          	success:  function (res) {
-	          		alert(res);
-	          		router.push({ path: 'home' });
-	          		// if(res=="Error mail"){
-	          		// 	alert(res);
-	          		// }else{
-	          		// 	alert(res);
-	          			
-	          		// 	// console.log('Success')
-	          		// 	// router.push({ name: '/home', params: { id: '1' } }) godornizazam@outlook.com
-	          		// 	// localStorage.setItem('token',  res );
-	          		// 	// alert(res);
-	          		// 	// router.push({ path: '/home/perfil' });
-	          		// 	// router.push({ path: '/home'});
-          			// 	router.push({ path: '/home'
-          			// 		//name: 'Providers orders',
-             //  				// params:{ id: 1 }
-             //  			});
-          			// }
-          		}
-        	});
-    	},
+ 		  const packagePost = new FormData();
+		  packagePost.append('mail',mail);
+      packagePost.append('passwordl',passwordl);
 
-	    register: function(){
-	    	// this.$refs.formR.validate()
-	    	
-	    		//GUARDAR DATOS
-	    		const nombre = this.nombre;
-	    		const apellidos = this.apellidos;
-	    		const email = this.email;
-	    		const password = this.password;
-	    		const nom_artistico = this.nom_artistico;
-	    		const categoria = this.categoria;
+      axios.post('' + serverName + '' + '/ajax/usuario.php?op=verificar',packagePost)
+      .then(res => {
+        	this.respuesta=res.data
+        	if(this.respuesta == 'Error mail'){
+            alert(this.respuesta);
+          }else{
+            localStorage.setItem('token', this.respuesta);
+            this.$router.push({ path: '/home' })
+          }
+      })     
+    },
 
-	    		//CREAR PAQUETE
-	    		const packagePost = {
-	    			'nombre':nombre,
-	    			'apellidos':apellidos,
-	    			'email':email,
-	    			'password':password,
-	    			'nom_artistico':nom_artistico,
-	    			// 'categoria':categoria
-	    		};
+    register: function() {
+      if (this.confirmar == this.password) {
+      	//GUARDAR DATOS
+	    const nombre = this.nombre;
+	    const apellidos = this.apellidos;
+	    const nom_artistico = this.nom_artistico;
+	    const email = this.email;
+	    const password = this.password;
+	    const imagen = this.imagen;
+	    const telefono = this.telefono;
+	    const fechNac = this.fechNac;
+	    
+        //CREAR PAQUETE
+        
+        const packagePost = new FormData();
+        packagePost.append('nombre',nombre);
+        packagePost.append('apellidos',apellidos);
+        packagePost.append('nom_artistico',nom_artistico);
+        packagePost.append('email',email);
+        packagePost.append('password',password);
+        packagePost.append('imagen',imagen);
+        packagePost.append('telefono',telefono);
+        packagePost.append('fechNac',fechNac);
 
-	    		
-	    		//ENVIAR PACKETE POR POST
-	    		$.ajax({
-	    			data:  packagePost,
-	    			url:   ''+serverName+''+'/ajax/usuario.php?op=guardaryeditar', 
-	    			type:  'post',
+        axios.post('' + serverName + '' + '/ajax/usuario.php?op=guardaryeditar',packagePost)
+        .then(res => {
+        	this.respuesta=res.data
+        	this.direccionamiento()
+        })
+	      //ENVIAR PACKETE POR POST
+	    // $.ajax({
+	    //     data: packagePost,
+	    //     url: '' + serverName + '' + '/ajax/usuario.php?op=guardaryeditar',
+	    //     type: 'post',
+	    //     contentType: false,
+	    //      processData: false,
 
-	    			success:  function (res) {
-	    				
-	    				if( res == 'Error mail'){
-	    				
-	    					alert('Correo ya registrado')
-	    					console.log('Correo ya existe')
-	    				
-	    				}else if( res == 'Err inputs'){
-	    				
-	    					alert('Verifica tu información')
-	    					console.log('verificar registro')	    				
+	    //     success: function(res) {
+	    //     	if (res == 'Error mail') {
+	    //     		alert(res);
+	    //         	console.log('Correo ya existe');
 
-	    				}
-	    				//GUARDAR TOKEN
-	    				else{
-	    					localStorage.setItem('token',  res );
-	    					router.push({ path: '/home'});
-	    					console.log('Registrado')
-	    				}
-	    			}
-	    		});
-	    	
-	    }
-	}
+	    //       	} else if (res == 'Err inputs') {
+	    //       		alert(res);
+	    //         	console.log('verificar registro');
+
+	    //       	}
+	    //       	//GUARDAR TOKEN
+	    //       	else {
+	    //       		alert(res);
+	    //         	// localStorage.setItem('token', res);
+	    //         	// router.push( '/home' );
+	    //         	// router.push({ path: '/home' });
+	    //         	this.direccionamiento();
+	            	
+	    //       	}
+	    //     }
+	    // });
+
+      }else{
+      	alert('Su contraseña no coincide');
+      }
+    },
+
+    direccionamiento(){
+    	if(this.respuesta == 'Usuario registrado'){
+    		
+    		this.$router.push({ path: '/home' })
+    	}else{
+    		alert('No se registro el usuario');
+    	}
+    }
+  }
 }
 
 </script>
 <style>
-.img-bg{
-	background-image: url("../../public/2.jpg");
-  	background-position: center; /* Center the image */
-  	background-repeat: no-repeat; /* Do not repeat the image */
-  	background-size: cover; 
-  	background-attachment:fixed;
+.img-bg {
+  background-image: url("../../public/2.jpg");
+  background-position: center;
+  /* Center the image */
+  background-repeat: no-repeat;
+  /* Do not repeat the image */
+  background-size: cover;
+  background-attachment: fixed;
 }
+
 .my-card {
   width: 100%;
   max-width: 600px;
 }
 
-.img-login{
-	border-radius:50%;
-	width: 200px;
-	height:150px;
+.img-login {
+  border-radius: 50%;
+  width: 200px;
+  height: 150px;
 }
 
 .submitCont {
@@ -341,26 +473,26 @@ export default {
 
 
 
-.imageButton{
-	width: 100%; height: 85%;
-	background: white;
-	border-radius: 5px;
-	cursor: pointer;
-	overflow: hidden;
+.imageButton {
+  width: 100%;
+  height: 85%;
+  background: white;
+  border-radius: 5px;
+  cursor: pointer;
+  overflow: hidden;
 }
 
-.uploadImageIcon{
-	color: black !important;
-	font-size: 35px !important;
+.uploadImageIcon {
+  color: black !important;
+  font-size: 35px !important;
 }
 
-.imagePrevew{
-	height: 100%;
-	width: 56%;
-	border-radius:50%;
+.imagePrevew {
+  height: 100%;
+  width: 56%;
+  border-radius: 50%;
 }
-			
-		/*SUBIR IMAGEN*/
 
+/*SUBIR IMAGEN*/
 
 </style>

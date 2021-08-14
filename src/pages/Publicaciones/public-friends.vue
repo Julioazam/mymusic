@@ -36,36 +36,16 @@
 	    	</q-card-actions>
 	    </q-card>  
 
-	    <!-- Tarjeta Estado -->
-	    <q-card class="my-card" flat bordered>
-	    	<!-- Cabecera -->
-	    	<q-item>
-
-	    		<q-item-section avatar>
-	    			<q-avatar>
-	    				<img src="https://cdn.quasar.dev/img/boy-avatar.png" alt="">
-	    			</q-avatar>
-	    		</q-item-section>
-
-	    		<q-item-section>
-	    			<q-item-label class="text-h6 q-mb-xs absolute q-pa-xs"> {{user}} </q-item-label>
-	    			<q-item-label caption class="text-subtitle2 text-right q-pa-md text-dark col-4"> {{category}}</q-item-label>
-	    			<q-item-label caption class="text-right"> (241) 137-2093 </q-item-label>
-	    		</q-item-section>	    	
-	    	</q-item>
-
-	    	<q-card-section horizontal>
-	    		<q-card-section class="q-pt-xs">
-	    			<div class="text-overline">Overline</div>
-	    			<div class="text-h5 q-mt-sm q-mb-xs">Title</div>
-	    			<div class="text-caption text-grey"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-	    		</q-card-section>
-
-	    		<q-card-section class="col-5 flex flex-center">
-	    			<q-img class="rounded-borders" src="https://cdn.quasar.dev/img/parallax2.jpg"/>
-	    		</q-card-section>
+	    <!-- Tarjeta Video -->
+	    <q-card class="my-card">
+	    	<q-card-section class="q-pt-none">
+	    		<div class="text-h6 q-mb-xs absolute q-pa-xs">{{ user }}</div> 
+	    		<div class="text-subtitle2 text-right q-pa-md text-dark">{{category}}</div>
+	    		{{ lorem }}
 	    	</q-card-section>
 
+	    	<!-- <q-video src="https://www.youtube.com/embed/k3_tw44QsZQ?rel=0" /> -->
+	    	<q-img src="https://cdn.quasar.dev/img/chicken-salad.jpg" />
 	    	<q-card-actions align="center"> 
 
 	    		<!-- Evaluación -->
@@ -88,7 +68,7 @@
 	    			<!-- Location -->
 	    		<q-btn fab color="primary" icon="place" class="ubication"/>
 	    	</q-card-actions>
-	    </q-card>     	   
+	    </q-card>    
 
 	    <!-- Tarjeta Video -->
 	    <q-card class="my-card">
@@ -122,38 +102,18 @@
 	    			<!-- Location -->
 	    		<q-btn fab color="primary" icon="place" class="ubication"/>
 	    	</q-card-actions>
-	    </q-card>   
+	    </q-card>   	   
 
-	    <!-- Tarjeta Estado -->
-	    <q-card class="my-card" flat bordered>
-	    	<!-- Cabecera -->
-	    	<q-item>
-
-	    		<q-item-section avatar>
-	    			<q-avatar>
-	    				<img src="https://cdn.quasar.dev/img/boy-avatar.png" alt="">
-	    			</q-avatar>
-	    		</q-item-section>
-
-	    		<q-item-section>
-	    			<q-item-label class="text-h6 q-mb-xs absolute q-pa-xs"> {{user}} </q-item-label>
-	    			<q-item-label caption class="text-subtitle2 text-right q-pa-md text-dark col-4"> {{category}}</q-item-label>
-	    			<q-item-label caption class="text-right"> (241) 137-2093 </q-item-label>
-	    		</q-item-section>	    	
-	    	</q-item>
-
-	    	<q-card-section horizontal>
-	    		<q-card-section class="q-pt-xs">
-	    			<div class="text-overline">Overline</div>
-	    			<div class="text-h5 q-mt-sm q-mb-xs">Title</div>
-	    			<div class="text-caption text-grey"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-	    		</q-card-section>
-
-	    		<q-card-section class="col-5 flex flex-center">
-	    			<q-img class="rounded-borders" src="https://cdn.quasar.dev/img/parallax2.jpg"/>
-	    		</q-card-section>
+	    <!-- Tarjeta Video -->
+	    <q-card class="my-card">
+	    	<q-card-section class="q-pt-none">
+	    		<div class="text-h6 q-mb-xs absolute q-pa-xs">{{ user }}</div> 
+	    		<div class="text-subtitle2 text-right q-pa-md text-dark">{{category}}</div>
+	    		{{ lorem }}
 	    	</q-card-section>
 
+	    	<q-video src="https://www.youtube.com/embed/k3_tw44QsZQ?rel=0" />
+	    	<q-img src="https://cdn.quasar.dev/img/chicken-salad.jpg" />
 	    	<q-card-actions align="center"> 
 
 	    		<!-- Evaluación -->
@@ -176,7 +136,7 @@
 	    			<!-- Location -->
 	    		<q-btn fab color="primary" icon="place" class="ubication"/>
 	    	</q-card-actions>
-	    </q-card> 
+	    </q-card>   
 	   
   	</div>
 </template>

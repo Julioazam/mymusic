@@ -71,7 +71,7 @@
             <router-link class="text-primary" style="text-decoration: none; font-weight:600;" active-color="dark" indicator-color="primary" align="justify" to="/perfil/info-perfil">
               <q-item clickable v-ripple>
                 <q-item-section avatar>
-                  <q-icon name="inbox" />
+                  <q-icon name="person" />
                 </q-item-section>
 
                 <q-item-section>
@@ -99,7 +99,7 @@
 
               <q-item clickable v-ripple>
                 <q-item-section avatar>
-                  <q-icon name="person" />
+                  <q-icon name="group" />
                 </q-item-section>
 
                 

@@ -8,12 +8,12 @@
       <q-step :name="1" title="Información de contacto" icon="settings" caption="Optional" :done="step > 1">
         ¿Desea modificar sus datos de contacto?
 
-        <q-form method="get" ref="formR" lazy-validation class="col-12" v-on:register="register" @submit="onSubmit" @reset="onReset">
+        <q-form method="get" ref="formR" lazy-validation class="col-12" v-on:register="register" @submit="onSubmit" >
           <!-- v-model="valid"   -->
           <q-toggle v-model="accept" label="Acepto modificar cambios" checked-icon="check" color="green" unchecked-icon="clear" />
           <div class="q-pa-md" style="max-width: 300px;">
             <div class="q-gutter-y-md column">
-              <q-file filled v-model="img" label="Foto de perfil" :dense="dense" accept=".jpg, image/*">
+              <q-file filled v-model="img" label="Foto de perfil" :dense="dense" >
                 <template v-slot:prepend>
                   <q-icon name="photo" />
                 </template>
@@ -42,7 +42,6 @@
                   </q-icon>
                 </template>
               </q-input>
-              <!-- <q-select filled v-model="categoria" id="categoria" :options="options" label="Categoria" hint="Seleciones una Categoría" :dense="dense" /> -->
             </div>
           </div>
           <div>
@@ -77,7 +76,7 @@
             </div>
           </div>
           <div>
-            <q-btn label="Guardar Cambios" type="submit" color="info" />
+            <q-btn label="Guardar Cambios" color="info" />
           </div>
         </q-form>
 
@@ -140,22 +139,7 @@
       </q-step>
     </q-stepper>
   </div>
-  <!-- 
-  <div class="q-pa-md justify-center" style="max-width: 400px">
-    <q-form @submit="onSubmit" @reset="onReset" class="q-gutter-md">
-      <q-input filled v-model="name" label="Tu nombre *" lazy-rules :rules="[ val => val && val.length > 0 || 'Por favor escrifghba algo ']" />
-      <q-input filled v-model="password" label="Tu contraseña*" hint="Confirme su contraseña" lazy-rules :rules="[ val => val && val.length > 0 || 'Confirme su contraseña ']" />
-      <q-input filled type="number" v-model="age" label="Your age *" lazy-rules :rules="[
-          val => val !== null && val !== '' || 'Please type your age',
-          val => val > 0 && val < 100 || 'Please type a real age'
-        ]" />
-      <q-toggle v-model="accept" label="Acepto los terminos y condiciones" checked-icon="check" color="green" unchecked-icon="clear" />
-      <div>
-        <q-btn label="Submit" type="submit" color="primary" />
-        <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
-      </div>
-    </q-form> 
-  </div>-->
+
 </template>
 <script>
 import { useQuasar } from 'quasar'
