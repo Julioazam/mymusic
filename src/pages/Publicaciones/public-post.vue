@@ -337,9 +337,6 @@ export default {
     // left:20%
   }
 
-  .center-card {
-    // padding-left: 2%;
-  }
 }
 
 @media only screen and (max-width: 620px) and (min-width: 250px) {
