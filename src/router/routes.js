@@ -4,10 +4,17 @@ import Vue from 'vue'
 // Vue.use(VueRouter);
 
 const routes = [
+  
+  // Login
+  {
+     path: '/',
+     name:'Login',
+      component: () => import('pages/Login.vue'),
+  },
 
   // Ruta Inicio con hijos
   {
-    path: '/',
+    path: '/home',
     component: () => import('layouts/MainLayout.vue'),
     name:'Home',
     children: 
@@ -17,6 +24,13 @@ const routes = [
         path: '/home', 
         component: () => import('pages/Index.vue'),
         name:'Index' 
+      },
+
+      // Home - States
+      { 
+        path: '/home/post', 
+        component: () => import('pages/Publicaciones/public-post.vue'),
+        name: 'Post'
       },
 
       // Home - States
@@ -80,12 +94,6 @@ const routes = [
       }
       
     ]
-  },
-
-  {
-     path: '/Login',
-     name:'Login',
-    component: () => import('pages/Login.vue'),
   },
 
   // Always leave this as last one,

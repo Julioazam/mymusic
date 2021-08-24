@@ -39,14 +39,14 @@
                     	name="mail"
                     	label="Usuario" 
                     	placeholder="Correo | Usuario" 
-                    	hint="Escriba su usuario correo electronico" 
+                    	hint="Escriba su usuario o correo electronico" 
                     	required 
                     	clearable 
                     	color="primary" 
                     	rounded 
                     	:rules="stringRules">
 
-                    	<template v-slot:prepend>
+                    	  <template v-slot:prepend>
                         	<q-icon name="person" />
                       	</template>
                     </q-input>
@@ -343,13 +343,6 @@ export default {
       const mail = this.mail;
       const passwordl = this.passwordl;
 
-      // CREAR PAQUETE
-      // const packagePost = {
-      //  	'mail': mail,
-      //  	'passwordl': passwordl
-      // };
-
-
  		  const packagePost = new FormData();
 		  packagePost.append('mail',mail);
       packagePost.append('passwordl',passwordl);
@@ -358,10 +351,29 @@ export default {
       .then(res => {
         	this.respuesta=res.data
         	if(this.respuesta == 'Error mail'){
-            alert(this.respuesta);
+            // alert(this.respuesta);
+            this.$q.notify({
+              message: 'Correo o contraseña incorrectos',
+              color: 'warning',
+              textColor: 'positive',
+              icon: 'fa fa-exclamation-circle'
+
+            })
           }else{
-            localStorage.setItem('token', this.respuesta);
-            this.$router.push({ path: '/home' })
+            if(this.mail && this.passwordl){
+              localStorage.setItem('token', this.respuesta);
+              this.$router.push({ path: '/home' })
+
+            }else{
+              this.$q.notify({
+                message: 'Ingrese su correo y contraseña',
+                color: 'warning',
+                textColor: 'positive',
+                icon: 'fa fa-exclamation-circle'
+              })
+
+            }
+            
           }
       })     
     },

@@ -8,9 +8,11 @@
 	    	<q-item>
 
 	    		<q-item-section avatar>
-	    			<q-avatar>
-	    				<img src="https://cdn.quasar.dev/img/boy-avatar.png" alt="">
-	    			</q-avatar>
+	    			<q-btn round to="/perfil/photos-perfil">
+	        			<q-avatar size="42px">
+	        				<img src="https://cdn.quasar.dev/img/avatar2.jpg">
+			            </q-avatar>
+			        </q-btn>
 	    		</q-item-section>
 
 	    		<q-item-section>

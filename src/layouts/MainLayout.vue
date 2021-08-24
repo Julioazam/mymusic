@@ -36,7 +36,7 @@
           </q-menu>
         </q-btn>
 
-        <q-btn v-if="$q.screen.gt.xs" flat dense no-wrap color="positive" icon="cloud_upload" no-caps label="Subir" class="q-ml-sm q-px-md" />
+        <q-btn v-if="$q.screen.gt.xs" flat dense no-wrap color="positive" icon="cloud_upload" no-caps label="Subir" class="q-ml-sm q-px-md" to="/home/post"/>
 
         <q-space />
 
@@ -74,7 +74,7 @@
         <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
           <q-list padding>
 
-            <q-item clickable v-ripple to="/login">
+            <q-item clickable v-ripple to="/">
               <q-item-section avatar>
                 <q-icon name="inbox" />
               </q-item-section>
@@ -221,6 +221,7 @@ import { ref } from 'vue'
 export default {
   name: 'GooglePhotosLayout',
   setup () {
+
     const leftDrawerOpen = ref(false)
     const rightDrawerOpen = ref(false)
     const drawerRight = ref(false)
