@@ -19,10 +19,10 @@
                   </q-img>
                 </div>
               </div>
-              <BR></BR>
+              <BR/>
               <div class="text-h5">Bienvenido de nuevo</div>
               <q-separator color="positive" />
-              <BR></BR>
+              <BR/>
               <div class="text-subtitle2">Ingresa tus datos de acceso para iniciar sesión en tu cuenta</div>
             </q-card-section>
           </q-card>

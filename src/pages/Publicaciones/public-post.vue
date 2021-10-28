@@ -24,14 +24,35 @@
                     <q-tooltip class="bg-white text-primary">Close</q-tooltip>
                   </q-btn>
                 </q-bar>
-                <form autocorrect="off" autocapitalize="off" autocomplete="off" spellcheck="false">
+                <form 
+                  autocorrect="off" 
+                  autocapitalize="off" 
+                  autocomplete="off" 
+                  spellcheck="false"
+                  method="post"
+                  ref="form"
+                  id="frmPost"
+                >
                  
-                  <q-editor v-model="editor" min-height="5rem" placeholder="Publica un estado" toolbar-text-color="white" toolbar-bg="secondary" toolbar-toggle-color="info" align="center" flat content-class="bg-blue-grey-1" :toolbar="[
+                  <q-editor
+                    id="editor"
+                    name="editor"
+                    v-model="editor" 
+                    min-height="5rem" 
+                    placeholder="Publica un estado o frase"
+                    required
+                    toolbar-text-color="white" 
+                    toolbar-bg="info" 
+                    toolbar-toggle-color="secondary" 
+                    align="center" 
+                    flat 
+                    content-class="bg-blue-grey-1" 
+                    :toolbar="[
                         [ 'left', 'center'],
-                      [ 'right', 'justify'],
-                      ['bold', 'italic', 'quote'],
-                      [
-                        {
+                        [ 'right', 'justify'],
+                        ['bold', 'italic', 'quote'],
+                        [
+                          {
                             label: 'Tamaño',
                             icon: $q.iconSet.editor.formatting,
                             fixedLabel: true,
@@ -39,8 +60,8 @@
                             list: 'no-icons',
                             options: [ 'size-2', 'size-3', 'size-4', 'size-5' ]
                           }                 
-                      ],
-                      [
+                        ],
+                        [
                           {
                             label: 'Fotmato',
                             icon: $q.iconSet.editor.font,
@@ -48,12 +69,13 @@
                             list: 'no-icons',
                             options: [ 'default_font', 'arial', 'arial_black', 'comic_sans', 'courier_new', 'impact', 'lucida_grande', 'times_new_roman', 'verdana' ]
                           }
-                          ],
-                          [ 'hr', 'link', 'removeFormat'],
-                      ['undo'],
-                      [ 'redo']
-                  ]" :fonts="{
-                    arial: 'Arial',
+                        ],
+                        [ 'hr', 'link', 'removeFormat'],
+                        ['undo'],
+                        [ 'redo']
+                    ]" 
+                    :fonts="{
+                      arial: 'Arial',
                       arial_black: 'Arial Black',
                       comic_sans: 'Comic Sans MS',
                       courier_new: 'Courier New',
@@ -61,7 +83,8 @@
                       lucida_grande: 'Lucida Grande',
                       times_new_roman: 'Times New Roman',
                       verdana: 'Verdana'
-                  }" />
+                    }" 
+                  />
                 </form>
 
                 <q-separator />
@@ -96,7 +119,13 @@
                                 <q-img class="imagePrevew" v-if="seeImage" :src="imagePrevUrl">
                                 </q-img>
                                 <!--INPUT HIDE-->
-                                <input id="imageFile" @change="previsualizarImagen($event)" style="display: none;" type="file" name="image">
+                                <input
+                                  id="imgPost" 
+                                  name="imgPost"
+                                  @change="previsualizarImagen($event)" 
+                                  style="display: none;" 
+                                  type="file" 
+                                />
                                 <!--INPUT ICON-->
                                 <q-icon v-if="seeIcon" class="uploadImageIcon" name="add_a_photo" />
                             </label>
@@ -111,35 +140,21 @@
                 <q-separator/>
 
                 <q-card-actions align="center">
-                  <!-- Evaluación -->
-                  <div class="row no-wrap items-center" align="left">
-                    <q-rating size="18px" v-model="stars" :max="5" color="info" />
-                    <span class="text-caption text-grey q-ml-sm">4.2 (551)</span>
-                  </div>
-                  <q-btn flat round color="red" icon="favorite" />
-                  <q-btn flat round color="teal" icon="bookmark" />
-                  <q-btn flat round color="primary" icon="share" />
-                  <div class="q-pa-md q-gutter-sm">
-                    <q-btn color="dark" push size="xs">
-                      <q-icon left size="3em" name="send" />
+                  
+                  <div class="q-pa-md q-gutter-sm" align="left">
+                    
+                    <q-btn color="dark" push size="md" @click="Post()">
+                      <q-icon left size="2em" name="send" />
                       <div>Publicar</div>
                     </q-btn>
-                    <q-btn color="dark" push size="xs">
+                    <!-- <q-btn color="dark" push size="xs">
                       <q-icon left size="3em" name="send" />
                       <div>Live</div>
-                    </q-btn>
+                    </q-btn> -->
                     
                   </div>
                 </q-card-actions>
                 <!-- Fin Botones -->
-              </q-card>
-              <!-- Fin 1er post -->
-
-
-              <!-- segundo Post -->
-              <!-- Tarjeta Estado -->
-              <q-card class="my-card" flat bordered>
-                <!-- Cabecera -->
               </q-card>
             </q-dialog>
             <!-- Fin postear -->
@@ -212,7 +227,7 @@
 </template>
 <script>
 import { ref } from 'vue'
-
+import { axios } from 'axios'
 export default {
   setup() {
     // Agenda
@@ -223,7 +238,16 @@ export default {
       // Post
       editor: ref(''),
       bar2: ref(false),
+      //Agenda
+      dialog,
+      position,
+      open(post){
+        position.value = pos
+        dialog.values = true
+      },
 
+      days: ref()['2019/02/01'],
+      stars: ref('4'),
       // Fin Agenda
       lorem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
       user: 'Julio Armando',
@@ -238,15 +262,41 @@ export default {
     seeIcon: true,
     seeImage: false,
 
+    // Post
+    editor: null,
+    imgPost: null,
+    
+    respuesta:null
+
   }),
 
   methods:{
     previsualizarImagen(e) {
-            const file = e.target.files[0];
-            this.imagePrevUrl = URL.createObjectURL(file);
-            this.seeIcon = false;
-            this.seeImage = true;
-        }
+      const file = e.target.files[0];
+      this.imagePrevUrl = URL.createObjectURL(file);
+      this.seeIcon = false;
+      this.seeImage = true;
+    },
+
+    Post: function(){
+      //Guardar datos
+      const editor = this.editor;
+      const imgPost = this.imgPost;
+
+      //Crear Paquete 
+      const packagePost =new FormData();
+      packagePost.append('editor', editor);
+      packagePost.append('imgPost', imgPost);
+
+      axios.post('' + serverName + '' +'/ajax/publicacioines.php?op=postPublic', packagePost)
+      .then(res =>{
+        alert(res);
+        this.respuesta=res.data
+        this.$router.push({ path: '/home/states' })
+      })
+
+
+    }
 
   }
 }
