@@ -207,7 +207,7 @@
             </div>
             <div>
               <!-- <q-btn label="Guardar Cambios" type="submit" color="info" /> -->
-              <q-btn 
+            <q-btn 
               unelevated 
               color="info" 
               @click="register()" 
@@ -350,10 +350,11 @@ export default {
       axios.post('' + serverName + '' + '/ajax/usuario.php?op=verificar',packagePost)
       .then(res => {
         	this.respuesta=res.data
-        	if(this.respuesta == 'Error mail'){
+          // alert(this.respuesta);
+        	if(this.respuesta == 'Correo no encontrado'){
             // alert(this.respuesta);
             this.$q.notify({
-              message: 'Correo o contraseña incorrectos',
+              message:  '1 vue:' + this.respuesta,
               color: 'warning',
               textColor: 'positive',
               icon: 'fa fa-exclamation-circle'
@@ -361,12 +362,13 @@ export default {
             })
           }else{
             if(this.mail && this.passwordl){
+              alert(this.respuesta);
               localStorage.setItem('token', this.respuesta);
-              this.$router.push({ path: '/home' })
+              // this.$router.push({ path: '/home' })
 
             }else{
               this.$q.notify({
-                message: 'Ingrese su correo y contraseña',
+                message: '2 vue:' + this.respuesta,
                 color: 'warning',
                 textColor: 'positive',
                 icon: 'fa fa-exclamation-circle'
@@ -381,61 +383,61 @@ export default {
     register: function() {
       if (this.confirmar == this.password) {
       	//GUARDAR DATOS
-	    const nombre = this.nombre;
-	    const apellidos = this.apellidos;
-	    const nom_artistico = this.nom_artistico;
-	    const email = this.email;
-	    const password = this.password;
-	    const imagen = this.imagen;
-	    const telefono = this.telefono;
-	    const fechNac = this.fechNac;
-	    
-        //CREAR PAQUETE
+        const nombre = this.nombre;
+        const apellidos = this.apellidos;
+        const nom_artistico = this.nom_artistico;
+        const email = this.email;
+        const password = this.password;
+        const imagen = this.imagen;
+        const telefono = this.telefono;
+        const fechNac = this.fechNac;
         
-        const packagePost = new FormData();
-        packagePost.append('nombre',nombre);
-        packagePost.append('apellidos',apellidos);
-        packagePost.append('nom_artistico',nom_artistico);
-        packagePost.append('email',email);
-        packagePost.append('password',password);
-        packagePost.append('imagen',imagen);
-        packagePost.append('telefono',telefono);
-        packagePost.append('fechNac',fechNac);
+          //CREAR PAQUETE
+          
+          const packagePost = new FormData();
+          packagePost.append('nombre',nombre);
+          packagePost.append('apellidos',apellidos);
+          packagePost.append('nom_artistico',nom_artistico);
+          packagePost.append('email',email);
+          packagePost.append('password',password);
+          packagePost.append('imagen',imagen);
+          packagePost.append('telefono',telefono);
+          packagePost.append('fechNac',fechNac);
 
-        axios.post('' + serverName + '' + '/ajax/usuario.php?op=guardaryeditar',packagePost)
-        .then(res => {
-        	this.respuesta=res.data
-        	this.direccionamiento()
-        })
-	      //ENVIAR PACKETE POR POST
-	    // $.ajax({
-	    //     data: packagePost,
-	    //     url: '' + serverName + '' + '/ajax/usuario.php?op=guardaryeditar',
-	    //     type: 'post',
-	    //     contentType: false,
-	    //      processData: false,
+          axios.post('' + serverName + '' + '/ajax/usuario.php?op=guardaryeditar',packagePost)
+          .then(res => {
+            this.respuesta=res.data
+            this.direccionamiento()
+          })
+          //ENVIAR PACKETE POR POST
+        // $.ajax({
+        //     data: packagePost,
+        //     url: '' + serverName + '' + '/ajax/usuario.php?op=guardaryeditar',
+        //     type: 'post',
+        //     contentType: false,
+        //      processData: false,
 
-	    //     success: function(res) {
-	    //     	if (res == 'Error mail') {
-	    //     		alert(res);
-	    //         	console.log('Correo ya existe');
+        //     success: function(res) {
+        //     	if (res == 'Error mail') {
+        //     		alert(res);
+        //         	console.log('Correo ya existe');
 
-	    //       	} else if (res == 'Err inputs') {
-	    //       		alert(res);
-	    //         	console.log('verificar registro');
+        //       	} else if (res == 'Err inputs') {
+        //       		alert(res);
+        //         	console.log('verificar registro');
 
-	    //       	}
-	    //       	//GUARDAR TOKEN
-	    //       	else {
-	    //       		alert(res);
-	    //         	// localStorage.setItem('token', res);
-	    //         	// router.push( '/home' );
-	    //         	// router.push({ path: '/home' });
-	    //         	this.direccionamiento();
-	            	
-	    //       	}
-	    //     }
-	    // });
+        //       	}
+        //       	//GUARDAR TOKEN
+        //       	else {
+        //       		alert(res);
+        //         	// localStorage.setItem('token', res);
+        //         	// router.push( '/home' );
+        //         	// router.push({ path: '/home' });
+        //         	this.direccionamiento();
+                  
+        //       	}
+        //     }
+        // });
 
       }else{
       	alert('Su contraseña no coincide');
