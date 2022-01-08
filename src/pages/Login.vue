@@ -86,6 +86,22 @@
               </q-form>
             </q-section>
           </q-card>
+          <q-card-section>
+            <div class="text-center q-pa-md q-gutter-md">
+              <q-btn round color="indigo-7">
+                <q-icon name="fab fa-facebook-f" size="1.2rem" />
+              </q-btn>
+              <q-btn round color="red-8">
+                <q-icon name="fab fa-google-plus-g" size="1.2rem" />
+              </q-btn>
+              <q-btn round color="light-blue-5">
+                <q-icon name="fab fa-twitter" size="1.2rem" />
+              </q-btn>
+            </div>
+          </q-card-section>
+          <q-card-section class="text-center q-pa-sm">
+            <p class="text-grey-6">¿Olvidaste tu contraseña? </p>
+          </q-card-section>
         </q-tab-panel>
 
         <!-- Register -->
@@ -350,33 +366,47 @@ export default {
       axios.post('' + serverName + '' + '/ajax/usuario.php?op=verificar',packagePost)
       .then(res => {
         	this.respuesta=res.data
-          // alert(this.respuesta);
-        	if(this.respuesta == 'Correo no encontrado'){
+         // alert(this.respuesta);
+         //valida inputs vacios
+        if(this.mail && this.passwordl){
+          //Valida correo caracteres especiales
+          if(this.respuesta == 'Validar correo'){
             // alert(this.respuesta);
             this.$q.notify({
-              message:  '1 vue:' + this.respuesta,
+              message: this.respuesta,
+              color: 'warning',
+              textColor: 'positive',
+              icon: 'fa fa-exclamation-circle'
+
+            })
+          }
+
+          //Valida correo y password
+          else if (this.respuesta == 'Correo o contraseña incorrectos') {
+            this.$q.notify({
+              message: this.respuesta,
               color: 'warning',
               textColor: 'positive',
               icon: 'fa fa-exclamation-circle'
 
             })
           }else{
-            if(this.mail && this.passwordl){
-              alert(this.respuesta);
-              localStorage.setItem('token', this.respuesta);
-              // this.$router.push({ path: '/home' })
 
-            }else{
-              this.$q.notify({
-                message: '2 vue:' + this.respuesta,
-                color: 'warning',
-                textColor: 'positive',
-                icon: 'fa fa-exclamation-circle'
-              })
-
-            }
-            
+            // alert(this.respuesta);
+            localStorage.setItem('token', this.respuesta);
+            this.$router.push({ name: 'Home' })
           }
+          
+        }else{
+
+          this.$q.notify({
+            message: 'Favor de llenar los campos',
+            color: 'warning',
+            textColor: 'positive',
+            icon: 'fa fa-exclamation-circle'
+          }) 
+        }
+          
       })     
     },
 
@@ -480,7 +510,7 @@ export default {
 
 .submitCont {
   /*height: 50px;*/
-  margin-top: 10vh;
+  margin-top: 5vh;
 }
 
 /*SUBIR IMAGEN*/
