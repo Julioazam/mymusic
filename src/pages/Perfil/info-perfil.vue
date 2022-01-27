@@ -1,11 +1,9 @@
 <template>
-  <hr>
-  <div class="text-h5 q-mb-md">Información de {{nombre}}</div>
   <div class="q-pa-md">
     <q-stepper v-model="step" vertical color="green" animated>
 
       <!-- Paso 1 info person -->
-      <q-step :name="1" title="Información de contacto" icon="settings" caption="Optional" :done="step > 1">
+      <q-step :name="1" title="Información de Usuario" icon="settings" caption="Optional" :done="step > 1">
         ¿Desea modificar sus datos de contacto?
 
         <form
@@ -20,19 +18,22 @@
             <div class="q-gutter-y-md column" alieng="center">
 
               <!-- <label class="imageButton">
-                <img class="imagePrevew" v-if="seeImage" :src="imagePrevUrl">
-                <q-icon name="photo" v-if="seeIcon" class="uploadImageIcon" />
-                <q-file 
-                  :disable="disable"
-                  borderless 
-                  v-model="imagen" 
-                  name="imagen" 
-                  :dense="dense" 
-                  color="green-8"
-                  hint="Sube tu foto de perfil" 
-                  accept=".jpg, image/*" 
-                  @change="previsualizarImagen($event)">
-                </q-file>
+                  <q-icon name="fas fa-camera-retro" v-if="seeIcon" class="uploadImageIcon" />
+                  <img class="imagePrevew" v-if="seeImage" :src="imagePrevUrl">
+                  <q-file 
+                    
+                    v-model="imagen" 
+                    id="imagen" 
+                    name="imagen" 
+                    label="Foto de perfil" 
+                    placeholder="Carga de imagen" 
+                    class="text-center"
+                    accept=".jpg, image/*" 
+                    @change="previsualizarImagen($event)" 
+                    :dense="dense" 
+                    borderless
+                  >
+                  </q-file>
               </label> -->
 
               <q-input
@@ -183,50 +184,73 @@
       </q-step>
 
       <!-- Paso 2 -->
-      <q-step :name="2" title="Información de ubicación" caption="Optional" icon="create_new_folder" :done="step > 2">
+      <q-step :name="2" title="Información de Ubicación" caption="Optional" icon="place" :done="step > 2">
         Actualice sus datos de ubicación
 
-        <q-form 
+        <form 
           method="post" 
           ref="formU" 
           lazy-validation 
           class="col-12" 
-          v-on:register="registerU"
+          @submit.prevent.stop="onSubmit"
+          enctype="multipart/form-data"
         >
           <!-- v-model="valid"   -->
           
           <div class="q-pa-md" style="max-width: 300px;">
             <div class="q-gutter-y-md column">
               <div>
-                  <q-toggle v-model="disable" label="Habilitar" dark />
+                  <q-toggle v-model="disable" label="Habilitar" />
                 </div>
               
-              <q-input 
-                :disable="disable" 
-                v-model="pais" 
-                id="pais" 
-                :dense="dense" 
-                label="Pais (s)"/>
-              <q-input :disable="disable" v-model="estado" id="estado" label="Estado" :dense="dense" />
-              <q-input :disable="disable" v-model="munic" id="munic" label="Municio o Delegación" :dense="dense" />
-              <q-input :disable="disable" v-model="col" id="col" label="Colonia o barrio" :dense="dense" />
-              <q-input :disable="disable" v-model="dir" id="dir" required label="Dirección" :dense="dense" />
-              <q-input :disable="disable" v-model="codpost" id="codpost" label="Codigo Postal" mask="#####"  :dense="dense" />
+              <q-input :disable="disable" v-model="pais" id="pais" name="pais" :dense="dense" label="Pais (s)"/>
+              <q-input :disable="disable" v-model="estado" id="estado" name="estado" label="Estado" :dense="dense" />
+              <q-input :disable="disable" v-model="munic" id="munic" name="munic" label="Municio o Delegación" :dense="dense" />
+              <q-input :disable="disable" v-model="col" id="col" name="col" label="Colonia o barrio" :dense="dense" />
+              <q-input :disable="disable" v-model="dir" id="dir" name="dir" required label="Dirección" :dense="dense" />
+              <q-input :disable="disable" v-model="codpost" id="codpost" name="codpost" label="Codigo Postal" mask="#####"  :dense="dense" />
+
             </div>
           </div>
-          <q-btn 
+           <div  class="inputPlacesFh">
+                <q-input
+                  id='searchTextField'
+                  outlined
+                  label="Busca tu dirección manualmente"
+                ></q-input>
+              </div>
+              
+              <div class="addresContainer">
+                <iframe 
+                  id="mapaContFrameSrch" 
+                  class="iframe" 
+                  :src="business_map" 
+                  frameborder="0" 
+                  style="width: 100%;height: 100%;" 
+                  allowfullscreen></iframe>
+                <q-btn  @click="actualizarMapa()" class="updateMap cc">Actualizar</q-btn >
+        	  	</div>
+
+              <hr>
+                <div id="map"></div>
+
+           <div>  
+            <q-btn 
+              :loading="loading[0]" 
               unelevated 
-              :disable="disable" 
               color="info" 
-              @click="addUbication()" 
+              @click="simulateProgress(0),addUbication()" 
               label="Guardar cambios" 
-              type="submit">
+              type="submit"
+              :disable="disable"
+            >
 
               <template v-slot:loading>
                 <q-spinner-gears />
               </template>
             </q-btn>
-        </q-form>
+          </div>
+        </form>
 
 
         <q-stepper-navigation>
@@ -236,7 +260,7 @@
       </q-step>
 
       <!-- Paso 3 disable -->
-      <q-step :name="3" title="Confifuración de usuario" icon="assignment" :done="step > 3" disable >
+      <q-step :name="3" title="Confifuración de Contacto" icon="assignment" :done="step > 3" disable >
         Tipo de usuario
 
         <q-form 
@@ -285,7 +309,7 @@
 
         <q-stepper-navigation>
           <q-btn @click="step = 4" color="primary" label="Continue" />
-          <q-btn flat @click="step = 1" color="primary" label="Regrasar" class="q-ml-sm" />
+          <q-btn flat @click="step = 2" color="primary" label="Regrasar" class="q-ml-sm" />
         </q-stepper-navigation>
       </q-step>
 
@@ -299,7 +323,6 @@
           <q-btn flat @click="step = 2" color="primary" label="Regrasar" class="q-ml-sm" />
         </q-stepper-navigation>
       </q-step>
-      
     </q-stepper>
   </div>
 
@@ -372,6 +395,10 @@ export default {
   },
 
   data: () => ({
+    //URL PREVEW 1
+    imagePrevUrl: null,
+    seeIcon: true,
+    seeImage: false,
     
     // Validar data-user
     valid: true,
@@ -396,6 +423,7 @@ export default {
     dir: null,
     codpost: null,
     categoria:null,
+    business_map: 'https://maps.google.com/?ll=19.4180874,-99.1679389&z=18&t=m&output=embed&d',
     options: ['Comedia', 'Decoraciones', 'Musical', 'Servicios', 'Otro'],//Select items
 
     respuesta: null,
@@ -404,6 +432,16 @@ export default {
   }),
 
   methods: {
+     previsualizarImagen(e) {
+      const file = e.target.files[0];
+      this.imagePrevUrl = URL.createObjectURL(file);
+      this.seeIcon = false;
+      this.seeImage = true;
+    },
+
+    nothing() {
+      return null;
+    },
     //Update user  step 1
     modifyUser: function(){
 
@@ -416,6 +454,7 @@ export default {
         const nom_artistico = this.nom_artistico;
         const email = this.email;
         const password = this.password;
+        // const imagen = this.imagen;
         const telefono = this.telefono;
         const fechNac = this.fechNac;
         
@@ -426,6 +465,7 @@ export default {
         packagePost.append('nom_artistico',nom_artistico);
         packagePost.append('email',email);
         packagePost.append('password',password);
+        // packagePost.append('imagen',imagen);
         packagePost.append('telefono',telefono);
         packagePost.append('token',token);
         packagePost.append('fechNac',fechNac);
@@ -433,10 +473,10 @@ export default {
         //Validar campo contra
         if (this.password.length !==0) 
         {
-          axios.post('' + serverName + '' + '/ajax/usuario.php?op=editarPerfil',packagePost)
+          axios.post('' + localhost + '' + 'usuario.php?op=editarPerfil',packagePost)
           .then(res => {
             this.respuesta=res.data
-
+            alert(this.respuesta);
             if(this.respuesta =='Usuario Actualizado')
             {
               this.$q.notify({
@@ -473,7 +513,115 @@ export default {
           icon: 'fa fa-exclamation-circle'
         })
       }
+    },
+
+    //step 2 Ubication
+    addUbication: function(){
+      //GUARDAR DATOS
+        const token = localStorage.getItem('token');
+        const pais = this.pais;
+        const estado = this.estado;
+        const munic = this.munic;
+        const col = this.col;
+        const dir = this.dir;
+        const codpost = this.codpost;
+        
+        //CREAR PAQUETE
+        const packagePost = new FormData();
+        packagePost.append('token',token);
+        packagePost.append('pais',pais);
+        packagePost.append('estado',estado);
+        packagePost.append('munic',munic);
+        packagePost.append('col',col);
+        packagePost.append('dir',dir);
+        packagePost.append('codpost',codpost);
+        
+
+        axios.post('' + serverName + '' + '/ajax/ubicacion.php?op=registro',packagePost)
+          .then(res => {
+            this.respuesta=res.data
+            // alert(this.respuesta);
+
+            if(this.respuesta =='Ubicación registrada')
+            {
+              this.$q.notify({
+                message: this.respuesta,
+                color: 'secondary',
+                textColor: 'positive',
+                icon: 'fa fa-thumbs-up'
+              })
+            
+            }else if(this.respuesta =='Ubicación Actualizada')
+            {
+              this.$q.notify({
+                message: this.respuesta,
+                color: 'secondary',
+                textColor: 'positive',
+                icon: 'fa fa-thumbs-up'
+              })
+            
+            }else if(this.respuesta == false){
+              this.$q.notify({
+                message: 'Contraseña incorrecta',
+                color: 'warning',
+                textColor: 'positive',
+                icon: 'fa fa-exclamation-circle'
+              })
+            }
+          })
+      
+    },
+
+    initMap: function() {
+      
+      const map = new google.maps.Map(document.getElementById("mapaContFrameSrch"), {
+        zoom: 13,
+        center: { lat:  19.0572, lng: -98.129 },
+      });
+      alert(center);
+      marker = new google.maps.Marker({
+        map,
+        draggable: true,
+        animation: google.maps.Animation.DROP,
+        position: { lat: 19.0572, lng: -98.129 },
+      });
+    },
+
+    actualizarMapa(){
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          function(position){
+            const lat = position.coords.latitude;
+            const long = position.coords.longitude;
+            const token = localStorage.getItem('token');
+
+            const packagePost = {
+              'lat':lat,
+              'long':long,
+              'token':token
+            };
+
+            $.ajax({
+              data:  packagePost,
+              url:   ''+serverName+''+'/ajax/ubicacion.php?op=updateLatLong', 
+              type:  'post',
+
+              success:  function (res) {
+                $('#mapaContFrameSrch').attr('src',res)
+                alert(this.res);
+              }
+            })
+          },
+
+          function(){
+            alert('No nos haz permitido acceder a tu ubicación');
+          }
+        );
+      } else {
+        alert('It seems like Geolocation, which is required for this page, is not enabled in your browser. Please use a browser which supports it.');
+      }
     }
+
   },
 
   mounted(){
@@ -497,8 +645,49 @@ export default {
 	    this.imagen = response.data[0].imagen;
 	    this.telefono = response.data[0].telefono;
 	    this.fechNac = response.data[0].fechNac;
+
+      this.pais = response.data[0].pais;
+      this.estado = response.data[0].estado;
+      this.munic = response.data[0].munic;
+      this.col = response.data[0].col;
+      this.dir = response.data[0].dir;
+      this.codpost = response.data[0].codpost;
+      this.lat = response.data[0].lat;
       // alert("Perfil: "+token);
     })
+
+    //GOOGLE PLACES
+		var ubiMaps = document.getElementById('searchTextField');
+		var autocomplete = new google.maps.places.Autocomplete(ubiMaps);
+		
+		autocomplete.addListener('place_changed', function(){
+			const place = autocomplete.getPlace();
+			const lat =place.geometry.location.lat();
+			const long =place.geometry.location.lng();
+			const addressName = place.name;
+			
+			const packagePost = { 
+				'lat':lat,
+				'long':long,
+				'token':token
+      		};
+
+			$.ajax({
+				data:  packagePost, 
+				url:   ''+serverName+''+'/ajax/ubicacion.php?op=updateLatLong', 
+				type:  'post',
+
+				success:  function (res) {
+					$('#mapaContFrameSrch').attr('src',res)
+				}
+			})
+
+			//GENERATE MAP
+			
+			const urlMap = "https://maps.google.com/?q="+lat+","+long+"&z=18&t=m&output=embed";
+			$('.iframe').attr('src',urlMap);
+			//OCULTAR DIV
+		});
   }
 }
 
@@ -506,6 +695,11 @@ export default {
 </script>
 
 <style>
+
+#map {
+  height: 100%;
+}
+
 /*SUBIR IMAGEN*/
 .imageButton {
   width: 100%;
@@ -537,5 +731,23 @@ export default {
 }
 
 /*SUBIR IMAGEN*/
+
+/*MAPA*/
+	.addresContainer{
+		width: 100%; height: 250px;
+		margin-bottom: 60px;
+		position: relative;
+	}
+
+	.updateMap{
+		width: 150px; height: 50px;
+		position: absolute;
+		right: 15px;top: 15px;
+		z-index: 1000;
+		background: black;
+		border-radius: 5px;
+		color: white;
+		cursor: pointer;
+	}.inputPlacesFh{width: 100%;}
 
 </style>

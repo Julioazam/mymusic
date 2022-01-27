@@ -73,7 +73,13 @@
                     </q-input>
                   </div>
                   <div class="submitCont sc">
-                    <q-btn :loading="loading[0]" unelevated color="info" @click="simulateProgress(0),login()" label="Ingresar">
+                    <q-btn 
+                      :loading="loading[0]" 
+                      unelevated 
+                      color="info" 
+                      @click="simulateProgress(0),login()" 
+                      label="Ingresar"
+                    >
                       <template v-slot:loading>
                         <q-spinner-facebook />
                       </template>
@@ -120,21 +126,35 @@
                 <label class="imageButton">
                   <q-icon name="photo" v-if="seeIcon" class="uploadImageIcon" />
                   <img class="imagePrevew" v-if="seeImage" :src="imagePrevUrl">
-                  <q-file filled v-model="imagen" id="imagen" name="imagen" :dense="dense" label="Foto de perfil" placeholder="Carga de imagen" hint="Sube tu foto de perfil" accept=".jpg, image/*" @change="previsualizarImagen($event)"></q-file>
+                  <q-file 
+                    filled 
+                    v-model="imagen" 
+                    id="imagen" 
+                    name="imagen" 
+                    label="Foto de perfil" 
+                    placeholder="Carga de imagen" 
+                    hint="Sube tu foto de perfil" 
+                    accept=".jpg, image/*" 
+                    @change="previsualizarImagen($event)" 
+                    :dense="dense" 
+                    required>
+                  </q-file>
                 </label>
 
                 <q-input 
                 	filled 
+                  ref="nombreRef"
                 	v-model="nombre" 
                 	id="nombre" 
                 	name="nombre"
-                	:dense="dense" 
                 	label="Nombre (s)"
+                	:dense="dense" 
                 	lazy-rules
                 	:rules="[ val => val && val.length > 0 || 'Por favor Escriba su nombre']"/>
 
                 <q-input 
 	                filled 
+                  ref="apellidosRef"
 	                v-model="apellidos" 
 	                id="apellidos" 
 	                name="apellidos"
@@ -151,6 +171,7 @@
                 	label="Nombre Artistico" 
                 	:dense="dense" 
                 	lazy-rules
+                  required 
                 	:rules="[ val => val && val.length > 0 || 'Por favor Escriba su nombre artistico']"/>
 
                 <q-input 
@@ -159,7 +180,9 @@
                 	id="email" 
                 	name="email"
                 	label="Email" 
-                	:dense="dense" />
+                	:dense="dense" 
+                  required 
+                  :rules="dataRules" />
                 
                 <q-input 
                 	filled 
@@ -171,7 +194,8 @@
                 	:type="isPwd ? 'password' : 'text'" 
                 	required 
                 	:dense="dense" 
-                	hint="Escriba su contraseña">
+                	hint="Escriba su contraseña"
+                  :rules="dataRules" >
                 	<template v-slot:append>
                     	<q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
                   	</template>
@@ -187,7 +211,8 @@
                 	:type="isPwd ? 'password' : 'text'" 
                 	required 
                 	:dense="dense" 
-                	hint="Confirme su contraseña">
+                	hint="Confirme su contraseña"
+                  :rules="dataRules" >
                   <template v-slot:append>
                     <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
                   </template>
@@ -201,13 +226,15 @@
                 	name="telefono"
                 	label="Telefono" 
                 	mask="(###) ### - ####" 
-                	:dense="dense" />
+                	:dense="dense" 
+                  :rules="dataRules"
+                  ref="telefonoRef" />
 
                 <q-input filled v-model="fechNac" name="fechNac" id="fechNac" mask="date" :rules="['date']" placeholder="Escriba su fecha de nacimiento" hint="" :dense="dense">
                   <template v-slot:append>
                     <q-icon name="event" class="cursor-pointer">
                       <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
-                        <q-date v-model="fechNac">
+                        <q-date v-model="fechNac" :rules="dataRules" >
                           <div class="row items-center justify-end">
                             <q-btn v-close-popup label="Close" color="primary" flat />
                           </div>
@@ -218,7 +245,12 @@
                 </q-input>
 
                 <!-- v-model="valid"   -->
-                <q-toggle v-model="accept" label="Acepto Terminos y Condiciones" checked-icon="check" color="green" unchecked-icon="clear" />
+                <q-toggle 
+                v-model="accept" 
+                label="Acepto Terminos y Condiciones" 
+                checked-icon="check" 
+                color="green" 
+               />
               </div>
             </div>
             <div>
@@ -251,13 +283,17 @@ export default {
   setup() {
     // Switch
     const $q = useQuasar()
-    const nombre = ref(null)
-
-    const accept = ref(false)
 
     // Boutton
     const loading = ref([false])
     const progress = ref(false)
+
+    //Data form
+    const accept = ref(false)
+    const nombreRef = (null)
+    const apellidosRef = (null)
+    const telefonoRef = (null)
+
 
     function simulateProgress(number) {
       // we set loading state
@@ -271,14 +307,20 @@ export default {
     }
 
     return {
+
+      // Validar
+      accept,
+      //Data form
+      nombreRef,
+      apellidosRef,
+      telefonoRef,
+      dataRules: [
+        val => (val && val.length > 0) || 'LLene el campo'
+      ],
       // Contaseña
       isPwd: ref(true),
       dense: ref(true),
       color: ref('cyan'),
-
-      // Validar
-      nombre,
-      accept,
 
       // Botones de login
       loading,
@@ -294,20 +336,20 @@ export default {
       imagen: ref(null),
 
       onSubmit() {
-        if (accept.value !== true) {
-        	register();
+        imagenRef.value.validate()
+        nombreRef.value.validate()
+        apellidosRef.value.validate()
+        telefonoRef.value.validate()
+
+        if (nombreRef.value.hasError || apellidosRef.value.hasError || telefonoRef.value.hasError) {
+          // form has error
+        }
+        else if (accept.value !== true) {
           $q.notify({
             color: 'red-5',
             textColor: 'white',
             icon: 'warning',
             message: 'Debe aceptar Terminos y Condiciones'
-          })
-        } else {
-          $q.notify({
-            color: 'green-4',
-            textColor: 'white',
-            icon: 'cloud_done',
-            message: 'Se guardaron los cambios'
           })
         }
       }
@@ -363,10 +405,10 @@ export default {
 		  packagePost.append('mail',mail);
       packagePost.append('passwordl',passwordl);
 
-      axios.post('' + serverName + '' + '/ajax/usuario.php?op=verificar',packagePost)
+      axios.post('' + serverName + '' + '/ajax/usuario.php?op=login',packagePost)
       .then(res => {
         	this.respuesta=res.data
-         // alert(this.respuesta);
+        //  alert(this.respuesta);
          //valida inputs vacios
         if(this.mail && this.passwordl){
           //Valida correo caracteres especiales
@@ -392,9 +434,10 @@ export default {
             })
           }else{
 
-            // alert(this.respuesta);
+            // alert("Login: "+this.respuesta);
             localStorage.setItem('token', this.respuesta);
-            this.$router.push({ name: 'Home' })
+            // this.$router.push({ path: '/home' })
+            this.$router.push({ path: '/perfil/info-perfil' })
           }
           
         }else{
@@ -422,52 +465,24 @@ export default {
         const telefono = this.telefono;
         const fechNac = this.fechNac;
         
-          //CREAR PAQUETE
+        //CREAR PAQUETE
           
-          const packagePost = new FormData();
-          packagePost.append('nombre',nombre);
-          packagePost.append('apellidos',apellidos);
-          packagePost.append('nom_artistico',nom_artistico);
-          packagePost.append('email',email);
-          packagePost.append('password',password);
-          packagePost.append('imagen',imagen);
-          packagePost.append('telefono',telefono);
-          packagePost.append('fechNac',fechNac);
+        const packagePost = new FormData();
+        packagePost.append('nombre',nombre);
+        packagePost.append('apellidos',apellidos);
+        packagePost.append('nom_artistico',nom_artistico);
+        packagePost.append('email',email);
+        packagePost.append('password',password);
+        packagePost.append('imagen',imagen);
+        packagePost.append('telefono',telefono);
+        packagePost.append('fechNac',fechNac);
 
-          axios.post('' + serverName + '' + '/ajax/usuario.php?op=guardaryeditar',packagePost)
-          .then(res => {
-            this.respuesta=res.data
-            this.direccionamiento()
-          })
-          //ENVIAR PACKETE POR POST
-        // $.ajax({
-        //     data: packagePost,
-        //     url: '' + serverName + '' + '/ajax/usuario.php?op=guardaryeditar',
-        //     type: 'post',
-        //     contentType: false,
-        //      processData: false,
+        axios.post('' + serverName + '' + '/ajax/usuario.php?op=registro',packagePost)
+        .then(res => {
 
-        //     success: function(res) {
-        //     	if (res == 'Error mail') {
-        //     		alert(res);
-        //         	console.log('Correo ya existe');
-
-        //       	} else if (res == 'Err inputs') {
-        //       		alert(res);
-        //         	console.log('verificar registro');
-
-        //       	}
-        //       	//GUARDAR TOKEN
-        //       	else {
-        //       		alert(res);
-        //         	// localStorage.setItem('token', res);
-        //         	// router.push( '/home' );
-        //         	// router.push({ path: '/home' });
-        //         	this.direccionamiento();
-                  
-        //       	}
-        //     }
-        // });
+          this.respuesta=res.data
+          this.direccionamiento()
+        })
 
       }else{
       	alert('Su contraseña no coincide');
@@ -476,11 +491,26 @@ export default {
 
     direccionamiento(){
     	if(this.respuesta == 'Usuario registrado'){
-    		
-    		this.$router.push({ path: '/home' })
+        this.$q.notify({
+              message: this.respuesta,
+              color: 'secondary',
+              textColor: 'positive',
+              icon: 'fa fa-thumbs-up'
+
+            })
+            //  localStorage.setItem('token', this.respuesta);
+            //  this.$router.push({ path: '/perfil/info-perfil' })
+    	}else if(this.respuesta == 'Error'){
+         this.$q.notify({
+              message: 'La contraseña debe tener de minimo 8 caracteres',
+              color: 'warning',
+              textColor: 'positive',
+              icon: 'fa fa-exclamation-circle'
+
+            })
     	}else{
-    		alert('No se registro el usuario');
-    	}
+        alert(this.respuesta);
+      }
     }
   }
 }

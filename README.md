@@ -13,7 +13,7 @@ quasar dev
 ```
 
 
-### Build the app for production
+### Build the app for production spa
 ```bash
 quasar build
 ```

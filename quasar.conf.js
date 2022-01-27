@@ -103,7 +103,9 @@ module.exports = configure(function (ctx) {
 
       // Quasar plugins
       plugins: [
-      'Notify'
+        'Notify',
+        
+        'SessionStorage'
       ]
     },
 
@@ -137,7 +139,11 @@ module.exports = configure(function (ctx) {
     // https://v2.quasar.dev/quasar-cli/developing-pwa/configuring-pwa
     pwa: {
       workboxPluginMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
-      workboxOptions: {}, // only for GenerateSW
+      workboxOptions: {
+        // Recarga pagina automatica
+        skipWaiting: true,
+        clientsClaim: true
+      }, // only for GenerateSW
 
       // for the custom service worker ONLY (/src-pwa/custom-service-worker.[js|ts])
       // if using workbox in InjectManifest mode

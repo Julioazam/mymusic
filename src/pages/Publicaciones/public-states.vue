@@ -7,7 +7,7 @@
         <q-item-section avatar>
           <q-btn round to="/perfil/photos-perfil">
             <q-avatar size="42px">
-              <img src="https://cdn.quasar.dev/img/avatar2.jpg">
+              <img :src="perfil">
             </q-avatar>
           </q-btn>
         </q-item-section>
@@ -94,14 +94,15 @@
                     <q-item-section avatar>
                       <q-btn round to="/perfil/photos-perfil">
                         <q-avatar size="42px">
-                          <img src="https://cdn.quasar.dev/img/avatar2.jpg">
+                          <img :src="perfil">
                         </q-avatar>
                       </q-btn>
                     </q-item-section>
                     <q-item-section>
-                      <q-item-label class="text-h6 q-mb-xs absolute q-pa-xs"> {{user}} </q-item-label>
+                      <q-item-label class="text-h6 q-mb-xs absolute q-pa-xs"> {{nom_artistico}} </q-item-label>
+                      <q-item-label caption class="text-left"> {{nombre}} {{apellidos}} </q-item-label>
                       <q-item-label caption class="text-subtitle2 text-right q-pa-md text-dark col-4"> {{category}}</q-item-label>
-                      <q-item-label caption class="text-right"> (241) 137-2093 </q-item-label>
+                      <q-item-label caption class="text-right"> {{telefono}} </q-item-label>
                     </q-item-section>
                   </q-item>
 
@@ -119,13 +120,25 @@
                                 <q-img class="imagePrevew" v-if="seeImage" :src="imagePrevUrl">
                                 </q-img>
                                 <!--INPUT HIDE-->
-                                <input
+                                <!-- <input
                                   id="imgPost" 
                                   name="imgPost"
+                                  v-model="imagen" 
                                   @change="previsualizarImagen($event)" 
                                   style="display: none;" 
                                   type="file" 
-                                />
+                                /> -->
+
+                                <q-file               
+                                  v-model="imagen" 
+                                  placeholder="Carga de imagen" 
+                                  accept=".jpg, image/*" 
+                                  @change="previsualizarImagen($event)" 
+                                  :dense="dense" 
+                                  borderless
+                                  style="display: none;"
+                                >
+                                </q-file>
                                 <!--INPUT ICON-->
                                 <q-icon v-if="seeIcon" class="uploadImageIcon" name="add_a_photo" />
                             </label>
@@ -172,33 +185,44 @@
         <q-item-section avatar>
           <q-btn round to="/perfil/photos-perfil">
             <q-avatar size="42px">
-              <img src="https://cdn.quasar.dev/img/avatar2.jpg">
+              <img :src="perfil">
             </q-avatar>
           </q-btn>
         </q-item-section>
         <q-item-section>
-          <q-item-label class="text-h6 q-mb-xs absolute q-pa-xs"> {{user}} </q-item-label>
+          <q-item-label class="text-h6 q-mb-xs absolute q-pa-xs"> {{nom_artistico}} </q-item-label>
+          <q-item-label caption class="text-left"> {{nombre}} {{apellidos}} </q-item-label>
           <q-item-label caption class="text-subtitle2 text-right q-pa-md text-dark col-4"> {{category}}</q-item-label>
-          <q-item-label caption class="text-right"> (241) 137-2093 </q-item-label>
+          <q-item-label caption class="text-right"> {{telefono}} </q-item-label>
         </q-item-section>
       </q-item>
       <q-card-section horizontal>
         <q-card-section class="q-pt-xs">
           <div class="text-overline">Overline</div>
-          <div class="text-h5 q-mt-sm q-mb-xs">Title</div>
+          <div class="text-h5 q-mt-sm q-mb-xs">{{descripcion}}</div>
           <div class="text-caption text-grey" v-html="editor" />
         </q-card-section>
         <q-card-section class="col-5 flex flex-center">
-          <q-img class="rounded-borders" src="https://cdn.quasar.dev/img/parallax2.jpg" />
+          <q-img class="rounded-borders" :src="imagen" />
         </q-card-section>
       </q-card-section>
       <q-card-actions align="center">
         <!-- Evaluación -->
         <div class="row no-wrap items-center" align="left">
           <q-rating size="18px" v-model="stars" :max="5" color="info" />
-          <span class="text-caption text-grey q-ml-sm">4.2 (551)</span>
+          <span class="text-caption text-grey q-ml-sm">({{idusuario}})</span>
         </div>
-        <q-btn flat round color="red" icon="favorite" />
+        <q-btn 
+            round 
+            flat 
+            color="red" 
+            stack 
+            no-caps 
+            size="20px" 
+          >
+            <q-icon size="22px" name="favorite" />
+            <span class="text-caption text-grey q-ml-sm">{{idusuario}}</span>
+          </q-btn>
         <q-btn flat round color="teal" icon="bookmark" />
         <q-btn flat round color="primary" icon="share" />
       </q-card-actions>
@@ -273,67 +297,17 @@
       </q-card-actions>
     </q-card>
 
-    <!-- Tarjeta Estado -->
-    <q-card class="my-card" flat bordered>
-      <!-- Cabecera -->
-      <q-item>
-        <q-item-section avatar>
-          <q-btn round to="/perfil/photos-perfil">
-            <q-avatar size="42px">
-              <img src="https://cdn.quasar.dev/img/avatar2.jpg">
-            </q-avatar>
-          </q-btn>
-        </q-item-section>
-        <q-item-section>
-          <q-item-label class="text-h6 q-mb-xs absolute q-pa-xs"> {{user}} </q-item-label>
-          <q-item-label caption class="text-subtitle2 text-right q-pa-md text-dark col-4"> {{category}}</q-item-label>
-          <q-item-label caption class="text-right"> (241) 137-2093 </q-item-label>
-        </q-item-section>
-      </q-item>
-      <q-card-section horizontal>
-        <q-card-section class="q-pt-xs">
-          <div class="text-overline">Overline</div>
-          <div class="text-h5 q-mt-sm q-mb-xs">Title</div>
-          <div class="text-caption text-grey" v-html="editor" />
-        </q-card-section>
-        <q-card-section class="col-5 flex flex-center">
-          <q-img class="rounded-borders" src="https://cdn.quasar.dev/img/parallax2.jpg" />
-        </q-card-section>
-      </q-card-section>
-      <q-card-actions align="center">
-        <!-- Evaluación -->
-        <div class="row no-wrap items-center" align="left">
-          <q-rating size="18px" v-model="stars" :max="5" color="info" />
-          <span class="text-caption text-grey q-ml-sm">4.2 (551)</span>
-        </div>
-        <q-btn flat round color="red" icon="favorite" />
-        <q-btn flat round color="teal" icon="bookmark" />
-        <q-btn flat round color="primary" icon="share" />
-      </q-card-actions>
-      <q-separator />
-      <q-card-actions align="center">
-        <!-- Buton agenda, reservar ubication -->
-        <q-btn flat round icon="event" @click="open('left')" />
-        <q-btn flat color="primary">Reservar </q-btn>
-        <q-btn fab color="primary" icon="place" class="ubication" />
-        <q-dialog v-model="dialog" :position="position">
-          <q-card style="width: 320px">
-            <q-card-section class="items-center no-wrap">
-              <q-date v-model="days" multiple />
-            </q-card-section>
-          </q-card>
-        </q-dialog>
-        <!-- Fin agenda -->
-      </q-card-actions>
-    </q-card>
 
   </div>
 </template>
 <script>
 import { ref } from 'vue'
+import axios from 'axios'
+
 
 export default {
   setup() {
+    
     // Agenda
     const dialog = ref(false)
     const position = ref('top')
@@ -359,6 +333,14 @@ export default {
   },
 
   data:() => ({
+    idusuario: null,
+    nombre: null,
+    apellidos: null,
+	  nom_artistico : null,
+	  imagen: null,
+	  telefono: null,
+    perfil: null,
+    descripcion: null,
 
     //URL PREVEW 1
     imagePrevUrl: null,
@@ -383,23 +365,54 @@ export default {
 
     Post: function(){
       //Guardar datos
+      const token = localStorage.getItem('token');
       const editor = this.editor;
-      const imgPost = this.imgPost;
+      const imagen = this.imagen;
+      const nombre = this.nombre;
 
       //Crear Paquete 
       const packagePost =new FormData();
-      packagePost.append('editor', editor);
-      packagePost.append('imgPost', imgPost);
+      packagePost.append('descripcion', editor);
+      packagePost.append('imagen', imagen);
+      packagePost.append('nombre', nombre);
+      packagePost.append('token',token);
 
-      axios.post('' + serverName + '' +'/ajax/publicacioines.php?op=postPublic', packagePost)
+      axios.post('' + serverName + '' +'/ajax/publicaciones.php?op=postPublic', packagePost)
       .then(res =>{
-        alert(res);
+        
         this.respuesta=res.data
-        this.$router.push({ path: '/home/states' })
+        alert(this.respuesta);
+        // this.$router.push({ path: '/home/states' })
       })
 
 
     }
+
+  },
+
+  mounted(){
+    //Cargar datos de perfil
+    
+    
+    var token = localStorage.getItem('token');
+    // const userid = this.$route.params.id;
+    // const estadoUser = this.estadoUser;
+
+    axios.get('' + serverName + '' + '/ajax/usuario.php?op=mostrar&token=' + token)
+    .then(response =>{
+      this.respuesta=response.data
+      this.idusuario=response.data[0].idusuario;
+      this.nombre = response.data[0].nombre;
+      this.apellidos = response.data[0].apellidos;
+	    this.nom_artistico = response.data[0].nom_artistico;
+	    
+	    this.imagen = response.data[0].imagen;
+	    this.telefono = response.data[0].telefono;
+	    
+      this.perfil = response.data[0].perfil;
+      this.editor = response.data[0].frase;
+      // alert("Perfil: "+token);
+    })
 
   }
 }

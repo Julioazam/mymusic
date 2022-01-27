@@ -109,16 +109,18 @@
           </q-list>
         </q-scroll-area>
 
-        <q-img  class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px">
+        <q-img  class="absolute-top" :src="portada" style="height: 150px">
+        <!-- <q-img  class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px"> -->
           <div class="absolute-bottom bg-transparent">
             <q-btn round flat dense to="/perfil/info-perfil">     
               <q-avatar  size="56px" class="q-mb-sm">
-                <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+                <!-- <img src="https://cdn.quasar.dev/img/boy-avatar.png"> -->
+                <img :src="perfil">
               </q-avatar>
               <q-tooltip>Perfil</q-tooltip>
             </q-btn>
-            <div class="text-weight-bold">Julio Armando Maza Labastida</div>
-            <div>armando95azamgmail.com</div>
+            <div class="text-weight-bold inset-shadow	text-center  bg-black" clickable v-ripple to="/perfil/info-perfil">{{this.nom_artistico}}</div>
+            <div class=" text-center bg-black ">{{this. email}}</div>
           </div>
         </q-img>        
       </q-drawer>
@@ -268,6 +270,43 @@ export default {
       toggleLeftDrawer,
       toggleRightDrawer
     }
+  },
+
+  data:() => ({
+    nombre: null,
+    apellidos: null,
+    nom_artistico: null,
+    email: null,
+
+    perfil: null,
+    portada: null,
+
+  })
+  ,
+
+  mounted(){
+    //Cargar datos de perfil
+    
+    var token = localStorage.getItem('token');
+    // const userid = this.$route.params.id;
+    // const estadoUser = this.estadoUser;
+
+    axios.get('' + serverName + '' + '/ajax/usuario.php?op=mostrar&token=' + token)
+    .then(response =>{
+      this.respuesta=response.data
+      // alert(this.respuesta);
+      this.nombre = response.data[0].nombre;
+      this.apellidos = response.data[0].apellidos;
+	    this.nom_artistico = response.data[0].nom_artistico;
+	    this.email = response.data[0].email;
+	    this.password = response.data[0].password;
+	    this.imagen = response.data[0].imagen;
+	    this.telefono = response.data[0].telefono;
+	    this.fechNac = response.data[0].fechNac;
+
+      this.perfil = response.data[0].perfil;
+      this.portada = response.data[0].portada;
+    })
   }
 }
 </script>

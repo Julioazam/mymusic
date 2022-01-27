@@ -27,7 +27,7 @@ export default {
   setup() {
     return {
       // Fotos
-      fitModes: ['cover', 'fill', 'none']
+      fitModes: ['cover', 'fill', 'none', 'NICE']
     }
   }
 }
