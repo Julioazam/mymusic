@@ -1,25 +1,23 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
   <head>
+    <script>
+      // const serverName = "http://localhost/marketapi";
+      const localhost = "http://localhost/apiprueba/ajax/";
+      const serverName = "http://localhost/apiprueba";
 
-    <script> 
-    // const serverName = "http://localhost/marketapi";
-    const localhost = "http://localhost/apiprueba/ajax/";
-    const serverName = "http://localhost/apiprueba";
-    
-    // const firebaseConfig = {
-    //   apiKey: "AIzaSyCYjsmkKnQLDcVdEfWmoHccq-bbxGYM1r4",
-    // authDomain: "mypary-9f17c.firebaseapp.com",
-    // projectId: "mypary-9f17c",
-    // storageBucket: "mypary-9f17c.appspot.com",
-    // messagingSenderId: "576380345646",
-    // appId: "1:576380345646:web:6b163a78005c5eaf3d6ebf",
-    // measurementId: "G-1WN6C6EN87"
-    // };
-    // firebase.initializeApp(firebaseConfig);
-  </script>
-    <!-- <title><%= productName %></title> -->
-    <title>MyPARY</title>
+      // const firebaseConfig = {
+      //   apiKey: "AIzaSyCYjsmkKnQLDcVdEfWmoHccq-bbxGYM1r4",
+      // authDomain: "mypary-9f17c.firebaseapp.com",
+      // projectId: "mypary-9f17c",
+      // storageBucket: "mypary-9f17c.appspot.com",
+      // messagingSenderId: "576380345646",
+      // appId: "1:576380345646:web:6b163a78005c5eaf3d6ebf",
+      // measurementId: "G-1WN6C6EN87"
+      // };
+      // firebase.initializeApp(firebaseConfig);
+    </script>
+    <title><%= productName %></title>
 
     <meta charset="utf-8">
     <meta name="description" content="<%= productDescription %>">
@@ -32,7 +30,6 @@
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
     <link rel="icon" type="image/ico" href="favicon.ico">
-
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script
@@ -43,18 +40,16 @@
     </script>
 
     <!--GOOGLE PLACES API-->
-    <!-- <script 
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOg8fcqKsxEsS3nbcTp32BUFbh8mVkgUE=&libraries=places&callback=initialize"
-      async 
-      defer
-    ></script> -->
-
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
-    <script
+    <!-- <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg=&libraries=places&callback=initMap&v=weekly&channel=2"
       async
-  ></script>
+    ></script> -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOg8fcqKsxEsS3nbcTp32BUFbh8mVkgUE&callback=&libraries=&v=weekly&channel=2"
+      async
+    ></script>
   </head>
   <body>
     <!-- DO NOT touch the following DIV -->

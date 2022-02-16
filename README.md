@@ -1,4 +1,4 @@
-# Quasar App (mypary)
+# My Pary (mypary)
 
 A Quasar Framework app
 
@@ -12,15 +12,10 @@ npm install
 quasar dev
 ```
 
-
-### Build the app for production spa
+### Build the app for production
 ```bash
 quasar build
 ```
 
 ### Customize the configuration
-See [Configuring quasar.conf.js](https://v2.quasar.dev/quasar-cli/quasar-conf-js).
-
-### Compilar para windows 
-quasar build -m electron
-
+See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).

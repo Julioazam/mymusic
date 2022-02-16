@@ -34,3 +34,13 @@
     </div>
   </div>
 </template>
+
+<script>
+import sesion from '../../mixins/sesion'
+export default {
+  mixins:[sesion],
+  setup() {
+
+  },
+}
+</script>

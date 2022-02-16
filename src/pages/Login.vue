@@ -1,21 +1,21 @@
 <template>
   <div class="q-pa-md mobile img-bg" align="center">
     <q-card class="my-card" transparent>
-      <q-card-section>
+      <!-- <q-card-section>
         <div class="text-h6"> Porque The PARY eres tú</div>
-      </q-card-section>
+      </q-card-section> -->
       <q-tabs v-model="tab" class="text-teal">
         <q-tab label="Login" name="one" />
         <q-tab label="Registro" name="two" />
       </q-tabs>
       <q-separator />
       <q-tab-panels v-model="tab" animated>
-        <q-tab-panel name="one">The QCard component is a great way to display important pieces of grouped.
+        <q-tab-panel name="one">
           <q-card primary flat bordered class="my-card">
             <q-card-section class="bg-primary text-white">
               <div class="q-col-gutter-md row items-start">
                 <div class="col-12">
-                  <q-img class="img-login" src="https://cdn.quasar.dev/img/parallax2.jpg">
+                  <q-img class="img-login" src="http://localhost/apiprueba/files/logo.png">
                   </q-img>
                 </div>
               </div>
@@ -33,17 +33,17 @@
                 <!-- v-model="valid"	@submit.prevent="nothing()"  -->
                 <div class="q-pa-md">
                   <div class="q-gutter-y-md column" style="max-width: 300px">
-                    <q-input 
-                    	v-model="mail" 
+                    <q-input
+                    	v-model="mail"
                     	id="mail"
                     	name="mail"
-                    	label="Usuario" 
-                    	placeholder="Correo | Usuario" 
-                    	hint="Escriba su usuario o correo electronico" 
-                    	required 
-                    	clearable 
-                    	color="primary" 
-                    	rounded 
+                    	label="Usuario"
+                    	placeholder="Correo | Usuario"
+                    	hint="Escriba su usuario o correo electronico"
+                    	required
+                    	clearable
+                    	color="primary"
+                    	rounded
                     	:rules="stringRules">
 
                     	  <template v-slot:prepend>
@@ -51,16 +51,16 @@
                       	</template>
                     </q-input>
 
-                    <q-input 
-	                    v-model="passwordl" 
+                    <q-input
+	                    v-model="passwordl"
 	                    id="passwordl"
 	                    name="passwordl"
-	                    label="Contraseña" 
-	                    placeholder="Contraseña" 
-	                    hint="Escriba su contraseña" 
-	                    :type="isPwd ? 'password' : 'text'" 
-	                    required 
-	                    clearable 
+	                    label="Contraseña"
+	                    placeholder="Contraseña"
+	                    hint="Escriba su contraseña"
+	                    :type="isPwd ? 'password' : 'text'"
+	                    required
+	                    clearable
 	                    color="primary">
 
 	                    <!-- rounded filled -->
@@ -73,11 +73,11 @@
                     </q-input>
                   </div>
                   <div class="submitCont sc">
-                    <q-btn 
-                      :loading="loading[0]" 
-                      unelevated 
-                      color="info" 
-                      @click="simulateProgress(0),login()" 
+                    <q-btn
+                      :loading="loading[0]"
+                      unelevated
+                      color="info"
+                      @click="simulateProgress(0),login()"
                       label="Ingresar"
                     >
                       <template v-slot:loading>
@@ -112,10 +112,10 @@
 
         <!-- Register -->
         <q-tab-panel name="two">With so much content to display at once, and often so little screen real-estate
-          <q-form 
-          	method="post" 
-          	ref="formR"  
-          	class="col-12" 
+          <q-form
+          	method="post"
+          	ref="formR"
+          	class="col-12"
           	@submit="onSubmit"
           	enctype="multipart/form-data"
           	id="formRegistro">
@@ -126,74 +126,74 @@
                 <label class="imageButton">
                   <q-icon name="photo" v-if="seeIcon" class="uploadImageIcon" />
                   <img class="imagePrevew" v-if="seeImage" :src="imagePrevUrl">
-                  <q-file 
-                    filled 
-                    v-model="imagen" 
-                    id="imagen" 
-                    name="imagen" 
-                    label="Foto de perfil" 
-                    placeholder="Carga de imagen" 
-                    hint="Sube tu foto de perfil" 
-                    accept=".jpg, image/*" 
-                    @change="previsualizarImagen($event)" 
-                    :dense="dense" 
+                  <q-file
+                    filled
+                    v-model="imagen"
+                    id="imagen"
+                    name="imagen"
+                    label="Foto de perfil"
+                    placeholder="Carga de imagen"
+                    hint="Sube tu foto de perfil"
+                    accept=".jpg, image/*"
+                    @change="previsualizarImagen($event)"
+                    :dense="dense"
                     required>
                   </q-file>
                 </label>
 
-                <q-input 
-                	filled 
+                <q-input
+                	filled
                   ref="nombreRef"
-                	v-model="nombre" 
-                	id="nombre" 
+                	v-model="nombre"
+                	id="nombre"
                 	name="nombre"
                 	label="Nombre (s)"
-                	:dense="dense" 
+                	:dense="dense"
                 	lazy-rules
                 	:rules="[ val => val && val.length > 0 || 'Por favor Escriba su nombre']"/>
 
-                <q-input 
-	                filled 
+                <q-input
+	                filled
                   ref="apellidosRef"
-	                v-model="apellidos" 
-	                id="apellidos" 
+	                v-model="apellidos"
+	                id="apellidos"
 	                name="apellidos"
-	                label="Apellidos" 
-	                :dense="dense" 
+	                label="Apellidos"
+	                :dense="dense"
 	                lazy-rules
 	                :rules="[ val => val && val.length > 0 || 'Por favor Escriba su apellidos']"/>
 
-                <q-input 
-                	filled 
-                	v-model="nom_artistico" 
-                	id="nom_artistico" 
+                <q-input
+                	filled
+                	v-model="nom_artistico"
+                	id="nom_artistico"
                 	name="nom_artistico"
-                	label="Nombre Artistico" 
-                	:dense="dense" 
+                	label="Nombre Artistico"
+                	:dense="dense"
                 	lazy-rules
-                  required 
+                  required
                 	:rules="[ val => val && val.length > 0 || 'Por favor Escriba su nombre artistico']"/>
 
-                <q-input 
-                	filled 
-                	v-model="email" 
-                	id="email" 
+                <q-input
+                	filled
+                	v-model="email"
+                	id="email"
                 	name="email"
-                	label="Email" 
-                	:dense="dense" 
-                  required 
+                	label="Email"
+                	:dense="dense"
+                  required
                   :rules="dataRules" />
-                
-                <q-input 
-                	filled 
-                	v-model="confirmar" 
-                	id="confirmar" 
+
+                <q-input
+                	filled
+                	v-model="confirmar"
+                	id="confirmar"
                 	name="confirmar"
-                	label="Contraseña" 
-                	placeholder="Escribir" 
-                	:type="isPwd ? 'password' : 'text'" 
-                	required 
-                	:dense="dense" 
+                	label="Contraseña"
+                	placeholder="Escribir"
+                	:type="isPwd ? 'password' : 'text'"
+                	required
+                	:dense="dense"
                 	hint="Escriba su contraseña"
                   :rules="dataRules" >
                 	<template v-slot:append>
@@ -201,16 +201,16 @@
                   	</template>
                 </q-input>
 
-                <q-input 
-                	filled 
-                	v-model="password" 
-                	id="password" 
+                <q-input
+                	filled
+                	v-model="password"
+                	id="password"
                 	name="password"
-                	label="Contraseña" 
-                	placeholder="Escribir" 
-                	:type="isPwd ? 'password' : 'text'" 
-                	required 
-                	:dense="dense" 
+                	label="Contraseña"
+                	placeholder="Escribir"
+                	:type="isPwd ? 'password' : 'text'"
+                	required
+                	:dense="dense"
                 	hint="Confirme su contraseña"
                   :rules="dataRules" >
                   <template v-slot:append>
@@ -218,15 +218,15 @@
                   </template>
                 </q-input>
 
-               
-                <q-input 
-                	filled 
-                	v-model="telefono" 
-                	id="telefono" 
+
+                <q-input
+                	filled
+                	v-model="telefono"
+                	id="telefono"
                 	name="telefono"
-                	label="Telefono" 
-                	mask="(###) ### - ####" 
-                	:dense="dense" 
+                	label="Telefono"
+                	mask="(###) ### - ####"
+                	:dense="dense"
                   :rules="dataRules"
                   ref="telefonoRef" />
 
@@ -245,21 +245,21 @@
                 </q-input>
 
                 <!-- v-model="valid"   -->
-                <q-toggle 
-                v-model="accept" 
-                label="Acepto Terminos y Condiciones" 
-                checked-icon="check" 
-                color="green" 
+                <q-toggle
+                v-model="accept"
+                label="Acepto Terminos y Condiciones"
+                checked-icon="check"
+                color="green"
                />
               </div>
             </div>
             <div>
               <!-- <q-btn label="Guardar Cambios" type="submit" color="info" /> -->
-            <q-btn 
-              unelevated 
-              color="info" 
-              @click="register()" 
-              label="Registrar" 
+            <q-btn
+              unelevated
+              color="info"
+              @click="register()"
+              label="Registrar"
               type="submit">
 
                 <template v-slot:loading>
@@ -277,12 +277,10 @@
 import router from '../router/routes.js'
 import { ref } from 'vue'
 import axios from 'axios'
-import { useQuasar } from 'quasar'
 export default {
 
   setup() {
     // Switch
-    const $q = useQuasar()
 
     // Boutton
     const loading = ref([false])
@@ -332,11 +330,11 @@ export default {
 
       // select
       date:ref(''),
-      
+
       imagen: ref(null),
 
       onSubmit() {
-        imagenRef.value.validate()
+        // imagenRef.value.validate()
         nombreRef.value.validate()
         apellidosRef.value.validate()
         telefonoRef.value.validate()
@@ -433,13 +431,13 @@ export default {
 
             })
           }else{
+            alert(this.respuesta);
+          	localStorage.setItem('token', this.respuesta);
 
-            // alert("Login: "+this.respuesta);
-            localStorage.setItem('token', this.respuesta);
             // this.$router.push({ path: '/home' })
             this.$router.push({ path: '/perfil/info-perfil' })
           }
-          
+
         }else{
 
           this.$q.notify({
@@ -447,10 +445,10 @@ export default {
             color: 'warning',
             textColor: 'positive',
             icon: 'fa fa-exclamation-circle'
-          }) 
+          })
         }
-          
-      })     
+
+      })
     },
 
     register: function() {
@@ -464,9 +462,9 @@ export default {
         const imagen = this.imagen;
         const telefono = this.telefono;
         const fechNac = this.fechNac;
-        
+
         //CREAR PAQUETE
-          
+
         const packagePost = new FormData();
         packagePost.append('nombre',nombre);
         packagePost.append('apellidos',apellidos);
@@ -501,13 +499,13 @@ export default {
             //  localStorage.setItem('token', this.respuesta);
             //  this.$router.push({ path: '/perfil/info-perfil' })
     	}else if(this.respuesta == 'Error'){
-         this.$q.notify({
+        this.$q.notify({
               message: 'La contraseña debe tener de minimo 8 caracteres',
               color: 'warning',
               textColor: 'positive',
               icon: 'fa fa-exclamation-circle'
 
-            })
+        })
     	}else{
         alert(this.respuesta);
       }

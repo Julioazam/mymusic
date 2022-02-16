@@ -5,8 +5,11 @@
         <q-btn flat dense round @click="toggleLeftDrawer" aria-label="Menu" color="positive" icon="menu" class="q-mx-md"/>
 
         <q-toolbar-title v-if="$q.screen.gt.sm" shrink class="row items-center no-wrap">
-          <!-- <img src="https://cdn.quasar.dev/img/layout-gallery/logo-google.svg"> -->
-          <span class="q-ml-sm">My Pary</span>
+          <img style="width: 70px;" src="http://localhost/apiprueba/files/logo1.png">
+          <!-- <span class="q-ml-sm">My Pary</span> -->
+          <!-- <q-avatar size="40px"> -->
+              <!-- <img src="http://localhost/apiprueba/files/logo.png"> -->
+            <!-- </q-avatar> -->
         </q-toolbar-title>
 
         <q-space />
@@ -57,9 +60,9 @@
           </q-btn>
 
           <!-- btn Cuenta -->
-          <q-btn round flat dense @click="toggleRightDrawer" class="q-mx-md">     
-            <q-avatar size="26px">
-              <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+          <q-btn round flat dense @click="toggleRightDrawer" class="q-mx-md">
+            <q-avatar size="40px">
+              <img :src="perfil">
             </q-avatar>
             <q-tooltip>Cuenta</q-tooltip>
           </q-btn>
@@ -84,13 +87,13 @@
               </q-item-section>
             </q-item>
 
-            <q-item clickable v-ripple to="/login">
+            <q-item clickable v-ripple  @click="salir()" >
               <q-item-section avatar>
                 <q-icon name="send" />
               </q-item-section>
 
               <q-item-section>
-                Registrar
+                Salir
               </q-item-section>
             </q-item>
 
@@ -112,7 +115,7 @@
         <q-img  class="absolute-top" :src="portada" style="height: 150px">
         <!-- <q-img  class="absolute-top" src="https://cdn.quasar.dev/img/material.png" style="height: 150px"> -->
           <div class="absolute-bottom bg-transparent">
-            <q-btn round flat dense to="/perfil/info-perfil">     
+            <q-btn round flat dense to="/perfil/info-perfil">
               <q-avatar  size="56px" class="q-mb-sm">
                 <!-- <img src="https://cdn.quasar.dev/img/boy-avatar.png"> -->
                 <img :src="perfil">
@@ -122,17 +125,18 @@
             <div class="text-weight-bold inset-shadow	text-center  bg-black" clickable v-ripple to="/perfil/info-perfil">{{this.nom_artistico}}</div>
             <div class=" text-center bg-black ">{{this. email}}</div>
           </div>
-        </q-img>        
+        </q-img>
       </q-drawer>
-   
+
 
     <!-- Inicio Header Izquierda -->
     <q-drawer v-model="leftDrawerOpen" bordered behavior="mobile" @click="leftDrawerOpen = false">
       <q-scroll-area class="fit">
         <q-toolbar class="GPL__toolbar">
           <q-toolbar-title class="row items-center text-grey-8">
+              <img class="q-pl-md" style="width: 250px;" src="http://localhost/apiprueba/files/horizontal.png">
             <!-- <img class="q-pl-md" src="https://www.gstatic.com/images/branding/googlelogo/svg/googlelogo_clr_74x24px.svg"> -->
-            <span class="q-ml-sm">My PARY</span>
+            <!-- <span class="q-ml-sm">My PARY</span> -->
           </q-toolbar-title>
         </q-toolbar>
 
@@ -280,13 +284,47 @@ export default {
 
     perfil: null,
     portada: null,
+    respuesta: null
 
-  })
-  ,
+  }),
+
+  methods: {
+    salir: function(){
+
+        var token = localStorage.getItem('token');
+
+        axios.get('' + localhost + '' + 'usuario.php?op=salir&token='+token)
+        .then(res=> {
+
+        	this.respuesta=res.data
+          if(this.respuesta == 'success'){
+            localStorage.clear();
+            this.$router.push({ path: '/' })
+          }
+        })
+
+
+
+        // const token = localStorage.getItem('token');
+
+        // const packagePost = new FormData();
+        // packagePost.append('token',token);
+
+        // axios.post('' + localhost + '' + 'usuario.php?op=salir')
+        // .then(res => {
+
+        //   this.respuesta=res.data
+        //   alert(this.respuesta);
+        // })
+          // form has error
+
+    }
+
+  },
 
   mounted(){
     //Cargar datos de perfil
-    
+
     var token = localStorage.getItem('token');
     // const userid = this.$route.params.id;
     // const estadoUser = this.estadoUser;

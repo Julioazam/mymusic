@@ -14,11 +14,11 @@
 
       <!-- Categoria Comedia -->
       <q-item-label header>Comedia</q-item-label>
-      <q-slide-item 
-        @left="onLeft" 
-        @right="onRight" 
-        v-for="contact in Musical" :key="contact.id"  
-        left-color="green" 
+      <q-slide-item
+        @left="onLeft"
+        @right="onRight"
+        v-for="contact in Musical" :key="contact.id"
+        left-color="green"
         right-color="red"
       >
         <template v-slot:left>
@@ -26,13 +26,13 @@
             <q-icon left name="done" /> Enviar Solicitud
           </div>
         </template>
-        
+
         <template v-slot:right>
           <div class="row items-center">Descartar para Amigo
             <q-icon right name="delete" />
           </div>
         </template>
-        
+
         <q-item clickable v-ripple >
           <q-item-section avatar>
             <q-avatar>
@@ -41,7 +41,7 @@
           </q-item-section>
 
           <q-item-section>
-            
+
             <q-item-label>{{ contact.name }}</q-item-label>
             <q-item-label caption lines="1">{{ contact.email }}</q-item-label>
           </q-item-section>
@@ -57,11 +57,11 @@
       <!-- Categoria Decoraciones -->
       <q-item-label header>Decoraciones</q-item-label>
 
-      <q-slide-item 
-        @left="onLeft" 
-        @right="onRight" 
-        v-for="contact in contacts" :key="contact.id"  
-        left-color="green" 
+      <q-slide-item
+        @left="onLeft"
+        @right="onRight"
+        v-for="contact in contacts" :key="contact.id"
+        left-color="green"
         right-color="red"
       >
 
@@ -70,7 +70,7 @@
             <q-icon left name="done" /> Enviar Solicitud
           </div>
         </template>
-        
+
         <template v-slot:right>
           <div class="row items-center">Descartar para Amigo
             <q-icon right name="delete" />
@@ -99,11 +99,11 @@
 
       <!-- Categoria Musical -->
       <q-item-label header>Musical</q-item-label>
-      <q-slide-item 
-        @left="onLeft" 
-        @right="onRight" 
-        v-for="contact in Musical" :key="contact.id"  
-        left-color="green" 
+      <q-slide-item
+        @left="onLeft"
+        @right="onRight"
+        v-for="contact in Musical" :key="contact.id"
+        left-color="green"
         right-color="red"
       >
         <template v-slot:left>
@@ -111,13 +111,13 @@
             <q-icon left name="done" /> Enviar Solicitud
           </div>
         </template>
-        
+
         <template v-slot:right>
           <div class="row items-center">Descartar para Amigo
             <q-icon right name="delete" />
           </div>
         </template>
-        
+
         <q-item clickable v-ripple >
           <q-item-section avatar>
             <q-avatar>
@@ -126,7 +126,7 @@
           </q-item-section>
 
           <q-item-section>
-            
+
             <q-item-label>{{ contact.name }}</q-item-label>
             <q-item-label caption lines="1">{{ contact.email }}</q-item-label>
             <q-item-label caption lines="2">{{ contact.especialidad }}</q-item-label>
@@ -140,11 +140,11 @@
 
       <!-- Categoria servicios -->
       <q-item-label header>Servicios</q-item-label>
-      <q-slide-item 
-        @left="onLeft" 
-        @right="onRight" 
-        v-for="contact in Musical" :key="contact.id"  
-        left-color="green" 
+      <q-slide-item
+        @left="onLeft"
+        @right="onRight"
+        v-for="contact in Musical" :key="contact.id"
+        left-color="green"
         right-color="red"
       >
         <template v-slot:left>
@@ -152,13 +152,13 @@
             <q-icon left name="done" /> Enviar Solicitud
           </div>
         </template>
-        
+
         <template v-slot:right>
           <div class="row items-center">Descartar para Amigo
             <q-icon right name="delete" />
           </div>
         </template>
-        
+
         <q-item clickable v-ripple to="/perfil/chat-perfil" >
           <q-item-section avatar>
             <q-avatar>
@@ -167,7 +167,7 @@
           </q-item-section>
 
           <q-item-section>
-            
+
             <q-item-label>{{ contact.name }}</q-item-label>
             <q-item-label caption lines="1">{{ contact.email }}</q-item-label>
             <q-item-label caption lines="2">{{ contact.especialidad }}</q-item-label>
@@ -181,13 +181,14 @@
         </q-item>
       </q-slide-item>
 
-      
+
     </q-list>
   </div>
 </template>
 <script>
 import { useQuasar } from 'quasar'
 import { onBeforeUnmount } from 'vue'
+import sesion from '../../mixins/sesion'
 
 const contacts = [ {
   id: 1,
@@ -226,6 +227,7 @@ const Musical = [ {
 } ]
 
 export default {
+  mixins:[sesion],
   setup () {
     // Deslizar
     const $q = useQuasar()
@@ -244,7 +246,7 @@ export default {
     return {
       category:'Musical',
       contacts,
-      Musical,   
+      Musical,
 
       //Deslizar
       onLeft ({ reset }) {

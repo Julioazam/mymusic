@@ -24,29 +24,29 @@
                     <q-tooltip class="bg-white text-primary">Close</q-tooltip>
                   </q-btn>
                 </q-bar>
-                <form 
-                  autocorrect="off" 
-                  autocapitalize="off" 
-                  autocomplete="off" 
+                <form
+                  autocorrect="off"
+                  autocapitalize="off"
+                  autocomplete="off"
                   spellcheck="false"
                   method="post"
                   ref="form"
                   id="frmPost"
                 >
-                 
+
                   <q-editor
                     id="editor"
                     name="editor"
-                    v-model="editor" 
-                    min-height="5rem" 
+                    v-model="editor"
+                    min-height="5rem"
                     placeholder="Publica un estado o frase"
                     required
-                    toolbar-text-color="white" 
-                    toolbar-bg="info" 
-                    toolbar-toggle-color="secondary" 
-                    align="center" 
-                    flat 
-                    content-class="bg-blue-grey-1" 
+                    toolbar-text-color="white"
+                    toolbar-bg="info"
+                    toolbar-toggle-color="secondary"
+                    align="center"
+                    flat
+                    content-class="bg-blue-grey-1"
                     :toolbar="[
                         [ 'left', 'center'],
                         [ 'right', 'justify'],
@@ -59,7 +59,7 @@
                             fixedIcon: true,
                             list: 'no-icons',
                             options: [ 'size-2', 'size-3', 'size-4', 'size-5' ]
-                          }                 
+                          }
                         ],
                         [
                           {
@@ -73,7 +73,7 @@
                         [ 'hr', 'link', 'removeFormat'],
                         ['undo'],
                         [ 'redo']
-                    ]" 
+                    ]"
                     :fonts="{
                       arial: 'Arial',
                       arial_black: 'Arial Black',
@@ -83,7 +83,7 @@
                       lucida_grande: 'Lucida Grande',
                       times_new_roman: 'Times New Roman',
                       verdana: 'Verdana'
-                    }" 
+                    }"
                   />
                 </form>
 
@@ -120,11 +120,11 @@
                                 </q-img>
                                 <!--INPUT HIDE-->
                                 <input
-                                  id="imgPost" 
+                                  id="imgPost"
                                   name="imgPost"
-                                  @change="previsualizarImagen($event)" 
-                                  style="display: none;" 
-                                  type="file" 
+                                  @change="previsualizarImagen($event)"
+                                  style="display: none;"
+                                  type="file"
                                 />
                                 <!--INPUT ICON-->
                                 <q-icon v-if="seeIcon" class="uploadImageIcon" name="add_a_photo" />
@@ -140,9 +140,9 @@
                 <q-separator/>
 
                 <q-card-actions align="center">
-                  
+
                   <div class="q-pa-md q-gutter-sm" align="left">
-                    
+
                     <q-btn color="dark" push size="md" @click="Post()">
                       <q-icon left size="2em" name="send" />
                       <div>Publicar</div>
@@ -151,7 +151,7 @@
                       <q-icon left size="3em" name="send" />
                       <div>Live</div>
                     </q-btn> -->
-                    
+
                   </div>
                 </q-card-actions>
                 <!-- Fin Botones -->
@@ -191,7 +191,7 @@
           <label class="img-muestra">
             <!-- IMAGE PREVEW -->
             <q-img class="imagePrevew" :src="imagePrevUrl"></q-img>
-          </label>           
+          </label>
         </q-card-section>
       </q-card-section>
 
@@ -228,7 +228,9 @@
 <script>
 import { ref } from 'vue'
 import { axios } from 'axios'
+import sesion from '../../mixins/sesion'
 export default {
+  mixins:[sesion],
   setup() {
     // Agenda
     const dialog = ref(false)
@@ -265,7 +267,7 @@ export default {
     // Post
     editor: null,
     imgPost: null,
-    
+
     respuesta:null
 
   }),
@@ -283,7 +285,7 @@ export default {
       const editor = this.editor;
       const imgPost = this.imgPost;
 
-      //Crear Paquete 
+      //Crear Paquete
       const packagePost =new FormData();
       packagePost.append('editor', editor);
       packagePost.append('imgPost', imgPost);

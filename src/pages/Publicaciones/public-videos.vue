@@ -40,11 +40,11 @@
 
         <!-- Evaluación -->
         <div class="row no-wrap items-center" align="left">
-          <q-rating 
-            size="18px" 
-            v-model="stars" 
-            :max="5" 
-            color="info" 
+          <q-rating
+            size="18px"
+            v-model="stars"
+            :max="5"
+            color="info"
           />
           <span class="text-caption text-grey q-ml-sm">4.2 (551)</span>
         </div>
@@ -64,7 +64,7 @@
 
         <q-dialog v-model="dialog" :position="position">
             <q-card style="width: 320px">
-              
+
               <q-card-section class="items-center no-wrap">
                 <q-date v-model="days" multiple/>
               </q-card-section>
@@ -123,7 +123,7 @@
 
         <q-dialog v-model="dialog" :position="position">
             <q-card style="width: 320px">
-              
+
               <q-card-section class="items-center no-wrap">
                 <q-date v-model="days" multiple/>
               </q-card-section>
@@ -131,7 +131,7 @@
           </q-dialog>
 
           <!-- Fin agenda -->
-          
+
       </q-card-actions>
     </q-card>
 
@@ -182,7 +182,7 @@
 
         <q-dialog v-model="dialog" :position="position">
             <q-card style="width: 320px">
-              
+
               <q-card-section class="items-center no-wrap">
                 <q-date v-model="days" multiple/>
               </q-card-section>
@@ -190,7 +190,7 @@
           </q-dialog>
 
           <!-- Fin agenda -->
-          
+
       </q-card-actions>
     </q-card>
 
@@ -241,7 +241,7 @@
 
         <q-dialog v-model="dialog" :position="position">
             <q-card style="width: 320px">
-              
+
               <q-card-section class="items-center no-wrap">
                 <q-date v-model="days" multiple/>
               </q-card-section>
@@ -249,15 +249,17 @@
           </q-dialog>
 
           <!-- Fin agenda -->
-          
+
       </q-card-actions>
     </q-card>
   </div>
 </template>
 <script>
 import { ref } from 'vue'
+import sesion from '../../mixins/sesion'
 
 export default {
+  mixins:[sesion],
   setup() {
     // Agenda
     const dialog = ref(false)
@@ -274,7 +276,7 @@ export default {
         days: ref([ '2019/02/01', '2019/02/10', '2019/02/21' ]),
         stars: ref('4'),
         // Fin Agenda
-        // 
+        //
       lorem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
       user: 'Julio Armando',
       category: 'Musical'

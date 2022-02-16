@@ -22,8 +22,10 @@
 </template>
 <script>
 import { ref } from 'vue'
+import sesion from '../../mixins/sesion'
 
 export default {
+  mixins:[sesion],
   setup() {
     return {
       // Fotos

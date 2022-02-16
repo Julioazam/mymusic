@@ -24,29 +24,29 @@
                     <q-tooltip class="bg-white text-primary">Close</q-tooltip>
                   </q-btn>
                 </q-bar>
-                <form 
-                  autocorrect="off" 
-                  autocapitalize="off" 
-                  autocomplete="off" 
+                <form
+                  autocorrect="off"
+                  autocapitalize="off"
+                  autocomplete="off"
                   spellcheck="false"
                   method="post"
                   ref="form"
                   id="frmPost"
                 >
-                 
+
                   <q-editor
                     id="editor"
                     name="editor"
-                    v-model="editor" 
-                    min-height="5rem" 
+                    v-model="editor"
+                    min-height="5rem"
                     placeholder="Publica un estado o frase"
                     required
-                    toolbar-text-color="white" 
-                    toolbar-bg="info" 
-                    toolbar-toggle-color="secondary" 
-                    align="center" 
-                    flat 
-                    content-class="bg-blue-grey-1" 
+                    toolbar-text-color="white"
+                    toolbar-bg="info"
+                    toolbar-toggle-color="secondary"
+                    align="center"
+                    flat
+                    content-class="bg-blue-grey-1"
                     :toolbar="[
                         [ 'left', 'center'],
                         [ 'right', 'justify'],
@@ -59,7 +59,7 @@
                             fixedIcon: true,
                             list: 'no-icons',
                             options: [ 'size-2', 'size-3', 'size-4', 'size-5' ]
-                          }                 
+                          }
                         ],
                         [
                           {
@@ -73,7 +73,7 @@
                         [ 'hr', 'link', 'removeFormat'],
                         ['undo'],
                         [ 'redo']
-                    ]" 
+                    ]"
                     :fonts="{
                       arial: 'Arial',
                       arial_black: 'Arial Black',
@@ -83,7 +83,7 @@
                       lucida_grande: 'Lucida Grande',
                       times_new_roman: 'Times New Roman',
                       verdana: 'Verdana'
-                    }" 
+                    }"
                   />
                 </form>
 
@@ -121,20 +121,20 @@
                                 </q-img>
                                 <!--INPUT HIDE-->
                                 <!-- <input
-                                  id="imgPost" 
+                                  id="imgPost"
                                   name="imgPost"
-                                  v-model="imagen" 
-                                  @change="previsualizarImagen($event)" 
-                                  style="display: none;" 
-                                  type="file" 
+                                  v-model="imagen"
+                                  @change="previsualizarImagen($event)"
+                                  style="display: none;"
+                                  type="file"
                                 /> -->
 
-                                <q-file               
-                                  v-model="imagen" 
-                                  placeholder="Carga de imagen" 
-                                  accept=".jpg, image/*" 
-                                  @change="previsualizarImagen($event)" 
-                                  :dense="dense" 
+                                <q-file
+                                  v-model="imagen"
+                                  placeholder="Carga de imagen"
+                                  accept=".jpg, image/*"
+                                  @change="previsualizarImagen($event)"
+                                  :dense="dense"
                                   borderless
                                   style="display: none;"
                                 >
@@ -153,9 +153,9 @@
                 <q-separator/>
 
                 <q-card-actions align="center">
-                  
+
                   <div class="q-pa-md q-gutter-sm" align="left">
-                    
+
                     <q-btn color="dark" push size="md" @click="Post()">
                       <q-icon left size="2em" name="send" />
                       <div>Publicar</div>
@@ -164,7 +164,7 @@
                       <q-icon left size="3em" name="send" />
                       <div>Live</div>
                     </q-btn> -->
-                    
+
                   </div>
                 </q-card-actions>
                 <!-- Fin Botones -->
@@ -176,7 +176,7 @@
       </q-item>
     </q-card>
     <!--Fin Tarjeta Post -->
-    
+
 
     <!-- Tarjeta Estado -->
     <q-card class="my-card" flat bordered>
@@ -212,13 +212,13 @@
           <q-rating size="18px" v-model="stars" :max="5" color="info" />
           <span class="text-caption text-grey q-ml-sm">({{idusuario}})</span>
         </div>
-        <q-btn 
-            round 
-            flat 
-            color="red" 
-            stack 
-            no-caps 
-            size="20px" 
+        <q-btn
+            round
+            flat
+            color="red"
+            stack
+            no-caps
+            size="20px"
           >
             <q-icon size="22px" name="favorite" />
             <span class="text-caption text-grey q-ml-sm">{{idusuario}}</span>
@@ -303,11 +303,13 @@
 <script>
 import { ref } from 'vue'
 import axios from 'axios'
+import sesion from '../../mixins/sesion'
 
 
 export default {
+  mixins:[sesion],
   setup() {
-    
+
     // Agenda
     const dialog = ref(false)
     const position = ref('top')
@@ -350,7 +352,7 @@ export default {
     // Post
     editor: null,
     imgPost: null,
-    
+
     respuesta:null
 
   }),
@@ -370,7 +372,7 @@ export default {
       const imagen = this.imagen;
       const nombre = this.nombre;
 
-      //Crear Paquete 
+      //Crear Paquete
       const packagePost =new FormData();
       packagePost.append('descripcion', editor);
       packagePost.append('imagen', imagen);
@@ -379,7 +381,7 @@ export default {
 
       axios.post('' + serverName + '' +'/ajax/publicaciones.php?op=postPublic', packagePost)
       .then(res =>{
-        
+
         this.respuesta=res.data
         alert(this.respuesta);
         // this.$router.push({ path: '/home/states' })
@@ -392,8 +394,8 @@ export default {
 
   mounted(){
     //Cargar datos de perfil
-    
-    
+
+
     var token = localStorage.getItem('token');
     // const userid = this.$route.params.id;
     // const estadoUser = this.estadoUser;
@@ -405,10 +407,10 @@ export default {
       this.nombre = response.data[0].nombre;
       this.apellidos = response.data[0].apellidos;
 	    this.nom_artistico = response.data[0].nom_artistico;
-	    
+
 	    this.imagen = response.data[0].imagen;
 	    this.telefono = response.data[0].telefono;
-	    
+
       this.perfil = response.data[0].perfil;
       this.editor = response.data[0].frase;
       // alert("Perfil: "+token);

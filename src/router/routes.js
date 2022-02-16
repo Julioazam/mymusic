@@ -1,10 +1,6 @@
-import Vue from 'vue'
-// import Home from 'layouts/MainLayout.vue'
-// import VueRouter from 'vue-router'
-// Vue.use(VueRouter);
 
 const routes = [
-  
+
   // Login
   {
      path: '/',
@@ -17,65 +13,65 @@ const routes = [
     path: '/home',
     component: () => import('layouts/MainLayout.vue'),
     name:'Home',
-    children: 
+    children:
     [
       // Index
-      { 
-        path: '/home', 
+      {
+        path: '/home',
         component: () => import('pages/Index.vue'),
-        name:'Index' 
+        name:'Index'
       },
 
       // Home - States
-      { 
-        path: '/home/post', 
+      {
+        path: '/home/post',
         component: () => import('pages/Publicaciones/public-post.vue'),
         name: 'Post'
       },
 
       // Home - States
-      { 
-        path: '/home/states', 
+      {
+        path: '/home/states',
         component: () => import('pages/Publicaciones/public-states.vue'),
         name: 'States'
       },
 
       // Home - Photos
-      { 
-        path: '/home/photos', 
+      {
+        path: '/home/photos',
         component: () => import('pages/Publicaciones/public-photos.vue'),
         name: 'Photos'
       },
 
       // Home - Videos
-      {        
+      {
         path: '/home/videos',
         component: () => import('pages/Publicaciones/public-videos.vue'),
         name: 'Videos'
       },
 
       // Home - Stories
-      { 
-        path: '/home/stories', 
+      {
+        path: '/home/stories',
         component: () => import('pages/Publicaciones/public-stories.vue'),
         name: 'Stories'
       },
 
       // Home - friends
-      { 
-        path: '/home/friends', 
+      {
+        path: '/home/friends',
         component: () => import('pages/Publicaciones/public-friends.vue'),
         name: 'Friends'
       },
 
       // Home - categories
-      { 
-        path: '/home/categories', 
+      {
+        path: '/home/categories',
         component: () => import('pages/Publicaciones/public-categories.vue'),
         name: 'Categories'
 
       },
-      
+
 
       // Perfil
       {
@@ -92,7 +88,7 @@ const routes = [
             { path: '/perfil/chat-perfil', component: () => import('pages/Perfil/chat-perfil.vue')}
         ]
       }
-      
+
     ]
   },
 
@@ -103,7 +99,5 @@ const routes = [
     component: () => import('pages/Error404.vue')
   }
 ]
-
-
 
 export default routes

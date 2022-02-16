@@ -39,6 +39,18 @@
   </div>
 </template>
 
+<script>
+
+import sesion from '../../mixins/sesion'
+export default {
+  mixins:[sesion],
+  setup() {
+
+  },
+}
+</script>
+
+
 <style lang="sass">
 .my-emoji
   vertical-align: middle

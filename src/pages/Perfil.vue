@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-md row items-start q-gutter-md">
-    <q-card class="my-card col">    
+    <q-card class="my-card col">
       <!-- Portada -->
       <q-responsive :ratio="16/9" class="img-portada">
 
@@ -44,42 +44,44 @@
       <!-- perfil -->
       <q-card-section>
         <div align="center" class="section-card">
-          <q-img 
+          <q-img
             v-model="imagen"
-            class="img-login" 
-            :src="perfil" 
+            class="img-login"
+            :src="perfil"
           />
           <p class="text-h5">{{nombre}}</p>
           <p class="text-center text-no-wrap">{{telefono}}</p>
           <p class="text-subtitle2">{{descripcion}}</p>
-
+           <!-- Evaluación -->
           <div class="row no-wrap items-center">
             <q-rating size="18px" v-model="stars" :max="5" color="info" />
             <span class="text-caption text-grey q-ml-sm">4.2 (551)</span>
           </div>
 
-          <q-btn 
-            round 
-            flat 
-            color="red" 
-            stack 
-            no-caps 
-            size="20px" 
+          <q-btn
+            round
+            flat
+            color="red"
+            stack
+            no-caps
+            size="20px"
           >
             <q-icon size="22px" name="favorite" />
             <span class="text-caption text-grey q-ml-sm">4.2 (551)</span>
           </q-btn>
 
           <!-- <q-btn flat round color="teal" icon="bookmark" /> -->
+          <q-btn flat round color="primary" icon="event" @click="open('left')" />
           <q-btn flat round color="primary" icon="share" />
+
         </div>
 
         <!-- btn editar portada -->
         <div align="right" class="section-card">
-          <q-btn 
-              flat  
-              icon="fa fa-ellipsis-v" 
-              @click="darkDialog = true"  
+          <q-btn
+              flat
+              icon="fa fa-ellipsis-v"
+              @click="darkDialog = true"
               style="color: #F56628"
             />
             <p align="left">
@@ -87,43 +89,68 @@
               <span class=" text-grey q-ml-sm">/ Mariachi</span>
             </p>
         </div>
-        
+
         <q-separator />
 
         <q-card-actions align="center">
           <!-- Buton agenda, reservar ubication -->
-          <q-btn 
-            flat 
-            round 
-            icon="event" 
-            @click="open('left')" 
-          />
 
-          <q-btn 
-            round 
-            flat 
-            color="info" 
-            stack 
-            no-caps 
-            size="20px" 
+
+          <q-btn
+            round
+            flat
+            color="info"
+            stack
+            no-caps
+            size="20px"
             to="/perfil/agenda-perfil"
           >
             <q-icon size="22px" name="far fa-address-book" />
             <div class="GPL__side-btn__label">Agenda</div>
           </q-btn>
 
-          <q-btn 
-            fab 
-            color="primary" 
-            icon="place" 
-            class="ubication" 
-            to="/perfil/info-perfil" 
-            @click="step = 2 "  
+          <q-btn
+            fab
+            color="teal"
+            icon="place"
+            class="ubication"
+            to="/perfil/info-perfil"
+            @click="viewUbication(), dialogMap = true"
           />
+          <q-dialog v-model="dialogMap" dialogMap transition-show="scale" transition-hide="scale">
+            <q-card class="bg-teal text-white" style="width: 3000px">
+              <q-card-section>
+                <div class="text-h6">Ubicación</div>
+              </q-card-section>
+
+              <!-- <q-card-section class="q-pt-none">
+                {{nombre}}
+              </q-card-section> -->
+
+              <q-card-actions align="right" class="bg-white text-teal">
+                <div class="map">
+                  <iframe
+                    :src="mapaLink"
+                    frameborder="0"
+                    style="width: 100%;height: 100%;"
+                    scrolling="no"
+                    marginheight="0"
+                    marginwidth="0"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <q-separator/>
+                <q-btn color="red" flat label="Cerrar" v-close-popup />
+              </q-card-actions>
+            </q-card>
+          </q-dialog>
+
+
 
           <q-dialog v-model="dialog" :position="position">
             <q-card style="width: 320px">
               <q-card-section class="items-center no-wrap">
+                <p class=" text-center text-negative text-weight-bold">Fechas ya Asignadas</p>
                 <q-date v-model="days" multiple />
               </q-card-section>
             </q-card>
@@ -135,9 +162,9 @@
 
 
       <!-- Editar dialog -->
-      <q-dialog 
-        v-model="darkDialog" 
-        persistent 
+      <q-dialog
+        v-model="darkDialog"
+        persistent
         transition-show="flip-down"
         transition-hide="flip-up"
       >
@@ -159,17 +186,17 @@
                 <div class="text-h6 q-mb-md">Configuración</div>
 
                 <form
-                  method="post" 
-                  ref="formR"  
+                  method="post"
+                  ref="formR"
                   @submit.prevent.stop="onSubmit"
                   enctype="multipart/form-data"
                 >
 
-                  <q-file 
-                    borderless 
-                    v-model="addportada" 
+                  <q-file
+                    borderless
+                    v-model="addportada"
                     label="Portada"
-                    accept=".jpg, image/*" 
+                    accept=".jpg, image/*"
                     prepend-icon=""
                      :src="perfil"
                     use-chips
@@ -178,12 +205,12 @@
                       <q-icon name="far fa-image" />
                     </template>
                   </q-file>
-                  
-                  <q-file 
-                    borderless 
-                    v-model="addperfil" 
+
+                  <q-file
+                    borderless
+                    v-model="addperfil"
                     label="Perfil"
-                    accept=".jpg, image/*" 
+                    accept=".jpg, image/*"
                     :src="perfil"
                     use-chips
                   >
@@ -193,13 +220,13 @@
                   </q-file>
 
                   <q-input
-                    v-model="descripcion" 
+                    v-model="descripcion"
                     filled
                     type="textarea"
                     id="descripcion"
                     name="descripcion"
                     label='descripcion'
-                    :dense="dense" 
+                    :dense="dense"
                     lazy-rules
                     :rules="[ val => val && val.length > 0 || 'Por favor Escriba su nombre']"
                   />
@@ -216,13 +243,13 @@
                   v-close-popup
               />
             </div>
-          
+
           </q-card-section>
         </q-card>
       </q-dialog>
-      
+
     </q-card>
-    
+
   </div>
   <!-- botones horizontales -->
   <q-tabs
@@ -234,19 +261,19 @@
     align="justify"
     :breakpoint="0"
   >
-    <q-tab name="photos"> 
+    <q-tab name="photos">
       <router-link class="text-primary" style="text-decoration: none; font-weight:600;" active-color="dark" indicator-color="primary" align="justify" to="/perfil/photos-perfil">Fotos</router-link>
     </q-tab>
 
-    <q-tab name="movies"> 
+    <q-tab name="movies">
       <router-link class="text-primary" style="text-decoration: none; font-weight:600;" active-color="dark" indicator-color="primary" align="justify" to="/perfil/movies-perfil">Videos</router-link>
     </q-tab>
-    
+
     <q-tab name="history">
       <!-- hacemos llamado a pagina history -->
       <router-link class="text-primary" style="text-decoration: none; font-weight:600;" active-color="dark" indicator-color="primary" align="justify" to="/perfil/historys-perfil">Historias</router-link>
     </q-tab>
-      
+
   </q-tabs>
 
   <!-- Perfil -->
@@ -283,7 +310,7 @@
                 </q-item-section>
 
                 <q-item-section>
-                  Perfil                
+                  Perfil
                 </q-item-section>
 
               </q-item>
@@ -310,13 +337,13 @@
                   <q-icon name="group" />
                 </q-item-section>
 
-                
+
                 <q-item-section>
                   Amigos
                 </q-item-section>
               </q-item>
             </router-link>
-            
+
             <q-separator />
 
             <router-link class="text-primary" style="text-decoration: none; font-weight:600;" active-color="dark" indicator-color="primary" align="justify" to="/perfil/chat-perfil">
@@ -342,27 +369,40 @@
       <q-page-container>
         <router-view></router-view>
       </q-page-container>
-                  
+
     </q-layout>
   </div>
- 
+
 </template>
 
 <script>
 
 import {ref} from 'vue'
-import { axios } from 'src/boot/axios';
-import { useQuasar } from 'quasar'
+import axios from 'axios'
+import sesion from '../mixins/sesion'
 
 export default {
+  mixins:[sesion],
   setup () {
-    const $q = useQuasar()
+
     const accept = ref(false)
     // Agenda
     const dialog = ref(false)
     const position = ref('top')
-    
+
     return {
+
+      Pais: [
+        {Nombre:"Mexico"},
+        {Codigo:"+52"},
+        {Bandera:"banmex.png"},
+        {TerCon:"tercon.pdf"},
+        {SimMon:"$"},
+        {Lat:"19.433021004809355"},
+        {Lon:"-99.13516746685117"}
+      ],
+
+        dialogMap: ref(false),
       // Slider portada
       slide: ref(1),
       fullscreen: ref(false),
@@ -379,7 +419,6 @@ export default {
       stars: ref('4'),
       // Fin Agenda
       lorem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      user: 'Julio Armando',
       category: 'Musical',
 
       // Esqueleto de botones
@@ -387,7 +426,7 @@ export default {
       innerTab: ref('innerInfo'),
       splitterModel: ref(20),
       // Fin Esqueleto de botones
-      
+
       // Header
       drawer: ref(false),
       miniState: ref(true),
@@ -405,6 +444,9 @@ export default {
   },
 
   data: () => ({
+    mapaLink: null,
+
+    business_map: 'https://maps.google.com/?ll=19.503539,-98.392694&z=16&t=m&output=embed&d',
     // Portada
     perfil:null,
     addperfil:null,
@@ -420,8 +462,13 @@ export default {
     imagen: null,
     telefono: null,
 
+    //ubication
+    lat: null,
+    long:null,
+
     respuesta: null,
-    res:null
+    res:null,
+    map:null
 
   }),
 
@@ -434,7 +481,7 @@ export default {
       const perfil = this.addperfil;
       const descripcion = this.descripcion;
 
-      //Crear paquete 
+      //Crear paquete
       const data =new FormData();
       data.append('token',token);
       data.append('frase',descripcion);
@@ -450,14 +497,22 @@ export default {
 
       })
 
+    },
+
+    viewUbication: function(){
+
+      const lat = this.lat;
+      const long = this.long;
+      const mapaLink = "https://maps.google.com/?q="+lat+","+long+"&z=16&t=m&output=embed&d";
+      this.mapaLink =mapaLink;
     }
 
   },
 
   mounted(){
     //Cargar datos de perfil
-    
-    
+
+
     var token = localStorage.getItem('token');
     // const userid = this.$route.params.id;
     // const estadoUser = this.estadoUser;
@@ -469,7 +524,7 @@ export default {
       this.nombre = response.data[0].nombre;
 	    this.nom_artistico = response.data[0].nom_artistico;
 	    this.email = response.data[0].email;
-	    
+
 	    this.imagen = response.data[0].imagen;
 	    this.telefono = response.data[0].telefono;
 	    this.fechNac = response.data[0].fechNac;
@@ -481,12 +536,18 @@ export default {
       this.dir = response.data[0].dir;
       this.codpost = response.data[0].codpost;
       this.lat = response.data[0].lat;
+      this.long = response.data[0].long;
+
+      // const mapaLink = "https://maps.google.com/?q="+lat+","+long+"&z=20&t=m&output=embed&d ";
+
+
 
       this.perfil = response.data[0].perfil;
       this.portada = response.data[0].portada;
       this.descripcion = response.data[0].frase;
       // alert("Perfil: "+token);
     })
+
 
   }
 }
@@ -523,6 +584,13 @@ export default {
 
     top:-10px;
   }
+
+  /*MAPA*/
+	.map{
+		width: 100%; height: 250px;
+		margin-bottom: 60px;
+		position: relative;
+	}
 
 /*Fin Portada*/
 </style>

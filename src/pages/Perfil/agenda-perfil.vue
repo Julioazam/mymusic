@@ -4,7 +4,7 @@
   <div class="row">
     <div class="col-xl-12 col-sm-12 col-md-12">
       <q-splitter v-model="splitterModelfech" style="height: 100%">
-        <template v-slot:before class="col-12">          
+        <template v-slot:before class="col-12">
           <div class="q-pa-md">
             <q-date v-model="date" :events="events" event-color="orange" landscape style="width:100%;" />
           </div>
@@ -14,7 +14,7 @@
     <div class="col-xl-12 col-sm-12 col-md-12">
       <q-splitter style="height: 100%">
         <template v-slot:after class="col-12">
-         
+
           <q-tab-panels v-model="date" animated transition-prev="jump-up" transition-next="jump-up">
             <q-tab-panel name="2019/02/01">
               <div class="text-h4 q-mb-md">2019/02/01</div>
@@ -41,8 +41,11 @@
 <script>
 
 import {ref} from 'vue'
+import sesion from '../../mixins/sesion'
+
 
 export default {
+  mixins:[sesion],
   setup () {
     return {
       // Fotos
@@ -53,7 +56,7 @@ export default {
       innerTab: ref('innerInfo'),
       splitterModel: ref(20),
       // Fin Esqueleto de botones
-        
+
       // Fin
       // Agenda fecha
       splitterModelfech: ref(50),

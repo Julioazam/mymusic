@@ -19,18 +19,18 @@
 	    			<q-item-label class="text-h6 q-mb-xs absolute q-pa-xs"> {{user}} </q-item-label>
 	    			<q-item-label caption class="text-subtitle2 text-right q-pa-md text-dark col-4"> {{category}}</q-item-label>
 	    			<q-item-label caption class="text-right"> (241) 137-2093 </q-item-label>
-	    		</q-item-section>	    	
+	    		</q-item-section>
 	    	</q-item>
 
 	    	<q-card-section horizontal class="q-pt-none">
 	    		<q-card-section class="q-pt-xs">
-	    		{{ lorem }}	
-	    		</q-card-section>	    		
+	    		{{ lorem }}
+	    		</q-card-section>
 	    	</q-card-section>
 
 	    	<q-img src="https://cdn.quasar.dev/img/chicken-salad.jpg" />
-	    	
-	    	<q-card-actions align="center"> 
+
+	    	<q-card-actions align="center">
 
 	    		<!-- Evaluación -->
 	    		<div class="row no-wrap items-center" align="left">
@@ -52,7 +52,7 @@
 
 	  	 		<q-dialog v-model="dialog" :position="position">
 			      <q-card style="width: 320px">
-			        
+
 			        <q-card-section class="items-center no-wrap">
 			        	<q-date v-model="days" multiple/>
 			        </q-card-section>
@@ -60,18 +60,20 @@
 			    </q-dialog>
 
 	    		<!-- Fin agenda -->
-	    			    		
-	    	</q-card-actions>
-	    </q-card>  
 
-	   
+	    	</q-card-actions>
+	    </q-card>
+
+
   	</div>
 </template>
 
 <script>
 import { ref } from 'vue'
+import sesion from '../../mixins/sesion'
 // import { scroll } from 'quasar'
 export default {
+   mixins:[sesion],
   setup () {
   	// Agenda
   	const dialog = ref(false)
@@ -106,7 +108,7 @@ export default {
 	max-width: 600px;
 	// left:20%
 }
-  
+
 .ubication{
   right:-50px;
 }
@@ -114,8 +116,8 @@ export default {
 .center-card{
   padding-left:25%;
 }
-  
-@media only screen and (max-width: 1025px) and (min-width: 841px) {  
+
+@media only screen and (max-width: 1025px) and (min-width: 841px) {
 	.my-card{
 		width: 100%;
 		max-width: 890px;
@@ -133,5 +135,5 @@ export default {
 		padding: 1%;
 	}
 }
-  
+
 </style>

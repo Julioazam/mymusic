@@ -5,14 +5,14 @@
 	  	<!-- Tarjeta Video -->
 	    <q-card class="my-card">
 	    	<q-card-section class="q-pt-none">
-	    		<div class="text-h6 q-mb-xs absolute q-pa-xs">{{ user }}</div> 
+	    		<div class="text-h6 q-mb-xs absolute q-pa-xs">{{ user }}</div>
 	    		<div class="text-subtitle2 text-right q-pa-md text-dark">{{category}}</div>
 	    		{{ lorem }}
 	    	</q-card-section>
 
 	    	<!-- <q-video src="https://www.youtube.com/embed/k3_tw44QsZQ?rel=0" /> -->
 	    	<q-img src="https://cdn.quasar.dev/img/chicken-salad.jpg" />
-	    	<q-card-actions align="center"> 
+	    	<q-card-actions align="center">
 
 	    		<!-- Evaluación -->
 	    		<div class="row no-wrap items-center" align="left">
@@ -34,7 +34,7 @@
 	    			<!-- Location -->
 	    		<q-btn fab color="primary" icon="place" class="ubication"/>
 	    	</q-card-actions>
-	    </q-card>  
+	    </q-card>
 
 	    <!-- Tarjeta Estado -->
 	    <q-card class="my-card" flat bordered>
@@ -51,7 +51,7 @@
 	    			<q-item-label class="text-h6 q-mb-xs absolute q-pa-xs"> {{user}} </q-item-label>
 	    			<q-item-label caption class="text-subtitle2 text-right q-pa-md text-dark col-4"> {{category}}</q-item-label>
 	    			<q-item-label caption class="text-right"> (241) 137-2093 </q-item-label>
-	    		</q-item-section>	    	
+	    		</q-item-section>
 	    	</q-item>
 
 	    	<q-card-section horizontal>
@@ -66,7 +66,7 @@
 	    		</q-card-section>
 	    	</q-card-section>
 
-	    	<q-card-actions align="center"> 
+	    	<q-card-actions align="center">
 
 	    		<!-- Evaluación -->
 	    		<div class="row no-wrap items-center" align="left">
@@ -88,19 +88,19 @@
 	    			<!-- Location -->
 	    		<q-btn fab color="primary" icon="place" class="ubication"/>
 	    	</q-card-actions>
-	    </q-card>     	   
+	    </q-card>
 
 	    <!-- Tarjeta Video -->
 	    <q-card class="my-card">
 	    	<q-card-section class="q-pt-none">
-	    		<div class="text-h6 q-mb-xs absolute q-pa-xs">{{ user }}</div> 
+	    		<div class="text-h6 q-mb-xs absolute q-pa-xs">{{ user }}</div>
 	    		<div class="text-subtitle2 text-right q-pa-md text-dark">{{category}}</div>
 	    		{{ lorem }}
 	    	</q-card-section>
 
 	    	<q-video src="https://www.youtube.com/embed/k3_tw44QsZQ?rel=0" />
 	    	<!-- <q-img src="https://cdn.quasar.dev/img/chicken-salad.jpg" /> -->
-	    	<q-card-actions align="center"> 
+	    	<q-card-actions align="center">
 
 	    		<!-- Evaluación -->
 	    		<div class="row no-wrap items-center" align="left">
@@ -122,7 +122,7 @@
 	    			<!-- Location -->
 	    		<q-btn fab color="primary" icon="place" class="ubication"/>
 	    	</q-card-actions>
-	    </q-card>   
+	    </q-card>
 
 	    <!-- Tarjeta Estado -->
 	    <q-card class="my-card" flat bordered>
@@ -139,7 +139,7 @@
 	    			<q-item-label class="text-h6 q-mb-xs absolute q-pa-xs"> {{user}} </q-item-label>
 	    			<q-item-label caption class="text-subtitle2 text-right q-pa-md text-dark col-4"> {{category}}</q-item-label>
 	    			<q-item-label caption class="text-right"> (241) 137-2093 </q-item-label>
-	    		</q-item-section>	    	
+	    		</q-item-section>
 	    	</q-item>
 
 	    	<q-card-section horizontal>
@@ -154,7 +154,7 @@
 	    		</q-card-section>
 	    	</q-card-section>
 
-	    	<q-card-actions align="center"> 
+	    	<q-card-actions align="center">
 
 	    		<!-- Evaluación -->
 	    		<div class="row no-wrap items-center" align="left">
@@ -176,13 +176,15 @@
 	    			<!-- Location -->
 	    		<q-btn fab color="primary" icon="place" class="ubication"/>
 	    	</q-card-actions>
-	    </q-card> 
-	   
+	    </q-card>
+
   	</div>
 </template>
 
 <script>
+import sesion from '../mixins/sesion'
 export default {
+  mixins:[sesion],
   setup () {
     return {
       lorem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -204,7 +206,7 @@ export default {
 	max-width: 600px;
 	// left:20%
 }
-  
+
 .ubication{
   right:-50px;
 }
@@ -212,8 +214,8 @@ export default {
 .center-card{
   padding-left:25%;
 }
-  
-@media only screen and (max-width: 1025px) and (min-width: 841px) {  
+
+@media only screen and (max-width: 1025px) and (min-width: 841px) {
 	.my-card{
 		width: 100%;
 		max-width: 890px;
@@ -231,5 +233,5 @@ export default {
 		padding: 1%;
 	}
 }
-  
+
 </style>

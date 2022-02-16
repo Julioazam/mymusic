@@ -7,92 +7,92 @@
         ¿Desea modificar sus datos de contacto?
 
         <form
-          method="post" 
-          ref="formR"  
-          class="col-12" 
+          method="post"
+          ref="formR"
+          class="col-12"
           @submit.prevent.stop="onSubmit"
           enctype="multipart/form-data"
         >
-          
+
           <div class="q-pa-md" style="max-width: 300px;">
             <div class="q-gutter-y-md column" alieng="center">
 
               <!-- <label class="imageButton">
                   <q-icon name="fas fa-camera-retro" v-if="seeIcon" class="uploadImageIcon" />
                   <img class="imagePrevew" v-if="seeImage" :src="imagePrevUrl">
-                  <q-file 
-                    
-                    v-model="imagen" 
-                    id="imagen" 
-                    name="imagen" 
-                    label="Foto de perfil" 
-                    placeholder="Carga de imagen" 
+                  <q-file
+
+                    v-model="imagen"
+                    id="imagen"
+                    name="imagen"
+                    label="Foto de perfil"
+                    placeholder="Carga de imagen"
                     class="text-center"
-                    accept=".jpg, image/*" 
-                    @change="previsualizarImagen($event)" 
-                    :dense="dense" 
+                    accept=".jpg, image/*"
+                    @change="previsualizarImagen($event)"
+                    :dense="dense"
                     borderless
                   >
                   </q-file>
               </label> -->
 
               <q-input
-               	filled 
-               	v-model="nombre" 
+               	filled
+               	v-model="nombre"
                 id="nombre"
                	name="nombre"
                	label='Nombre (s)'
-               	:dense="dense" 
+               	:dense="dense"
                	lazy-rules
                	:rules="[ val => val && val.length > 0 || 'Por favor Escriba su nombre']"
                 color="green-8"
               />
 
-              <q-input 
-	              filled 
-	              v-model="apellidos" 
+              <q-input
+	              filled
+	              v-model="apellidos"
                 id="apellidos"
 	              name="apellidos"
-	              label="Apellidos" 
-	              :dense="dense" 
+	              label="Apellidos"
+	              :dense="dense"
 	              lazy-rules
 	              :rules="[ val => val && val.length > 0 || 'Por favor Escriba su apellidos']"
                 color="green-8"
               />
 
-              <q-input 
-               	filled 
-               	v-model="nom_artistico" 
-               	id="nom_artistico" 
+              <q-input
+               	filled
+               	v-model="nom_artistico"
+               	id="nom_artistico"
                	name="nom_artistico"
-               	label="Nombre Artistico" 
-               	:dense="dense" 
+               	label="Nombre Artistico"
+               	:dense="dense"
                	lazy-rules
                	:rules="[ val => val && val.length > 0 || 'Por favor Escriba su nombre artistico']"
                 color="green-8"
               />
 
-              <q-input 
-               	filled 
-               	v-model="email" 
-               	id="email" 
+              <q-input
+               	filled
+               	v-model="email"
+               	id="email"
                	name="email"
-               	label="Email" 
-               	:dense="dense" 
+               	label="Email"
+               	:dense="dense"
                 color="green-8"
                 disable
               />
 
-              <q-input 
+              <q-input
                 ref="passRef"
-               	filled 
-               	v-model="password" 
-               	id="password" 
+               	filled
+               	v-model="password"
+               	id="password"
                	name="password"
-               	label="Confirme Contraseña" 
-               	placeholder="Escribir" 
-               	:type="isPwd ? 'password' : 'text'" 
-               	:dense="dense" 
+               	label="Confirme Contraseña"
+               	placeholder="Escribir"
+               	:type="isPwd ? 'password' : 'text'"
+               	:dense="dense"
                	hint="Confirme su contraseña"
                 color="green-8"
                 :rules="nameRules"
@@ -102,26 +102,26 @@
                 </template>
               </q-input>
 
-               
-              <q-input 
+
+              <q-input
                 color="green-8"
-               	filled 
-               	v-model="telefono" 
-               	id="telefono" 
+               	filled
+               	v-model="telefono"
+               	id="telefono"
                	name="telefono"
-               	label="Telefono" 
-               	mask="(###) ### - ####" 
+               	label="Telefono"
+               	mask="(###) ### - ####"
                	:dense="dense" />
-              
-              <q-input 
+
+              <q-input
                 color="green-8"
-                filled 
-                v-model="fechNac" 
+                filled
+                v-model="fechNac"
                 id="fechNac"
-                mask="date" 
-                :rules="['date']" 
-                placeholder="Escriba su fecha de nacimiento" 
-                hint="" 
+                mask="date"
+                :rules="['date']"
+                placeholder="Escriba su fecha de nacimiento"
+                hint=""
                 :dense="dense"
                 >
                 <template v-slot:append>
@@ -138,31 +138,31 @@
               </q-input>
 
               <!-- <div>
-                <q-toggle 
-                  v-model="accept" 
-                  label="Confirme su contraseña" 
-                  dark 
+                <q-toggle
+                  v-model="accept"
+                  label="Confirme su contraseña"
+                  dark
                   color="green"
-                  checked-icon="check" 
+                  checked-icon="check"
                 />
               </div> -->
-               <q-toggle 
-                v-model="accept" 
-                label="Confirme su contraseña" 
+               <q-toggle
+                v-model="accept"
+                label="Confirme su contraseña"
                 color="green"
-                checked-icon="check" 
+                checked-icon="check"
                />
-              
+
             </div>
           </div>
 
-          <div>  
-            <q-btn 
-              :loading="loading[0]" 
-              unelevated 
-              color="info" 
-              @click="simulateProgress(0),modifyUser()" 
-              label="Guardar cambios" 
+          <div>
+            <q-btn
+              :loading="loading[0]"
+              unelevated
+              color="info"
+              @click="simulateProgress(0),modifyUser()"
+              label="Guardar cambios"
               type="submit">
 
               <template v-slot:loading>
@@ -174,11 +174,11 @@
 
         <q-stepper-navigation>
           <!-- register() -->
-          <q-btn 
-            type="submit" 
-            @click="step = 2 " 
-            color="primary" 
-            label="Continue" 
+          <q-btn
+            type="submit"
+            @click="step = 2 "
+            color="primary"
+            label="Continue"
           />
         </q-stepper-navigation>
       </q-step>
@@ -187,22 +187,22 @@
       <q-step :name="2" title="Información de Ubicación" caption="Optional" icon="place" :done="step > 2">
         Actualice sus datos de ubicación
 
-        <form 
-          method="post" 
-          ref="formU" 
-          lazy-validation 
-          class="col-12" 
+        <form
+          method="post"
+          ref="formU"
+          lazy-validation
+          class="col-12"
           @submit.prevent.stop="onSubmit"
           enctype="multipart/form-data"
         >
           <!-- v-model="valid"   -->
-          
+
           <div class="q-pa-md" style="max-width: 300px;">
             <div class="q-gutter-y-md column">
               <div>
                   <q-toggle v-model="disable" label="Habilitar" />
                 </div>
-              
+
               <q-input :disable="disable" v-model="pais" id="pais" name="pais" :dense="dense" label="Pais (s)"/>
               <q-input :disable="disable" v-model="estado" id="estado" name="estado" label="Estado" :dense="dense" />
               <q-input :disable="disable" v-model="munic" id="munic" name="munic" label="Municio o Delegación" :dense="dense" />
@@ -212,35 +212,65 @@
 
             </div>
           </div>
-           <div  class="inputPlacesFh">
-                <q-input
-                  id='searchTextField'
-                  outlined
-                  label="Busca tu dirección manualmente"
-                ></q-input>
-              </div>
-              
-              <div class="addresContainer">
-                <iframe 
-                  id="mapaContFrameSrch" 
-                  class="iframe" 
-                  :src="business_map" 
-                  frameborder="0" 
-                  style="width: 100%;height: 100%;" 
-                  allowfullscreen></iframe>
-                <q-btn  @click="actualizarMapa()" class="updateMap cc">Actualizar</q-btn >
-        	  	</div>
 
-              <hr>
-                <div id="map"></div>
+          <div  class="inputPlacesFh">
+            <q-input
+              id='searchTextField'
+              outlined
+              label="Busca tu dirección manualmente"
+            ></q-input>
+          </div>
 
-           <div>  
-            <q-btn 
-              :loading="loading[0]" 
-              unelevated 
-              color="info" 
-              @click="simulateProgress(0),addUbication()" 
-              label="Guardar cambios" 
+          <div class="addresContainer">
+            <iframe
+              id="map"
+              class="iframe"
+              :src="business_map"
+              frameborder="0"
+              style="width: 100%;height: 100%;"
+              allowfullscreen
+            ></iframe>
+
+              <q-btn  @click="initMap()" class="updateMap">Actualizar</q-btn >
+        	</div>
+
+          <hr>
+
+          <div class="addresContainer" ref="map" >Cargar mapa...
+            <GmapMap
+              :center="{lat:10, lng:10}"
+              :zoom="7"
+              map-type-id="terrain"
+              style="width: 500px; height: 300px"
+            >
+              <GmapMarker
+                :key="index"
+                v-for="(m, index) in markers"
+                :position="m.position"
+                :clickable="true"
+                :draggable="true"
+                @click="center=m.position"
+              />
+            </GmapMap>
+            <q-layout>
+              <gmap-mao
+                :center="{lat:10, lng: 10}"
+                :zoom="7"
+                map-type-id="terrain"
+                style="width: 500px; height: 300px"
+              >
+
+              </gmap-mao>
+            </q-layout>
+          </div>
+
+          <div>
+            <q-btn
+              :loading="loading[0]"
+              unelevated
+              color="info"
+              @click="simulateProgress(0),addUbication()"
+              label="Guardar cambios"
               type="submit"
               :disable="disable"
             >
@@ -263,23 +293,23 @@
       <q-step :name="3" title="Confifuración de Contacto" icon="assignment" :done="step > 3" disable >
         Tipo de usuario
 
-        <q-form 
-          method="post" 
-          ref="formT" 
-          lazy-validation 
-          class="col-12" 
+        <q-form
+          method="post"
+          ref="formT"
+          lazy-validation
+          class="col-12"
           v-on:register="registerU"
         >
           <!-- v-model="valid"   -->
-          
-          <q-toggle 
-            v-model="accept" 
-            label="Acepto Terminos y Condiciones" 
-            checked-icon="check" 
-            color="green" 
-            unchecked-icon="clear" 
+
+          <q-toggle
+            v-model="accept"
+            label="Acepto Terminos y Condiciones"
+            checked-icon="check"
+            color="green"
+            unchecked-icon="clear"
           />
-          
+
           <div class="q-pa-md" style="max-width: 300px;">
             <div class="q-gutter-y-md column">
 
@@ -288,13 +318,13 @@
                   <div class="self-center full-width no-outline">Servicio</div>
                 </template>
               </q-field>
-              
+
               <q-field standout hint="Categoria" :dense="dense" disable>
                 <template v-slot:control>
                   <div class="self-center full-width no-outline">Musica</div>
                 </template>
               </q-field>
-              
+
               <q-field standout hint="Especialidad" :dense="dense" disable>
                 <template v-slot:control>
                   <div class="self-center full-width no-outline">Musica</div>
@@ -304,7 +334,7 @@
               <q-select filled v-model="categoria" id="categoria" :options="options" label="Categoria" hint="Seleciones una Categoría" :dense="dense" />
             </div>
           </div>
-         
+
         </q-form>
 
         <q-stepper-navigation>
@@ -313,7 +343,7 @@
         </q-stepper-navigation>
       </q-step>
 
-      <!-- Paso 4 Pago --> 
+      <!-- Paso 4 Pago -->
       <q-step :name="4" title="Pago" icon="add_comment">
         Try out different ad text to see what brings in the most customers, and learn how to
         enhance your ads using features like ad extensions. If you run into any problems with
@@ -332,9 +362,20 @@ import router from '../../router/routes.js'
 import { ref } from 'vue'
 import axios from 'axios'
 import { useQuasar } from 'quasar'
+import sesion from '../../mixins/sesion'
+
+import * as VueGoogleMaps from 'vue2-google-maps'
 
 export default {
+  mixins:[sesion],
+  name: 'Map',
+  components:{
+    useQuasar
+  },
+
+
   setup() {
+
     // Switch
     const $q = useQuasar()
 
@@ -345,7 +386,7 @@ export default {
     // Boutton
     const loading = ref([false])
     const progress = ref(false)
-    
+
 
     function simulateProgress(number) {
       // we set loading state
@@ -399,7 +440,7 @@ export default {
     imagePrevUrl: null,
     seeIcon: true,
     seeImage: false,
-    
+
     // Validar data-user
     valid: true,
     stringRules: [v => !!v || '', ],
@@ -427,7 +468,8 @@ export default {
     options: ['Comedia', 'Decoraciones', 'Musical', 'Servicios', 'Otro'],//Select items
 
     respuesta: null,
-    res:null
+    res:null,
+    map:null
 
   }),
 
@@ -457,7 +499,7 @@ export default {
         // const imagen = this.imagen;
         const telefono = this.telefono;
         const fechNac = this.fechNac;
-        
+
         //CREAR PAQUETE
         const packagePost = new FormData();
         packagePost.append('nombre',nombre);
@@ -471,7 +513,7 @@ export default {
         packagePost.append('fechNac',fechNac);
 
         //Validar campo contra
-        if (this.password.length !==0) 
+        if (this.password.length !==0)
         {
           axios.post('' + localhost + '' + 'usuario.php?op=editarPerfil',packagePost)
           .then(res => {
@@ -485,7 +527,7 @@ export default {
                 textColor: 'positive',
                 icon: 'fa fa-thumbs-up'
               })
-            
+
             }else if(this.respuesta == false){
               this.$q.notify({
                 message: 'Contraseña incorrecta',
@@ -525,7 +567,7 @@ export default {
         const col = this.col;
         const dir = this.dir;
         const codpost = this.codpost;
-        
+
         //CREAR PAQUETE
         const packagePost = new FormData();
         packagePost.append('token',token);
@@ -535,7 +577,7 @@ export default {
         packagePost.append('col',col);
         packagePost.append('dir',dir);
         packagePost.append('codpost',codpost);
-        
+
 
         axios.post('' + serverName + '' + '/ajax/ubicacion.php?op=registro',packagePost)
           .then(res => {
@@ -550,7 +592,7 @@ export default {
                 textColor: 'positive',
                 icon: 'fa fa-thumbs-up'
               })
-            
+
             }else if(this.respuesta =='Ubicación Actualizada')
             {
               this.$q.notify({
@@ -559,7 +601,7 @@ export default {
                 textColor: 'positive',
                 icon: 'fa fa-thumbs-up'
               })
-            
+
             }else if(this.respuesta == false){
               this.$q.notify({
                 message: 'Contraseña incorrecta',
@@ -569,25 +611,31 @@ export default {
               })
             }
           })
-      
-    },
 
-    initMap: function() {
-      
-      const map = new google.maps.Map(document.getElementById("mapaContFrameSrch"), {
-        zoom: 13,
-        center: { lat:  19.0572, lng: -98.129 },
+    },
+    initMap: function(){
+
+      // The location of Uluru
+      const uluru = { lat: -25.344, lng: 131.036 };
+      // The map, centered at Uluru
+      const map = new google.maps.Map($( "#map" )[0],
+        {
+          zoom: 4,
+          center: uluru,
+        }
+      );
+
+      // The marker, positioned at Uluru
+      const marker = new google.maps.Marker({
+        position: uluru,
+        map: map,
       });
-      alert(center);
-      marker = new google.maps.Marker({
-        map,
-        draggable: true,
-        animation: google.maps.Animation.DROP,
-        position: { lat: 19.0572, lng: -98.129 },
-      });
+
+      this.map=map;
     },
 
     actualizarMapa(){
+
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           function(position){
@@ -603,7 +651,7 @@ export default {
 
             $.ajax({
               data:  packagePost,
-              url:   ''+serverName+''+'/ajax/ubicacion.php?op=updateLatLong', 
+              url:   ''+serverName+''+'/ajax/ubicacion.php?op=updateLatLong',
               type:  'post',
 
               success:  function (res) {
@@ -616,6 +664,7 @@ export default {
           function(){
             alert('No nos haz permitido acceder a tu ubicación');
           }
+
         );
       } else {
         alert('It seems like Geolocation, which is required for this page, is not enabled in your browser. Please use a browser which supports it.');
@@ -626,8 +675,8 @@ export default {
 
   mounted(){
     //Cargar datos de perfil
-    
-    
+
+
     var token = localStorage.getItem('token');
     // const userid = this.$route.params.id;
     // const estadoUser = this.estadoUser;
@@ -635,7 +684,7 @@ export default {
     axios.get('' + serverName + '' + '/ajax/usuario.php?op=mostrar&token=' + token)
     .then(response =>{
       this.respuesta=response.data
-      
+
       this.idusuario=response.data[0].idusuario;
       this.nombre = response.data[0].nombre;
       this.apellidos = response.data[0].apellidos;
@@ -657,40 +706,39 @@ export default {
     })
 
     //GOOGLE PLACES
-		var ubiMaps = document.getElementById('searchTextField');
-		var autocomplete = new google.maps.places.Autocomplete(ubiMaps);
-		
-		autocomplete.addListener('place_changed', function(){
-			const place = autocomplete.getPlace();
-			const lat =place.geometry.location.lat();
-			const long =place.geometry.location.lng();
-			const addressName = place.name;
-			
-			const packagePost = { 
-				'lat':lat,
-				'long':long,
-				'token':token
-      		};
+		// var ubiMaps = document.getElementById('searchTextField');
+		// var autocomplete = new google.maps.places.Autocomplete(ubiMaps);
 
-			$.ajax({
-				data:  packagePost, 
-				url:   ''+serverName+''+'/ajax/ubicacion.php?op=updateLatLong', 
-				type:  'post',
+		// autocomplete.addListener('place_changed', function(){
+		// 	const place = autocomplete.getPlace();
+		// 	const lat =place.geometry.location.lat();
+		// 	const long =place.geometry.location.lng();
+		// 	const addressName = place.name;
 
-				success:  function (res) {
-					$('#mapaContFrameSrch').attr('src',res)
-				}
-			})
+		// 	const packagePost = {
+		// 		'lat':lat,
+		// 		'long':long,
+		// 		'token':token
+    //   		};
 
-			//GENERATE MAP
-			
-			const urlMap = "https://maps.google.com/?q="+lat+","+long+"&z=18&t=m&output=embed";
-			$('.iframe').attr('src',urlMap);
-			//OCULTAR DIV
-		});
+		// 	$.ajax({
+		// 		data:  packagePost,
+		// 		url:   ''+serverName+''+'/ajax/ubicacion.php?op=updateLatLong',
+		// 		type:  'post',
+
+		// 		success:  function (res) {
+		// 			$('#mapaContFrameSrch').attr('src',res)
+		// 		}
+		// 	})
+
+		// 	//GENERATE MAP
+
+		// 	const urlMap = "https://maps.google.com/?q="+lat+","+long+"&z=18&t=m&output=embed";
+		// 	$('.iframe').attr('src',urlMap);
+		// 	//OCULTAR DIV
+		// });
   }
 }
-
 
 </script>
 
