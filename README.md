@@ -1,4 +1,4 @@
-# My Pary (mypary)
+# My Music (mymusic)
 
 A Quasar Framework app
 
