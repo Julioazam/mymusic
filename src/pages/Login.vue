@@ -1,10 +1,10 @@
 <template>
   <div class="q-pa-md mobile img-bg" align="center">
-    <q-card class="my-card" transparent>
+    <q-card class="my-card bg-dark " transparent>
       <!-- <q-card-section>
         <div class="text-h6"> Porque The PARY eres tú</div>
       </q-card-section> -->
-      <q-tabs v-model="tab" class="text-teal">
+      <q-tabs v-model="tab" class="text-positive">
         <q-tab label="Login" name="one" />
         <q-tab label="Registro" name="two" />
       </q-tabs>
@@ -12,18 +12,18 @@
       <q-tab-panels v-model="tab" animated>
         <q-tab-panel name="one">
           <q-card primary flat bordered class="my-card">
-            <q-card-section class="bg-primary text-white">
+            <q-card-section class=" bg-primary text-white">
               <div class="q-col-gutter-md row items-start">
                 <div class="col-12">
-                  <q-img class="img-login" src="http://localhost/apiprueba/files/logo.png">
+                  <q-img class="img-login" src="https://mymusicperrona22.000webhostapp.com/apimusic/files/logo.png">
                   </q-img>
                 </div>
               </div>
               <BR/>
-              <div class="text-h5">Bienvenido de nuevo</div>
+              <div class="text-h5">Bienvenido a My Music</div>
               <q-separator color="positive" />
               <BR/>
-              <div class="text-subtitle2">Ingresa tus datos de acceso para iniciar sesión en tu cuenta</div>
+              <div class="text-subtitle2">Ingresa tus datos de acceso para iniciar sesión</div>
             </q-card-section>
           </q-card>
           <q-card class="my-card">
@@ -111,7 +111,7 @@
         </q-tab-panel>
 
         <!-- Register -->
-        <q-tab-panel name="two">With so much content to display at once, and often so little screen real-estate
+        <q-tab-panel name="two">Si eres nuevo ingrese sus datos!
           <q-form
           	method="post"
           	ref="formR"
@@ -122,23 +122,23 @@
 
             <div class="q-pa-md" style="max-width: 300px;">
               <div class="q-gutter-y-md column">
-
                 <label class="imageButton">
                   <q-icon name="photo" v-if="seeIcon" class="uploadImageIcon" />
-                  <img class="imagePrevew" v-if="seeImage" :src="imagePrevUrl">
-                  <q-file
-                    filled
-                    v-model="imagen"
-                    id="imagen"
-                    name="imagen"
+                  <q-img class="imagePrevew" v-if="seeImage" :src="imagePrevUrl"></q-img>
+                  <input
+                    id="imageFile"
+                    name="image"
                     label="Foto de perfil"
                     placeholder="Carga de imagen"
                     hint="Sube tu foto de perfil"
                     accept=".jpg, image/*"
                     @change="previsualizarImagen($event)"
-                    :dense="dense"
-                    required>
-                  </q-file>
+                    required
+                    type="file"
+                    style="display: none;"
+
+                  />
+
                 </label>
 
                 <q-input
@@ -163,16 +163,17 @@
 	                lazy-rules
 	                :rules="[ val => val && val.length > 0 || 'Por favor Escriba su apellidos']"/>
 
+
                 <q-input
                 	filled
-                	v-model="nom_artistico"
-                	id="nom_artistico"
-                	name="nom_artistico"
-                	label="Nombre Artistico"
+                	v-model="usuario"
+                	id="usuario"
+                	name="usuario"
+                	label="Usuario"
                 	:dense="dense"
                 	lazy-rules
                   required
-                	:rules="[ val => val && val.length > 0 || 'Por favor Escriba su nombre artistico']"/>
+                	:rules="[ val => val && val.length > 0 || 'Por favor Escriba su Usuario']"/>
 
                 <q-input
                 	filled
@@ -306,6 +307,8 @@ export default {
 
     return {
 
+      tipoUser: ref(null),
+
       // Validar
       accept,
       //Data form
@@ -355,6 +358,9 @@ export default {
   },
 
   data: () => ({
+    // Tipo Usuario
+    options: ['Amigo','Trabajador'],//Select items
+    tipoUser: null,
     //URL PREVEW 1
     imagePrevUrl: null,
     seeIcon: true,
@@ -369,7 +375,7 @@ export default {
 
     nombre: null,
     apellidos: null,
-    nom_artistico: null,
+    usuario: null,
     email: null,
     password: null,
     confirmar: null,
@@ -425,17 +431,17 @@ export default {
           else if (this.respuesta == 'Correo o contraseña incorrectos') {
             this.$q.notify({
               message: this.respuesta,
-              color: 'warning',
+              color: 'negative',
               textColor: 'positive',
               icon: 'fa fa-exclamation-circle'
 
             })
           }else{
-            alert(this.respuesta);
+            // alert(this.respuesta);
           	localStorage.setItem('token', this.respuesta);
 
-            // this.$router.push({ path: '/home' })
-            this.$router.push({ path: '/perfil/info-perfil' })
+            this.$router.push({ path: '/home' })
+            // this.$router.push({ path: '/perfil/info-perfil' })
           }
 
         }else{
@@ -456,22 +462,25 @@ export default {
       	//GUARDAR DATOS
         const nombre = this.nombre;
         const apellidos = this.apellidos;
-        const nom_artistico = this.nom_artistico;
+        const tipoUser = this.tipoUser;
+        const usuario = this.usuario;
         const email = this.email;
         const password = this.password;
-        const imagen = this.imagen;
+        // const imagen = this.imagen;
         const telefono = this.telefono;
         const fechNac = this.fechNac;
+        const imagen = $('#imageFile')[0].files[0];
 
         //CREAR PAQUETE
 
         const packagePost = new FormData();
         packagePost.append('nombre',nombre);
         packagePost.append('apellidos',apellidos);
-        packagePost.append('nom_artistico',nom_artistico);
+        packagePost.append('tipoUser',tipoUser);
+        packagePost.append('nom_artistico',usuario);
         packagePost.append('email',email);
         packagePost.append('password',password);
-        packagePost.append('imagen',imagen);
+        packagePost.append('perfil',imagen);
         packagePost.append('telefono',telefono);
         packagePost.append('fechNac',fechNac);
 
@@ -483,7 +492,14 @@ export default {
         })
 
       }else{
-      	alert('Su contraseña no coincide');
+         this.$q.notify({
+              message: 'La contraseña debe tener de minimo 8 caracteres',
+              color: 'negative',
+              textColor: 'positive',
+              icon: 'fa fa-exclamation-circle'
+
+        })
+      	// alert('Su contraseña no coincide');
       }
     },
 
@@ -566,5 +582,6 @@ export default {
 }
 
 /*SUBIR IMAGEN*/
+
 
 </style>

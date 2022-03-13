@@ -53,10 +53,9 @@
           <p class="text-center text-no-wrap">{{telefono}}</p>
           <p class="text-subtitle2">{{descripcion}}</p>
            <!-- Evaluación -->
-          <div class="row no-wrap items-center">
-            <q-rating size="18px" v-model="stars" :max="5" color="info" />
-            <span class="text-caption text-grey q-ml-sm">4.2 (551)</span>
-          </div>
+          <!-- <div class="row no-wrap items-center"> -->
+
+          <!-- </div> -->
 
           <q-btn
             round
@@ -70,9 +69,9 @@
             <span class="text-caption text-grey q-ml-sm">4.2 (551)</span>
           </q-btn>
 
-          <!-- <q-btn flat round color="teal" icon="bookmark" /> -->
-          <q-btn flat round color="primary" icon="event" @click="open('left')" />
           <q-btn flat round color="primary" icon="share" />
+
+          <q-rating size="18px" v-model="stars" :max="5" color="info" />
 
         </div>
 
@@ -84,79 +83,7 @@
               @click="darkDialog = true"
               style="color: #F56628"
             />
-            <p align="left">
-              <span class=" text-grey q-ml-sm">{{category}} <br> </span>
-              <span class=" text-grey q-ml-sm">/ Mariachi</span>
-            </p>
         </div>
-
-        <q-separator />
-
-        <q-card-actions align="center">
-          <!-- Buton agenda, reservar ubication -->
-
-
-          <q-btn
-            round
-            flat
-            color="info"
-            stack
-            no-caps
-            size="20px"
-            to="/perfil/agenda-perfil"
-          >
-            <q-icon size="22px" name="far fa-address-book" />
-            <div class="GPL__side-btn__label">Agenda</div>
-          </q-btn>
-
-          <q-btn
-            fab
-            color="teal"
-            icon="place"
-            class="ubication"
-            to="/perfil/info-perfil"
-            @click="viewUbication(), dialogMap = true"
-          />
-          <q-dialog v-model="dialogMap" dialogMap transition-show="scale" transition-hide="scale">
-            <q-card class="bg-teal text-white" style="width: 3000px">
-              <q-card-section>
-                <div class="text-h6">Ubicación</div>
-              </q-card-section>
-
-              <!-- <q-card-section class="q-pt-none">
-                {{nombre}}
-              </q-card-section> -->
-
-              <q-card-actions align="right" class="bg-white text-teal">
-                <div class="map">
-                  <iframe
-                    :src="mapaLink"
-                    frameborder="0"
-                    style="width: 100%;height: 100%;"
-                    scrolling="no"
-                    marginheight="0"
-                    marginwidth="0"
-                    allowfullscreen
-                  ></iframe>
-                </div>
-                <q-separator/>
-                <q-btn color="red" flat label="Cerrar" v-close-popup />
-              </q-card-actions>
-            </q-card>
-          </q-dialog>
-
-
-
-          <q-dialog v-model="dialog" :position="position">
-            <q-card style="width: 320px">
-              <q-card-section class="items-center no-wrap">
-                <p class=" text-center text-negative text-weight-bold">Fechas ya Asignadas</p>
-                <q-date v-model="days" multiple />
-              </q-card-section>
-            </q-card>
-          </q-dialog>
-          <!-- Fin agenda -->
-        </q-card-actions>
 
       </q-card-section>
 
@@ -251,30 +178,6 @@
     </q-card>
 
   </div>
-  <!-- botones horizontales -->
-  <q-tabs
-    v-model="tab"
-    dense
-    class="text-white"
-    active-color="dark"
-    indicator-color="primary"
-    align="justify"
-    :breakpoint="0"
-  >
-    <q-tab name="photos">
-      <router-link class="text-primary" style="text-decoration: none; font-weight:600;" active-color="dark" indicator-color="primary" align="justify" to="/perfil/photos-perfil">Fotos</router-link>
-    </q-tab>
-
-    <q-tab name="movies">
-      <router-link class="text-primary" style="text-decoration: none; font-weight:600;" active-color="dark" indicator-color="primary" align="justify" to="/perfil/movies-perfil">Videos</router-link>
-    </q-tab>
-
-    <q-tab name="history">
-      <!-- hacemos llamado a pagina history -->
-      <router-link class="text-primary" style="text-decoration: none; font-weight:600;" active-color="dark" indicator-color="primary" align="justify" to="/perfil/historys-perfil">Historias</router-link>
-    </q-tab>
-
-  </q-tabs>
 
   <!-- Perfil -->
   <div class="q-pa-md">
@@ -303,6 +206,7 @@
       >
         <q-scroll-area class="fit">
           <q-list padding>
+
             <router-link class="text-primary" style="text-decoration: none; font-weight:600;" active-color="dark" indicator-color="primary" align="justify" to="/perfil/info-perfil">
               <q-item clickable v-ripple>
                 <q-item-section avatar>
@@ -313,20 +217,6 @@
                   Perfil
                 </q-item-section>
 
-              </q-item>
-            </router-link>
-
-            <router-link class="text-primary" style="text-decoration: none; font-weight:600;" active-color="dark" indicator-color="primary" align="justify" to="/perfil/agenda-perfil">
-
-              <q-item active clickable v-ripple>
-                <q-item-section avatar>
-                  <q-icon name="far fa-calendar-check" />
-                  <q-badge color="red" floating>2</q-badge>
-                </q-item-section>
-
-                <q-item-section>
-                  Agenda
-                </q-item-section>
               </q-item>
             </router-link>
 
@@ -345,20 +235,6 @@
             </router-link>
 
             <q-separator />
-
-            <router-link class="text-primary" style="text-decoration: none; font-weight:600;" active-color="dark" indicator-color="primary" align="justify" to="/perfil/chat-perfil">
-
-              <q-item clickable v-ripple>
-                <q-item-section avatar>
-                  <q-icon name="drafts" />
-                  <q-badge color="red" floating>2</q-badge>
-                </q-item-section>
-
-                <q-item-section>
-                  Chat
-                </q-item-section>
-              </q-item>
-            </router-link>
 
 
           </q-list>
@@ -392,34 +268,20 @@ export default {
 
     return {
 
-      Pais: [
-        {Nombre:"Mexico"},
-        {Codigo:"+52"},
-        {Bandera:"banmex.png"},
-        {TerCon:"tercon.pdf"},
-        {SimMon:"$"},
-        {Lat:"19.433021004809355"},
-        {Lon:"-99.13516746685117"}
-      ],
-
-        dialogMap: ref(false),
       // Slider portada
       slide: ref(1),
       fullscreen: ref(false),
       autoplay: ref(true),
 
        // Agenda
-      dialog,
       position,
       open(pos) {
         position.value = pos
         dialog.value = true
       },
-      days: ref(['2019/02/01', '2019/02/10', '2019/02/21']),
+
       stars: ref('4'),
-      // Fin Agenda
-      lorem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      category: 'Musical',
+
 
       // Esqueleto de botones
       tab: ref('info'),
@@ -444,9 +306,6 @@ export default {
   },
 
   data: () => ({
-    mapaLink: null,
-
-    business_map: 'https://maps.google.com/?ll=19.503539,-98.392694&z=16&t=m&output=embed&d',
     // Portada
     perfil:null,
     addperfil:null,
@@ -480,6 +339,7 @@ export default {
       const portada = this.addportada;
       const perfil = this.addperfil;
       const descripcion = this.descripcion;
+      const email = this.email;
 
       //Crear paquete
       const data =new FormData();
@@ -487,26 +347,38 @@ export default {
       data.append('frase',descripcion);
       data.append('perfil',perfil);
       data.append('portada',portada);
+      data.append('email',email);
 
       //Send data
-      axios.post('' + localhost + '' + 'usuario.php?op=updateimgPerfil', data)
+      axios.post('' + localhost + '' + 'tipo_User.php?op=updateimgPerfil', data)
       .then(res => {
         this.respuesta=res.data
 
-        alert(this.respuesta);
+        if(this.respuesta == 'Datos Actualizados'){
+           this.$q.notify({
+              message: this.respuesta,
+              color: 'secondary',
+              textColor: 'positive',
+              icon: 'fa fa-thumbs-up'
+
+            })
+          // alert(this.respuesta);
+          // actualiza la pagina
+          this.$router.go(0)
+        }else{
+          this.$q.notify({
+            message: this.respuesta,
+            color: 'negative',
+            textColor: 'positive',
+            icon: 'fa fa-exclamation-circle'
+
+          })
+        }
+
 
       })
 
-    },
-
-    viewUbication: function(){
-
-      const lat = this.lat;
-      const long = this.long;
-      const mapaLink = "https://maps.google.com/?q="+lat+","+long+"&z=16&t=m&output=embed&d";
-      this.mapaLink =mapaLink;
     }
-
   },
 
   mounted(){
@@ -537,10 +409,6 @@ export default {
       this.codpost = response.data[0].codpost;
       this.lat = response.data[0].lat;
       this.long = response.data[0].long;
-
-      // const mapaLink = "https://maps.google.com/?q="+lat+","+long+"&z=20&t=m&output=embed&d ";
-
-
 
       this.perfil = response.data[0].perfil;
       this.portada = response.data[0].portada;

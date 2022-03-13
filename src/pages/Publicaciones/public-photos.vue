@@ -1,108 +1,216 @@
-
 <template>
+
 	<div class="q-pa-md items-start q-gutter-md center-card">
+    <q-btn-dropdown
+      split
+      class="glossy"
+      color="primary"
+      label="Playlist"
+      hit="Seleccione un genero"
+    >
+      <q-list>
+        <q-item v-for="(playlis, s) in playings" :key="s" clickable v-close-popup @click="getList(playlis.id)">
+          <q-item-section avatar>
+            <!-- <q-avatar icon="folder" color="primary" text-color="white" /> -->
+            <q-avatar size="42px" v-for="(icon , i) in playlis.icons" :key="i">
+                  <img  :src="icon.url">
+            </q-avatar>
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{playlis.name}}</q-item-label>
+          </q-item-section>
+        </q-item>
 
-	  	<!-- Tarjeta Photos -->
-	    <q-card class="my-card" flat bordered>
-	    	<!-- Cabecera -->
-	    	<q-item>
-
-	    		<q-item-section avatar>
-	    			<q-btn round to="/perfil/photos-perfil">
-	        			<q-avatar size="42px">
-	        				<img src="https://cdn.quasar.dev/img/avatar2.jpg">
-			            </q-avatar>
-			        </q-btn>
-	    		</q-item-section>
-
-	    		<q-item-section>
-	    			<q-item-label class="text-h6 q-mb-xs absolute q-pa-xs"> {{user}} </q-item-label>
-	    			<q-item-label caption class="text-subtitle2 text-right q-pa-md text-dark col-4"> {{category}}</q-item-label>
-	    			<q-item-label caption class="text-right"> (241) 137-2093 </q-item-label>
-	    		</q-item-section>
-	    	</q-item>
-
-	    	<q-card-section horizontal class="q-pt-none">
-	    		<q-card-section class="q-pt-xs">
-	    		{{ lorem }}
-	    		</q-card-section>
-	    	</q-card-section>
-
-	    	<q-img src="https://cdn.quasar.dev/img/chicken-salad.jpg" />
-
-	    	<q-card-actions align="center">
-
-	    		<!-- Evaluación -->
-	    		<div class="row no-wrap items-center" align="left">
-	    			<q-rating size="18px" v-model="stars" :max="5" color="info" />
-	    			<span class="text-caption text-grey q-ml-sm">4.2 (551)</span>
-	    		</div>
-		        <q-btn flat round color="red" icon="favorite" />
-		        <q-btn flat round color="teal" icon="bookmark" />
-		        <q-btn flat round color="primary" icon="share" />
-	      	</q-card-actions>
-
-	    	<q-separator />
-
-	    	<q-card-actions align="center">
-	    		<!-- Buton agenda, reservar ubication -->
-	    		<q-btn flat round icon="event" @click="open('left')" />
-	    		<q-btn flat color="primary">Reservar </q-btn>
-	    		<q-btn fab color="primary" icon="place" class="ubication"/>
-
-	  	 		<q-dialog v-model="dialog" :position="position">
-			      <q-card style="width: 320px">
-
-			        <q-card-section class="items-center no-wrap">
-			        	<q-date v-model="days" multiple/>
-			        </q-card-section>
-			      </q-card>
-			    </q-dialog>
-
-	    		<!-- Fin agenda -->
-
-	    	</q-card-actions>
-	    </q-card>
+      </q-list>
+    </q-btn-dropdown>
 
 
-  	</div>
+    <q-card class="my-card" flat bordered>
+      <div class="" >
+        <!-- Cabecera -->
+        <q-list>
+          <q-item v-for="(item, i) in playList " :key="i">
+            <q-item-section avatar>
+              <q-btn round @click="getList(item.id)">
+                <div  v-for="(icon , i) in item.album" :key="i">
+                  <q-avatar size="42px" v-for="(img , a) in icon.images" :key="a">
+
+                    <img  :src="img.url">
+                  </q-avatar>
+                </div>
+              </q-btn>
+            </q-item-section>
+
+            <q-item-section>
+              <q-item-label class="text-h6 q-mb-xs relative q-pa-xs"> {{item.name}} </q-item-label>
+
+              <div v-for="(artis , b) in item.artists" :key="b">
+                <q-item-label caption class="text-left ">Artista: {{artis.name}}  </q-item-label>
+              </div>
+              <div  v-for="(album, i) in item.album " :key="i">
+                <div v-for="(sencillo, i) in album.artists " :key="i">
+                  <q-item-label caption class="text-left ">{{sencillo.name}} </q-item-label>
+                </div>
+
+              </div>
+
+
+            </q-item-section>
+
+            <q-card-actions align="center">
+              <!-- Evaluación -->
+              <div class="row no-wrap items-center" align="left">
+                <q-rating size="18px" v-model="stars" :max="5" color="info" />
+                <!-- <span class="text-caption text-grey q-ml-sm">({{item}})</span> -->
+              </div>
+              <q-btn
+                  round
+                  flat
+                  color="red"
+                  stack
+                  no-caps
+                  size="20px"
+              >
+                  <q-icon size="22px" name="favorite" />
+                  <!-- <span class="text-caption text-grey q-ml-sm">{{item}}</span> -->
+              </q-btn>
+              <q-btn flat round color="teal" icon="bookmark" />
+              <q-btn flat round color="primary" icon="share" />
+            </q-card-actions>
+          </q-item>
+        </q-list>
+
+
+      </div>
+    </q-card>
+
+
+
+  </div>
+
 </template>
 
 <script>
-import { ref } from 'vue'
-import sesion from '../../mixins/sesion'
-// import { scroll } from 'quasar'
+
 export default {
-   mixins:[sesion],
-  setup () {
-  	// Agenda
-  	const dialog = ref(false)
-    const position = ref('top')
-    // const { getScrollHeight } = scroll
 
+  data() {
     return {
-    	// getScrollHeight(scrollTargetDomElement), // returns a Number
-    	// Agenda
-    	dialog,
-    	position,
-    	open (pos) {
-    		position.value = pos
-        	dialog.value = true
-        },
-        stars: ref('2'),
-        days: ref([ '2019/02/01', '2019/02/10'  ]),
-        // Fin Agenda
-
-        lorem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      	user:'Julio Armando',
-      	category:'Musical'
+      utlSpoti: 'https://api.spotify.com/v1',
+      clientId: 'f72ee33ceff848b694f07afe4aac84f8',
+      clientSecret: '36c404ddc7414e458fe3e9e347ff3c39',
+      token: null,
+      genero:null,
+      recomends:null,
+      playings: null,
+      playList:null
     }
+  },
+
+  created: function(){
+    this.getToken();
+  },
+
+  methods:{
+    getToken:  async function(){
+
+      const clientSecret ='36c404ddc7414e458fe3e9e347ff3c39';
+      const clientId = 'f72ee33ceff848b694f07afe4aac84f8';
+      //  console.log(clientId + ""+ clientSecret);
+       const result = await fetch('https://accounts.spotify.com/api/token', {
+            method: 'POST',
+            headers: {
+                'Content-Type' : 'application/x-www-form-urlencoded',
+                'Authorization' : 'Basic ' + btoa(clientId + ':' + clientSecret)
+            },
+            body: 'grant_type=client_credentials'
+        });
+
+        const data = await result.json();
+        this.token= data.access_token;
+
+        console.log(this.token);
+           this.getPlay();
+           this.getList();
+          //  this.getRecomends();
+    },
+
+    getPlay: async function(){
+      const result = await fetch(`https://api.spotify.com/v1/browse/categories?offset=0`, {
+        // const result = await fetch(`https://api.spotify.com/v1/browse/categories/${id}/playlists`, {
+            method: 'GET',
+            headers: { 'Authorization' : 'Bearer ' + this.token}
+        });
+
+        const data = await result.json();
+        this.playings= data.categories.items;
+        // console.log(this.playings);
+        // console.log(data);
+    },
+
+    getList: async function(){
+      const result = await fetch(`https://api.spotify.com/v1/recommendations?seed_artists=4NHQUGzhtTLFvgF5SZesLK`, {
+            method: 'GET',
+            headers: { 'Authorization' : 'Bearer ' + this.token}
+        });
+
+        const data = await result.json();
+
+        this.playList= data.tracks;
+        console.log(this.playList);
+
+    }
+
   }
+}
+</script>
+
+
+<style lang="scss" scoped>
+.select-css {
+	display: block;
+	font-size: 16px;
+	font-family: 'Verdana', sans-serif;
+	font-weight: 400;
+	color: #444;
+	line-height: 1.3;
+	padding: .4em 1.4em .3em .8em;
+	width: 400px;
+	max-width: 100%;
+	box-sizing: border-box;
+ margin: 20px auto;
+	border: 1px solid #aaa;
+	box-shadow: 0 1px 0 1px rgba(0,0,0,.03);
+	border-radius: .3em;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
+	background-color: #fff;
+	background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'),
+	  linear-gradient(to bottom, #ffffff 0%,#f7f7f7 100%);
+	background-repeat: no-repeat, repeat;
+	background-position: right .7em top 50%, 0 0;
+	background-size: .65em auto, 100%;
+}
+.select-css::-ms-expand {
+	display: none;
+}
+.select-css:hover {
+	border-color: #888;
+}
+.select-css:focus {
+	border-color: #aaa;
+	box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
+	box-shadow: 0 0 0 3px -moz-mac-focusring;
+	color: #222;
+	outline: none;
+}
+.select-css option {
+	font-weight:normal;
 }
 
 
-</script>
-<style lang="scss" scoped>
+
 .my-card{
 	width: 100%;
 	max-width: 600px;

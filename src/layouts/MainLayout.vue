@@ -1,11 +1,9 @@
 <template>
   <q-layout view="lHh Lpr fff" class="bg-positive-1">
-    <q-header elevated class="bg-primary text-white-8" height-hint="64">
+    <q-header elevated class="bg-white text-dark-8" height-hint="64">
       <q-toolbar class="GPL__toolbar" style="height: 64px">
-        <q-btn flat dense round @click="toggleLeftDrawer" aria-label="Menu" color="positive" icon="menu" class="q-mx-md"/>
-
         <q-toolbar-title v-if="$q.screen.gt.sm" shrink class="row items-center no-wrap">
-          <img style="width: 70px;" src="http://localhost/apiprueba/files/logo1.png">
+          <img style="width: 70px;" src="http://localhost/apimusic/files/logo.png">
           <!-- <span class="q-ml-sm">My Pary</span> -->
           <!-- <q-avatar size="40px"> -->
               <!-- <img src="http://localhost/apiprueba/files/logo.png"> -->
@@ -15,31 +13,17 @@
         <q-space />
 
         <!-- Barra de busqueda -->
-        <q-input class="GPL__toolbar-input" dense standout="bg-secondary" v-model="search" placeholder="Buscar perfiles, categorias" >
+        <q-input class="GPL__toolbar-input" dense standout="bg-info" v-model="search" placeholder="Buscar genero" >
           <!-- <q-input class="GNL__toolbar-input" outlined dense v-model="search" color="bg-grey-7 shadow-1" placeholder="Search for topics, locations & sources"> -->
           <template v-slot:prepend>
-            <q-icon v-if="search === ''" name="search" color="positive"/>
+            <q-icon v-if="search === ''" name="search" color="primary"/>
             <q-icon v-else name="clear" class="cursor-pointer" @click="search = ''" />
           </template>
         </q-input>
 
-        <q-btn v-if="$q.screen.gt.xs" flat dense no-wrap color="positive" icon="add" no-caps label="Crear Pary" class="q-ml-sm q-px-md">
-          <q-menu anchor="top end" self="top end">
-            <q-list class="text-grey-8" style="min-width: 100px">
-              <q-item aria-hidden="true">
-                <q-item-section class="text-uppercase text-grey-7" style="font-size: 0.7rem">Crear PARY</q-item-section>
-              </q-item>
-              <q-item v-for="menu in createMenu" :key="menu.text" clickable v-close-popup aria-hidden="true">
-                <q-item-section avatar>
-                  <q-icon :name="menu.icon" />
-                </q-item-section>
-                <q-item-section>{{ menu.text }}</q-item-section>
-              </q-item>
-            </q-list>
-          </q-menu>
-        </q-btn>
 
-        <q-btn v-if="$q.screen.gt.xs" flat dense no-wrap color="positive" icon="cloud_upload" no-caps label="Subir" class="q-ml-sm q-px-md" to="/home/post"/>
+
+        <q-btn v-if="$q.screen.gt.xs" flat dense no-wrap color="dark" icon="cloud_upload" no-caps label="Actualizar" class="q-ml-sm q-px-md" to="/home"/>
 
         <q-space />
 
@@ -47,8 +31,8 @@
         <div class="q-gutter-sm row items-center no-wrap">
 
           <!-- btn Home -->
-          <q-btn round dense flat color="positive" icon="apps" to="/home">
-            <q-tooltip>Home Apps</q-tooltip>
+          <q-btn round dense flat color="dark" icon="apps" to="/home">
+            <q-tooltip>Home</q-tooltip>
           </q-btn>
 
           <!-- btn Notificaciones -->
@@ -77,13 +61,13 @@
         <q-scroll-area style="height: calc(100% - 150px); margin-top: 150px; border-right: 1px solid #ddd">
           <q-list padding>
 
-            <q-item clickable v-ripple to="/">
+            <q-item clickable v-ripple to="/perfil/info-perfil">
               <q-item-section avatar>
                 <q-icon name="inbox" />
               </q-item-section>
 
               <q-item-section>
-                Iniciar Sesión
+                Perfil
               </q-item-section>
             </q-item>
 
@@ -98,17 +82,6 @@
             </q-item>
 
             <q-separator class="q-my-md" />
-
-            <q-item clickable class="GPL__drawer-item GPL__drawer-item--storage">
-              <q-item-section avatar><q-icon name="cloud" />
-            </q-item-section>
-
-            <q-item-section top>
-              <q-item-label>Storage</q-item-label>
-                <q-linear-progress :value="storage" class="q-my-sm" />
-                <q-item-label caption>2.6 GB of 15 GB</q-item-label>
-              </q-item-section>
-            </q-item>
           </q-list>
         </q-scroll-area>
 
@@ -123,98 +96,47 @@
               <q-tooltip>Perfil</q-tooltip>
             </q-btn>
             <div class="text-weight-bold inset-shadow	text-center  bg-black" clickable v-ripple to="/perfil/info-perfil">{{this.nom_artistico}}</div>
-            <div class=" text-center bg-black ">{{this. email}}</div>
+            <div class=" text-center bg-black ">{{this.email}}</div>
           </div>
         </q-img>
       </q-drawer>
 
 
     <!-- Inicio Header Izquierda -->
-    <q-drawer v-model="leftDrawerOpen" bordered behavior="mobile" @click="leftDrawerOpen = false">
-      <q-scroll-area class="fit">
-        <q-toolbar class="GPL__toolbar">
-          <q-toolbar-title class="row items-center text-grey-8">
-              <img class="q-pl-md" style="width: 250px;" src="http://localhost/apiprueba/files/horizontal.png">
-            <!-- <img class="q-pl-md" src="https://www.gstatic.com/images/branding/googlelogo/svg/googlelogo_clr_74x24px.svg"> -->
-            <!-- <span class="q-ml-sm">My PARY</span> -->
-          </q-toolbar-title>
-        </q-toolbar>
-
-        <!-- Group Public -->
-        <q-list padding>
-          <q-item v-for="link in links1" :key="link.text" clickable class="GPL__drawer-item" :to="link.path">
-            <q-item-section avatar>
-              <q-icon :name="link.icon" />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{ link.text }}</q-item-label>
-            </q-item-section>
-          </q-item>
-          <!-- Finn Group Public -->
-
-          <q-separator class="q-my-md" />
-
-          <q-item v-for="link in links2" :key="link.text" clickable class="GPL__drawer-item" >
-            <q-item-section avatar>
-              <q-icon :name="link.icon" />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{ link.text }}</q-item-label>
-            </q-item-section>
-          </q-item>
-
-          <q-separator class="q-my-md" />
-
-          <q-item v-for="link in links3" :key="link.text" clickable class="GPL__drawer-item">
-            <q-item-section avatar>
-              <q-icon :name="link.icon" />
-            </q-item-section>
-            <q-item-section>
-              <q-item-label>{{ link.text }}</q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-list>
-      </q-scroll-area>
-
-    </q-drawer>
-
     <q-page-container class="GPL__page-container">
       <router-view></router-view>
 
       <q-page-sticky v-if="$q.screen.gt.sm" expand position="left">
         <div class="fit q-pt-xl q-px-sm column">
 
-          <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn" to="/home/states">
+           <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn" to="/home/states">
             <q-icon size="22px" name="assistant" />
-            <div class="GPL__side-btn__label">Estados</div>
+            <div class="GPL__side-btn__label">Genero</div>
             <q-badge floating color="red" text-color="white" style="top: 8px; right: 16px">
               1
             </q-badge>
           </q-btn>
 
-          <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn" to="/home/photos">
+          <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn" to="/home/photos" >
+            <q-icon size="22px" name="import_contacts" />
+            <div class="GPL__side-btn__label">Album</div>
+          </q-btn>
+
+           <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn">
             <q-icon size="22px" name="photo" />
-            <div class="GPL__side-btn__label">Fotos</div>
+            <div class="GPL__side-btn__label">Artista</div>
           </q-btn>
 
           <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn" to="/home/videos">
             <q-icon size="22px" name="collections_bookmark" />
-            <div class="GPL__side-btn__label">Videos</div>
+            <div class="GPL__side-btn__label">Pista</div>
           </q-btn>
 
-          <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn" to="/home/stories">
-            <q-icon size="22px" name="import_contacts" />
-            <div class="GPL__side-btn__label">Historias</div>
-          </q-btn>
+
 
           <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn" to="/home/friends">
             <q-icon size="22px" name="group" />
             <div class="GPL__side-btn__label">Amigos</div>
-          </q-btn>
-
-          <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn" to="/home/categories">
-            <q-icon size="22px" name="category" />
-            <div class="GPL__side-btn__label">Categorías</div>
           </q-btn>
         </div>
       </q-page-sticky>
@@ -234,10 +156,6 @@ export default {
 
     const search = ref('')
     const storage = ref(0.26)
-    function toggleLeftDrawer () {
-      leftDrawerOpen.value = !leftDrawerOpen.value
-    }
-
     function toggleRightDrawer () {
       rightDrawerOpen.value = !rightDrawerOpen.value
     }
@@ -246,32 +164,7 @@ export default {
       leftDrawerOpen,
       search,
       storage,
-      links1: [
-        { icon: 'assistant', text: 'Estados', path: "/home/states" },
-        { icon: 'photo', text: 'Fotos', path: "/home/photos" },
-        { icon: 'photo_album', text: 'Videos', path: "/home/videos" },
-        { icon: 'import_contacts', text: 'Historias', path: "/home/stories" },
-        { icon: 'people', text: 'Amigos', path: "/home/friends" },
-        { icon: 'category', text: 'Categorias', path: "/home/categories"}
-      ],
-      links2: [
-        { icon: 'archive', text: 'Archive' },
-        { icon: 'delete', text: 'Trash' }
-      ],
-      links3: [
-        { icon: 'settings', text: 'Settings' },
-        { icon: 'help', text: 'Help & Feedback' },
-        { icon: 'get_app', text: 'App Downloads' }
-      ],
-      createMenu: [
-        { icon: 'photo_album', text: 'Album' },
-        { icon: 'people', text: 'Shared Album' },
-        { icon: 'movie', text: 'Movie' },
-        { icon: 'library_books', text: 'Animation' },
-        { icon: 'dashboard', text: 'Collage' },
-        { icon: 'book', text: 'Photo book' }
-      ],
-      toggleLeftDrawer,
+
       toggleRightDrawer
     }
   },
@@ -297,37 +190,19 @@ export default {
         .then(res=> {
 
         	this.respuesta=res.data
+          alert(this.respuesta);
           if(this.respuesta == 'success'){
             localStorage.clear();
             this.$router.push({ path: '/' })
           }
         })
-
-
-
-        // const token = localStorage.getItem('token');
-
-        // const packagePost = new FormData();
-        // packagePost.append('token',token);
-
-        // axios.post('' + localhost + '' + 'usuario.php?op=salir')
-        // .then(res => {
-
-        //   this.respuesta=res.data
-        //   alert(this.respuesta);
-        // })
-          // form has error
-
     }
 
   },
 
   mounted(){
     //Cargar datos de perfil
-
     var token = localStorage.getItem('token');
-    // const userid = this.$route.params.id;
-    // const estadoUser = this.estadoUser;
 
     axios.get('' + serverName + '' + '/ajax/usuario.php?op=mostrar&token=' + token)
     .then(response =>{
@@ -337,8 +212,6 @@ export default {
       this.apellidos = response.data[0].apellidos;
 	    this.nom_artistico = response.data[0].nom_artistico;
 	    this.email = response.data[0].email;
-	    this.password = response.data[0].password;
-	    this.imagen = response.data[0].imagen;
 	    this.telefono = response.data[0].telefono;
 	    this.fechNac = response.data[0].fechNac;
 

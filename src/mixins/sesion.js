@@ -4,6 +4,7 @@ export default{
     if (!token){
       this.$router.push({ path: '/' })
     }
+
   }
 
 }

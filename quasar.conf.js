@@ -96,7 +96,8 @@ module.exports = configure(function (ctx) {
       // Quasar plugins
       plugins: [
         'Notify',
-        'Dialog'
+        'Dialog',
+        'BottomSheet'
       ]
     },
 
@@ -139,8 +140,8 @@ module.exports = configure(function (ctx) {
       },
 
       manifest: {
-        name: `My Pary`,
-        short_name: `My Pary`,
+        name: `My Music`,
+        short_name: `My Music`,
         description: `A Quasar Framework app`,
         display: 'standalone',
         orientation: 'portrait',
@@ -207,7 +208,7 @@ module.exports = configure(function (ctx) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 'mypary'
+        appId: 'mymusic'
       },
 
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
