@@ -9,7 +9,7 @@
             <q-item-section avatar>
               <q-btn round>
                 <q-avatar size="42px">
-                  <q-img class="img-login" src="https://mymusicperrona22.000webhostapp.com/apimusic/files/logo.png">
+                  <q-img class="img-login" src="https://mymusicperronas.000webhostapp.com/apimusic/files/logo.png">
                   </q-img>
                 </q-avatar>
               </q-btn>

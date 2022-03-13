@@ -15,7 +15,7 @@
             <q-card-section class=" bg-primary text-white">
               <div class="q-col-gutter-md row items-start">
                 <div class="col-12">
-                  <q-img class="img-login" src="https://mymusicperrona22.000webhostapp.com/apimusic/files/logo.png">
+                  <q-img class="img-login" src="https://mymusicperronas.000webhostapp.com/apimusic/files/logo.png">
                   </q-img>
                 </div>
               </div>
